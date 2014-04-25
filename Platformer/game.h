@@ -5,6 +5,9 @@ public:
 	Game();
 	~Game();
 private:
+	void eventLoop();
 
+	void update();
+	void draw();
 
 };
