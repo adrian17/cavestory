@@ -1,5 +1,7 @@
 #pragma once
 
+struct SDL_Window;
+
 class Game{
 public:
 	Game();
@@ -10,4 +12,5 @@ private:
 	void update();
 	void draw();
 
+	SDL_Window *window;
 };
