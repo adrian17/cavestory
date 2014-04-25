@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "SDL.h"
+#include <cstdio>
 
 Game::Game(){
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -40,6 +41,9 @@ void Game::eventLoop(){
 		int elapsedTime = SDL_GetTicks() - startTime;
 		if (elapsedTime > 10) elapsedTime = 10;
 		SDL_Delay(1000 / 60 - elapsedTime);
+
+		//const float fps = 1000.0 / (SDL_GetTicks() - startTime);
+		//printf("fps=%f\n", fps);
 	}
 }
 
