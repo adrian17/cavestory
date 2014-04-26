@@ -87,6 +87,7 @@ void Game::update(int dt){
 
 void Game::draw(Graphics &graphics){
 	graphics.clear();
+	map->drawBackground(graphics);
 	player->draw(graphics);
 	map->draw(graphics);
 	graphics.flip();

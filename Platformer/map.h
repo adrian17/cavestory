@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 
+class Backdrop;
 class Graphics;
 class Rectangle;
 class Sprite;
@@ -22,6 +23,7 @@ public:
 	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle) const;
 
 	void update(int dt);
+	void drawBackground(Graphics &graphics);
 	void draw(Graphics &graphics);
 private:
 	struct Tile{
@@ -30,6 +32,7 @@ private:
 		TileType tileType;
 		std::shared_ptr<Sprite> sprite;
 	};
+	std::shared_ptr<Backdrop> backdrop;
 	std::vector<std::vector<Tile>> tiles;
 };
 

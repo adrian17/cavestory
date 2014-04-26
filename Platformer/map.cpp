@@ -1,5 +1,6 @@
 #include "map.h"
 
+#include "backdrop.h"
 #include "game.h"
 #include "graphics.h"
 #include "rectangle.h"
@@ -7,6 +8,8 @@
 
 Map* Map::createTestMap(Graphics &graphics){
 	Map *map = new Map;
+
+	map->backdrop.reset(new FixedBackdrop("content/bkBlue.bmp", graphics));
 
 	const int nRows = 15;
 	const int nCols = 20;
@@ -52,6 +55,10 @@ void Map::update(int dt){
 			}
 		}
 	}
+}
+
+void Map::drawBackground(Graphics &graphics){
+	backdrop->draw(graphics);
 }
 
 void Map::draw(Graphics &graphics){
