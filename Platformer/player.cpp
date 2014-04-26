@@ -6,18 +6,31 @@
 #include <cmath>
 
 namespace {
-	const double slowdownFactor = 0.8;
+	const double slowdownFactor = 0.8;	//walk
 	const double walkingAcceleration = 0.0012;
 	const double maxVelX = 0.325;
 
-	const double gravity = 0.0012;
+	const double gravity = 0.0012;	//fall
 	const double maxVelY = 0.325;
 
-	const double jumpSpeed = 0.325;
+	const double jumpSpeed = 0.325;	//jump
 	const int jumpTime = 275;
 
+	const std::string spriteFilePath = "content/myChar.bmp";
+
+	const int characterFrame = 0;
+
+	const int walkFrame = 0;	//motion
+	const int standFrame = 0;
 	const int jumpFrame = 1;
 	const int fallFrame = 2;
+	
+	const int upFrameOffset = 3;	//vertical
+	const int downFrame = 6;
+	const int backFrame = 7;
+
+	const int walkFps = 15;	//animation
+	const int nWalkFrames = 3;
 }
 
 bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
@@ -25,6 +38,8 @@ bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
 		return a.motionType < b.motionType;
 	if (a.horizontalFacing != b.horizontalFacing)
 		return a.horizontalFacing < b.horizontalFacing;
+	if (a.verticalFacing != b.verticalFacing)
+		return a.verticalFacing < b.verticalFacing;
 	return false;
 }
 
@@ -80,6 +95,18 @@ void Player::stopMoving(){
 	accX = 0.0;
 }
 
+void Player::loopUp(){
+	verticalFacing = UP;
+}
+
+void Player::lookDown(){
+	verticalFacing = DOWN;
+}
+
+void Player::lookHorizontal(){
+	verticalFacing = HORIZONTAL;
+}
+
 void Player::startJump(){
 	if (onGround){
 		jump.reset();
@@ -94,31 +121,46 @@ void Player::stopJump(){
 }
 
 void Player::initSprites(Graphics &graphics){
-	sprites[SpriteState(STANDING, LEFT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
-		0, 0,
-		tileSize, tileSize));
-	sprites[SpriteState(WALKING, LEFT)] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, "content/myChar.bmp",
-		0, 0,
-		tileSize, tileSize, 15, 3));
-	sprites[SpriteState(JUMPING, LEFT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
-		jumpFrame*tileSize, 0,
-		tileSize, tileSize));
-	sprites[SpriteState(FALLING, LEFT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
-		fallFrame*tileSize, 0,
-		tileSize, tileSize));
-	sprites[SpriteState(STANDING, RIGHT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
-		0, tileSize,
-		tileSize, tileSize));
-	sprites[SpriteState(WALKING, RIGHT)] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, "content/myChar.bmp",
-		0, tileSize,
-		tileSize, tileSize, 15, 3));
-	sprites[SpriteState(JUMPING, RIGHT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
-		jumpFrame*tileSize, tileSize,
-		tileSize, tileSize));
-	sprites[SpriteState(FALLING, RIGHT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
-		fallFrame*tileSize, tileSize,
-		tileSize, tileSize));
+	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
+		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){
+			for (int verticalFacing = 0; verticalFacing < LAST_VERTICAL_FACING; ++verticalFacing){
+				initSprite(graphics, SpriteState((MotionType)motionType, (HorizontalFacing)horizontalFacing, (VerticalFacing)verticalFacing));
+			}
+		}
+	}
+}
 
+void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
+	int srcY = spriteState.horizontalFacing == LEFT ? 
+		characterFrame * tileSize : 
+		(characterFrame + 1) * tileSize;
+	int srcX;
+	switch (spriteState.motionType){
+	case WALKING:
+		srcX = walkFrame * tileSize;
+		break;
+	case STANDING:
+		srcX = standFrame * tileSize;
+		break;
+	case JUMPING:
+		srcX = jumpFrame * tileSize;
+		break;
+	case FALLING:
+		srcX = fallFrame * tileSize;
+		break;
+	}
+	srcX = spriteState.verticalFacing == UP ? srcX + upFrameOffset * tileSize : srcX;
+
+	if (spriteState.motionType == WALKING){
+		sprites[spriteState] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, spriteFilePath,
+			srcX, srcY, tileSize, tileSize, walkFps, nWalkFrames));
+	} else {
+		if (spriteState.verticalFacing == DOWN){
+			srcX = spriteState.motionType == STANDING ? backFrame * tileSize : downFrame * tileSize;
+		}
+		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,
+			srcX, srcY, tileSize, tileSize));
+	}
 }
 
 Player::SpriteState Player::getSpriteState(){
@@ -128,7 +170,8 @@ Player::SpriteState Player::getSpriteState(){
 
 	return SpriteState(
 		motion,
-		horizontalFacing);
+		horizontalFacing,
+		verticalFacing);
 }
 
 void Player::Jump::update(int dt){
