@@ -1,22 +1,23 @@
 #include "game.h"
 
+#include "graphics.h"
 #include "SDL.h"
 #include <cstdio>
 
 Game::Game(){
 	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_ShowCursor(SDL_DISABLE);
-	window = SDL_CreateWindow("Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
 
 	eventLoop();
 }
 
 Game::~Game(){
-	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
 void Game::eventLoop(){
+
+	Graphics graphics;
+
 	SDL_Event event;
 
 	bool done = false;
