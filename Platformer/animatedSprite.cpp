@@ -18,7 +18,7 @@ AnimatedSprite::~AnimatedSprite(){
 
 }
 
-void AnimatedSprite::Update(int dt){
+void AnimatedSprite::update(int dt){
 	elapsedTime += dt;
 	if (elapsedTime > frameTime){
 		++currentFrame;

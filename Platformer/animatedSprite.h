@@ -8,7 +8,7 @@ public:
 		int srcX, int srcY, int width, int height, int fps, int nFrames);
 	~AnimatedSprite();
 
-	void Update(int dt);
+	void update(int dt);
 private:
 	const int frameTime;
 	const int nFrames;

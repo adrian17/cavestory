@@ -6,13 +6,13 @@
 class Input
 {
 public:
-	void BeginNewFrame();
+	void beginNewFrame();
 
-	void KeyDownEvent(SDL_Event &event);
-	void KeyUpEvent(SDL_Event &event);
+	void keyDownEvent(SDL_Event &event);
+	void keyUpEvent(SDL_Event &event);
 
-	bool WasKeyPressed(SDL_Keycode key);
-	bool WasKeyReleased(SDL_Keycode key);
+	bool wasKeyPressed(SDL_Keycode key);
+	bool wasKeyReleased(SDL_Keycode key);
 	bool isKeyHeld(SDL_Keycode key);
 private:
 	std::map<SDL_Keycode, bool> heldKeys;

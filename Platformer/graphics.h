@@ -15,10 +15,10 @@ public:
 	Graphics();
 	~Graphics();
 
-	void DrawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *dest);
-	void Flip();
+	void drawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *dest);
+	void flip();
 
-	SDL_Texture *CreateTexture(const std::string &path);
+	SDL_Texture *createTexture(const std::string &path);
 private:
 	SDL_Window *window;
 	SDL_Renderer *renderer;

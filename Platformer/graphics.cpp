@@ -13,17 +13,17 @@ Graphics::~Graphics(){
 	SDL_DestroyRenderer(renderer);
 }
 
-SDL_Texture* Graphics::CreateTexture(const std::string &path){
+SDL_Texture* Graphics::createTexture(const std::string &path){
 	SDL_Surface *tempSurface = SDL_LoadBMP(path.c_str());
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 	return texture;
 }
 
-void Graphics::DrawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *dest){
+void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *dest){
 	SDL_RenderCopy(renderer, texture, source, dest);
 }
 
-void Graphics::Flip(){
+void Graphics::flip(){
 	SDL_RenderPresent(renderer);
 }

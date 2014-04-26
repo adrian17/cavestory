@@ -32,21 +32,22 @@ void Game::eventLoop(){
 	bool done = false;
 	while (!done){
 		const int startTime = SDL_GetTicks();
-		input.BeginNewFrame();
+		input.beginNewFrame();
+
 		while (SDL_PollEvent(&event)){
 			switch (event.type){
 			case SDL_QUIT:
 				done = true;
 				break;
 			case SDL_KEYDOWN:
-				input.KeyDownEvent(event);
+				input.keyDownEvent(event);
 				break;
 			case SDL_KEYUP:
-				input.KeyUpEvent(event);
+				input.keyUpEvent(event);
 				break;
 			}
 		}
-		if (input.WasKeyPressed(SDLK_ESCAPE)) done = true;
+		if (input.wasKeyPressed(SDLK_ESCAPE)) done = true;
 
 		const int currentTime = SDL_GetTicks();
 		update(currentTime-lastUpdateTime);
@@ -63,10 +64,10 @@ void Game::eventLoop(){
 }
 
 void Game::update(int dt){
-	sprite->Update(dt);
+	sprite->update(dt);
 }
 
 void Game::draw(Graphics &graphics){
-	sprite->Draw(graphics, 320, 240);
-	graphics.Flip();
+	sprite->draw(graphics, 320, 240);
+	graphics.flip();
 }
