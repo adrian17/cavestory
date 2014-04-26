@@ -12,9 +12,9 @@ FixedBackdrop::FixedBackdrop(const std::string &path, Graphics &graphics){
 }
 
 void FixedBackdrop::draw(Graphics &graphics) const{
-	for (int x = 0; x < windowWidth; x += backgroundSize){
-		for (int y = 0; y < windowHeight; y += backgroundSize){
-			SDL_Rect dest ={x, y, backgroundSize, backgroundSize };
+	for (int x = 0; x < screenWidth; x += backgroundSize){
+		for (int y = 0; y < screenHeight; y += backgroundSize){
+			SDL_Rect dest = {x, y, backgroundSize, backgroundSize };
 			graphics.drawTexture(textureID, NULL, &dest);
 		}
 	}
