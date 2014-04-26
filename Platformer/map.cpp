@@ -2,16 +2,8 @@
 
 #include "game.h"
 #include "graphics.h"
+#include "rectangle.h"
 #include "sprite/sprite.h"
-
-Map::Map()
-{
-}
-
-
-Map::~Map()
-{
-}
 
 Map* Map::createTestMap(Graphics &graphics){
 	Map *map = new Map;
@@ -32,6 +24,21 @@ Map* Map::createTestMap(Graphics &graphics){
 	}
 
 	return map;
+}
+
+std::vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle){
+	const int firstRow = rectangle.top() / tileSize;
+	const int lastRow = rectangle.bottom() / tileSize;
+	const int firstCol = rectangle.left() / tileSize;
+	const int lastCol = rectangle.right() / tileSize;
+
+	std::vector<Map::CollisionTile> collisionTiles;
+	for (int row = firstRow; row < lastRow; ++row){
+		for (int col = firstCol; col < lastCol; ++col){
+			collisionTiles.push_back(CollisionTile(row, col, tiles[row][col].tileType));
+		}
+	}
+	return collisionTiles;
 }
 
 void Map::update(int dt){
