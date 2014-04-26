@@ -22,6 +22,9 @@ Map* Map::createTestMap(Graphics &graphics){
 	for (int col = 0; col < nCols; ++col){
 		map->tiles[row][col] = tile;
 	}
+	map->tiles[10][5] = tile;
+	map->tiles[9][4] = tile;
+	map->tiles[8][7] = tile;
 
 	return map;
 }
