@@ -171,11 +171,13 @@ void Player::draw(Graphics &graphics){
 void Player::startMovingLeft(){
 	accX = -1;
 	horizontalFacing = LEFT;
+	interacting = false;
 }
 
 void Player::startMovingRight(){
 	accX = 1;
 	horizontalFacing = RIGHT;
+	interacting = false;
 }
 
 void Player::stopMoving(){
@@ -184,10 +186,13 @@ void Player::stopMoving(){
 
 void Player::loopUp(){
 	verticalFacing = UP;
+	interacting = false;
 }
 
 void Player::lookDown(){
+	if (verticalFacing == DOWN) return;
 	verticalFacing = DOWN;
+	interacting = (onGround && accX == 0) ? true : false;
 }
 
 void Player::lookHorizontal(){
@@ -195,6 +200,7 @@ void Player::lookHorizontal(){
 }
 
 void Player::startJump(){
+	interacting = false;
 	jumping = true;
 	if (onGround){
 		velY = -jumpSpeed;
@@ -228,6 +234,9 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 	case STANDING:
 		srcX = standFrame * tileSize;
 		break;
+	case INTERACTING:
+		srcX = backFrame * tileSize;
+		break;
 	case JUMPING:
 		srcX = jumpFrame * tileSize;
 		break;
@@ -241,8 +250,8 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 		sprites[spriteState] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, spriteFilePath,
 			srcX, srcY, tileSize, tileSize, walkFps, nWalkFrames));
 	} else {
-		if (spriteState.verticalFacing == DOWN){
-			srcX = spriteState.motionType == STANDING ? backFrame * tileSize : downFrame * tileSize;
+		if (spriteState.verticalFacing == DOWN && (spriteState.motionType == JUMPING || spriteState.motionType == FALLING)){
+			srcX = downFrame * tileSize;
 		}
 		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,
 			srcX, srcY, tileSize, tileSize));
@@ -251,7 +260,8 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 
 Player::SpriteState Player::getSpriteState(){
 	MotionType motion;
-	if (onGround) motion = accX == 0 ? STANDING : WALKING;
+	if (interacting) motion = INTERACTING;
+	else if (onGround) motion = accX == 0 ? STANDING : WALKING;
 	else motion = velY < 0.0 ? JUMPING : FALLING;
 
 	return SpriteState(

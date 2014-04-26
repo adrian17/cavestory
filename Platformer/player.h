@@ -30,7 +30,7 @@ public:
 	void startJump();
 	void stopJump();
 private:
-	enum MotionType { STANDING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE};
+	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE};
 	enum HorizontalFacing { LEFT, RIGHT, LAST_HORIZONTAL_FACING };
 	enum VerticalFacing { UP, DOWN, HORIZONTAL, LAST_VERTICAL_FACING };
 
@@ -59,7 +59,8 @@ private:
 	HorizontalFacing horizontalFacing = LEFT;
 	VerticalFacing verticalFacing = HORIZONTAL;
 	bool onGround = true;
-	bool jumping;
+	bool jumping = false;
+	bool interacting = false;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 };
