@@ -19,7 +19,7 @@ public:
 	};
 	static Map* createTestMap(Graphics &graphics);
 
-	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle);
+	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle) const;
 
 	void update(int dt);
 	void draw(Graphics &graphics);

@@ -81,7 +81,7 @@ void Game::eventLoop(){
 }
 
 void Game::update(int dt){
-	player->update(dt);
+	player->update(dt, *map);
 	map->update(dt);
 }
 

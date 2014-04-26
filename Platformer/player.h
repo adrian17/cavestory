@@ -3,7 +3,9 @@
 #include <map>
 #include <memory>
 
+class Map;
 class Graphics;
+class Rectangle;
 class Sprite;
 
 class Player
@@ -12,7 +14,9 @@ public:
 	Player(Graphics &graphics, int x, int y);
 	~Player();
 
-	void update(int dt);
+	void update(int dt, const Map &map);
+	void updateX(int dt, const Map &map);
+	void updateY(int dt, const Map &map);
 	void draw(Graphics &graphics);
 
 	void startMovingLeft();
@@ -39,6 +43,11 @@ private:
 	};
 	friend bool operator<(const SpriteState &a, const SpriteState &b);
 	SpriteState getSpriteState();
+
+	Rectangle leftCollision(int delta) const;
+	Rectangle rightCollision(int delta) const;
+	Rectangle topCollision(int delta) const;
+	Rectangle bottomCollision(int delta) const;
 
 	struct Jump {
 		void update(int dt);

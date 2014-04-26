@@ -1,6 +1,8 @@
 #include "player.h"
 
 #include "game.h"
+#include "map.h"
+#include "rectangle.h"
 #include "sprite/animatedSprite.h"
 #include <algorithm>
 #include <cmath>
@@ -31,6 +33,26 @@ namespace {
 
 	const int walkFps = 15;	//animation
 	const int nWalkFrames = 3;
+
+	const Rectangle collisionX(6, 10, 20, 12);
+	const Rectangle collisionY(10, 2, 12, 30);
+
+	struct CollisionInfo{
+		bool collided;
+		int row, col;
+	} info;
+
+	CollisionInfo getWallCollisionInfo(const Map &map, const Rectangle rectangle){
+		CollisionInfo info = { false, 0, 0 };
+		std::vector<Map::CollisionTile> tiles = map.getCollidingTiles(rectangle);
+		for (auto && tile : tiles){
+			if (tile.tileType == Map::WALL_TILE){
+				info = { true, tile.row, tile.col };
+				break;
+			}
+		}
+		return info;
+	}
 }
 
 bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
@@ -52,29 +74,91 @@ Player::Player(Graphics &graphics, int x, int y):
 Player::~Player(){
 }
 
-void Player::update(int dt){
+void Player::update(int dt, const Map &map){
 	sprites[getSpriteState()]->update(dt);
-
 	jump.update(dt);
 
-	x += velX * dt;
-	y += velY * dt;
+	updateX(dt, map);
+	updateY(dt, map);
+}
+
+void Player::updateX(int dt, const Map &map){
 	velX += accX * dt;
 
 	if (accX<0.0) velX = std::max(velX, -maxVelX);
 	else if (accX>0.0) velX = std::min(velX, maxVelX);
 	else if (onGround) velX *= slowdownFactor;
 
+	const int delta = (int)round(velX * dt);
+	if (delta > 0){
+		CollisionInfo info = getWallCollisionInfo(map, rightCollision(delta));
+		if (info.collided){
+			x = info.col * tileSize - collisionX.right();
+			velX = 0.0;
+		}
+		else
+			x += delta;
+		//other dir
+		info = getWallCollisionInfo(map, leftCollision(0));
+		if (info.collided){
+			x = info.col * tileSize + collisionX.right();
+		}
+	}
+	else {
+		CollisionInfo info = getWallCollisionInfo(map, leftCollision(delta));
+		if (info.collided){
+			x = info.col * tileSize + collisionX.right();
+			velX = 0.0;
+		}
+		else
+			x += delta;
+		//other dir
+		info = getWallCollisionInfo(map, rightCollision(0));
+		if (info.collided){
+			x = info.col * tileSize - collisionX.right();
+		}
+	}
+}
+
+void Player::updateY(int dt, const Map &map){
 	if (jump.isActive() == false){
 		velY += gravity * dt;
 		velY = std::min(velY, maxVelY);
 	}
+	const int delta = (int)round(velY * dt);
 
-	if (y > 320){
-		y = 320;
-		velY = 0.0;
+	if (delta > 0){
+		CollisionInfo info = getWallCollisionInfo(map, bottomCollision(delta));
+		if (info.collided){
+			y = info.row * tileSize - collisionY.bottom();
+			velY = 0.0;
+			onGround = true;
+		} else {
+			y += delta;
+			onGround = false;
+		}
+		//other dir
+		info = getWallCollisionInfo(map, topCollision(0));
+		if (info.collided){
+			y = info.row * tileSize + collisionY.height();
+		}
+	} else {
+		CollisionInfo info = getWallCollisionInfo(map, topCollision(delta));
+		if (info.collided){
+			y = info.row * tileSize + collisionY.height();
+			velY = 0.0;
+		}
+		else {
+			y += delta;
+			onGround = false;
+		}
+		//other dir
+		info = getWallCollisionInfo(map, bottomCollision(0));
+		if (info.collided){
+			y = info.row * tileSize - collisionY.bottom();
+			onGround = true;
+		}
 	}
-	onGround = (y == 320);
 }
 
 void Player::draw(Graphics &graphics){
@@ -185,4 +269,40 @@ void Player::Jump::update(int dt){
 void Player::Jump::reset(){
 	timeRemaining = jumpTime;
 	reactivate();
+}
+
+Rectangle Player::leftCollision(int delta) const{
+	_ASSERT(delta <= 0);
+	return Rectangle(
+		(int)round(x) + collisionX.left() + delta,
+		(int)round(y) + collisionX.top(),
+		collisionX.width() / 2 - delta,
+		collisionX.height());
+}
+
+Rectangle Player::rightCollision(int delta) const{
+	_ASSERT(delta >= 0);
+	return Rectangle(
+		(int)round(x) + collisionX.left() + collisionX.width() / 2,
+		(int)round(y) + collisionX.top(),
+		collisionX.width() / 2 + delta,
+		collisionX.height());
+}
+
+Rectangle Player::topCollision(int delta) const{
+	_ASSERT(delta <= 0);
+	return Rectangle(
+		(int)round(x) + collisionY.left(),
+		(int)round(y) + collisionY.top() + delta,
+		collisionY.width(),
+		collisionY.height() / 2 - delta);
+}
+
+Rectangle Player::bottomCollision(int delta) const{
+	_ASSERT(delta >= 0);
+	return Rectangle(
+		(int)round(x) + collisionY.left(),
+		(int)round(y) + collisionY.top() + collisionY.height() / 2,
+		collisionY.width(),
+		collisionY.height() / 2 + delta);
 }

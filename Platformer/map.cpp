@@ -26,15 +26,15 @@ Map* Map::createTestMap(Graphics &graphics){
 	return map;
 }
 
-std::vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle){
+std::vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle) const{
 	const int firstRow = rectangle.top() / tileSize;
 	const int lastRow = rectangle.bottom() / tileSize;
 	const int firstCol = rectangle.left() / tileSize;
 	const int lastCol = rectangle.right() / tileSize;
 
 	std::vector<Map::CollisionTile> collisionTiles;
-	for (int row = firstRow; row < lastRow; ++row){
-		for (int col = firstCol; col < lastCol; ++col){
+	for (int row = firstRow; row <= lastRow; ++row){
+		for (int col = firstCol; col <= lastCol; ++col){
 			collisionTiles.push_back(CollisionTile(row, col, tiles[row][col].tileType));
 		}
 	}
