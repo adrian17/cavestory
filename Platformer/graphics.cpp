@@ -9,8 +9,9 @@ Graphics::Graphics(){
 }
 
 Graphics::~Graphics(){
-	SDL_DestroyWindow(window);
+	for (auto &&kv : spriteSheets) SDL_DestroyTexture(kv.second);
 	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 }
 
 Graphics::TextureID Graphics::createTexture(const std::string &path){

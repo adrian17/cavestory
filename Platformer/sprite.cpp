@@ -11,7 +11,6 @@ Sprite::Sprite(Graphics &graphics, const std::string filePath,
 }
 
 Sprite::~Sprite(){
-	SDL_DestroyTexture(spriteSheet);
 }
 
 void Sprite::draw(Graphics &graphics, int x, int y){
