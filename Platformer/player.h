@@ -49,17 +49,6 @@ private:
 	Rectangle topCollision(int delta) const;
 	Rectangle bottomCollision(int delta) const;
 
-	struct Jump {
-		void update(int dt);
-		void reset();
-		void reactivate() { active = timeRemaining > 0; }
-		void deactivate() { active = false; }
-		bool isActive() const {return active; }
-	private:
-		int timeRemaining = 0;
-		bool active = false;
-	};
-
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
@@ -69,7 +58,7 @@ private:
 	HorizontalFacing horizontalFacing = LEFT;
 	VerticalFacing verticalFacing = HORIZONTAL;
 	bool onGround = true;
-	Jump jump;
+	bool jumping;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 };

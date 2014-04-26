@@ -15,8 +15,9 @@ namespace {
 	const double gravity = 0.0012;	//fall
 	const double maxVelY = 0.325;
 
-	const double jumpSpeed = 0.325;	//jump
-	const int jumpTime = 275;
+	const double jumpSpeed = 0.25;	//jump
+	const double airAcceleration = 0.0003125;
+	const double jumpGravity = 0.0003125;
 
 	const std::string spriteFilePath = "content/myChar.bmp";
 
@@ -76,7 +77,6 @@ Player::~Player(){
 
 void Player::update(int dt, const Map &map){
 	sprites[getSpriteState()]->update(dt);
-	jump.update(dt);
 
 	updateX(dt, map);
 	updateY(dt, map);
@@ -121,10 +121,10 @@ void Player::updateX(int dt, const Map &map){
 }
 
 void Player::updateY(int dt, const Map &map){
-	if (jump.isActive() == false){
-		velY += gravity * dt;
-		velY = std::min(velY, maxVelY);
-	}
+	const double grav = jumping && velY < 0.0f ? jumpGravity : gravity;
+	velY += grav * dt;
+	velY = std::min(velY, maxVelY);
+
 	const int delta = (int)round(velY * dt);
 
 	if (delta > 0){
@@ -192,16 +192,15 @@ void Player::lookHorizontal(){
 }
 
 void Player::startJump(){
+	jumping = true;
 	if (onGround){
-		jump.reset();
 		velY = -jumpSpeed;
 	} else if (velY < 0.0) {	//mid jump
-		jump.reactivate();
 	}
 }
 
 void Player::stopJump(){
-	jump.deactivate();
+	jumping = false;
 }
 
 void Player::initSprites(Graphics &graphics){
@@ -256,19 +255,6 @@ Player::SpriteState Player::getSpriteState(){
 		motion,
 		horizontalFacing,
 		verticalFacing);
-}
-
-void Player::Jump::update(int dt){
-	if (active){
-		timeRemaining -= dt;
-		if (timeRemaining <= 0)
-			deactivate();
-	}
-}
-
-void Player::Jump::reset(){
-	timeRemaining = jumpTime;
-	reactivate();
 }
 
 Rectangle Player::leftCollision(int delta) const{
