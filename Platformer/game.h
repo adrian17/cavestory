@@ -3,6 +3,7 @@
 #include <memory>
 
 class Graphics;
+class Player;
 class Sprite;
 
 const int tileSize = 32;
@@ -17,5 +18,5 @@ private:
 	void update(int dt);
 	void draw(Graphics &graphics);
 
-	std::unique_ptr<Sprite> sprite;
+	std::unique_ptr<Player> player;
 };

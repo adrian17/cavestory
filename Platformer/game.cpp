@@ -2,7 +2,7 @@
 
 #include "graphics.h"
 #include "input.h"
-#include "animatedSprite.h"
+#include "player.h"
 #include "SDL.h"
 #include <cstdio>
 
@@ -26,7 +26,7 @@ void Game::eventLoop(){
 	Input input;
 	SDL_Event event;
 
-	sprite.reset(new AnimatedSprite(graphics, "content/myChar.bmp", 0, 0, tileSize, tileSize, 15, 3));
+	player.reset(new Player(graphics, 320, 240));
 
 	int lastUpdateTime = SDL_GetTicks();
 	bool done = false;
@@ -64,10 +64,10 @@ void Game::eventLoop(){
 }
 
 void Game::update(int dt){
-	sprite->update(dt);
+	player->update(dt);
 }
 
 void Game::draw(Graphics &graphics){
-	sprite->draw(graphics, 320, 240);
+	player->draw(graphics);
 	graphics.flip();
 }
