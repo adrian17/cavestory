@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="sprite\animatedSprite.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
@@ -89,6 +90,7 @@
     <ClCompile Include="sprite\sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="backdrop.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="sprite\animatedSprite.h" />
     <ClInclude Include="game.h" />
