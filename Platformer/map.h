@@ -17,6 +17,13 @@ public:
 	void update(int dt);
 	void draw(Graphics &graphics);
 private:
-	std::vector<std::vector<std::shared_ptr<Sprite>>> foregroundSprites;
+	enum TileType { AIR_TILE, WALL_TILE };
+	struct Tile{
+		Tile(TileType tileType = AIR_TILE, std::shared_ptr<Sprite> sprite = std::shared_ptr<Sprite>()) :
+			tileType(tileType), sprite(sprite) {}
+		TileType tileType;
+		std::shared_ptr<Sprite> sprite;
+	};
+	std::vector<std::vector<Tile>> tiles;
 };
 

@@ -19,35 +19,36 @@ Map* Map::createTestMap(Graphics &graphics){
 	const int nRows = 15;
 	const int nCols = 20;
 
-	map->foregroundSprites = std::vector<std::vector<std::shared_ptr<Sprite>>>(
-		nRows, std::vector<std::shared_ptr<Sprite>>(
-			nCols, std::shared_ptr<Sprite>()));
+	map->tiles = std::vector<std::vector<Tile>>(
+		nRows, std::vector<Tile>(
+			nCols, Tile()));
 
 	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "content/PrtCave.bmp", tileSize, 0, tileSize, tileSize));
+	Tile tile(WALL_TILE, sprite);
 
 	const int row = 11;
 	for (int col = 0; col < nCols; ++col){
-		map->foregroundSprites[row][col] = sprite;
+		map->tiles[row][col] = tile;
 	}
 
 	return map;
 }
 
 void Map::update(int dt){
-	for (size_t row = 0; row < foregroundSprites.size(); ++row){
-		for (size_t col = 0; col < foregroundSprites[row].size(); ++col){
-			if (foregroundSprites[row][col]){
-				foregroundSprites[row][col]->update(dt);
+	for (size_t row = 0; row < tiles.size(); ++row){
+		for (size_t col = 0; col < tiles[row].size(); ++col){
+			if (tiles[row][col].sprite){
+				tiles[row][col].sprite->update(dt);
 			}
 		}
 	}
 }
 
 void Map::draw(Graphics &graphics){
-	for (size_t row = 0; row < foregroundSprites.size(); ++row){
-		for (size_t col = 0; col < foregroundSprites[row].size(); ++col){
-			if (foregroundSprites[row][col]){
-				foregroundSprites[row][col]->draw(graphics, col * tileSize, row * tileSize);
+	for (size_t row = 0; row < tiles.size(); ++row){
+		for (size_t col = 0; col < tiles[row].size(); ++col){
+			if (tiles[row][col].sprite){
+				tiles[row][col].sprite->draw(graphics, col * tileSize, row * tileSize);
 			}
 		}
 	}
