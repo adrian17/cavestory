@@ -2,7 +2,8 @@
 
 #include "graphics.h"
 
-Sprite::Sprite(Graphics &graphics, const std::string filePath, int srcX, int srcY, int width, int height)
+Sprite::Sprite(Graphics &graphics, const std::string filePath, 
+	int srcX, int srcY, int width, int height)
 {
 	spriteSheet = graphics.CreateTexture(filePath);
 	sourceRect.x = srcX; sourceRect.y = srcY;
@@ -10,8 +11,7 @@ Sprite::Sprite(Graphics &graphics, const std::string filePath, int srcX, int src
 }
 
 
-Sprite::~Sprite()
-{
+Sprite::~Sprite(){
 	SDL_DestroyTexture(spriteSheet);
 }
 

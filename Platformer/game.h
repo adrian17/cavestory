@@ -5,7 +5,7 @@
 class Graphics;
 class Sprite;
 
-const int fps = 60;
+const int tileSize = 32;
 
 class Game{
 public:
@@ -14,7 +14,7 @@ public:
 private:
 	void eventLoop();
 
-	void update();
+	void update(int dt);
 	void draw(Graphics &graphics);
 
 	std::unique_ptr<Sprite> sprite;

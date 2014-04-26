@@ -1,9 +1,13 @@
 #include "game.h"
 
 #include "graphics.h"
-#include "sprite.h"
+#include "animatedSprite.h"
 #include "SDL.h"
 #include <cstdio>
+
+namespace {
+	const int fps = 60;
+}
 
 Game::Game(){
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -21,11 +25,12 @@ void Game::eventLoop(){
 
 	SDL_Event event;
 
-	sprite.reset(new Sprite(graphics, "content/myChar.bmp", 0, 0, 32, 32));
+	sprite.reset(new AnimatedSprite(graphics, "content/myChar.bmp", 0, 0, tileSize, tileSize, 15, 3));
 
+	int lastUpdateTime = SDL_GetTicks();
 	bool done = false;
 	while (!done){
-		int startTime = SDL_GetTicks();
+		const int startTime = SDL_GetTicks();
 		while (SDL_PollEvent(&event)){
 			switch (event.type){
 			case SDL_QUIT:
@@ -38,8 +43,9 @@ void Game::eventLoop(){
 			}
 		}
 
-
-		update();
+		const int currentTime = SDL_GetTicks();
+		update(currentTime-lastUpdateTime);
+		lastUpdateTime = currentTime;
 		draw(graphics);
 
 		int elapsedTime = SDL_GetTicks() - startTime;
@@ -51,8 +57,8 @@ void Game::eventLoop(){
 	}
 }
 
-void Game::update(){
-
+void Game::update(int dt){
+	sprite->Update(dt);
 }
 
 void Game::draw(Graphics &graphics){
