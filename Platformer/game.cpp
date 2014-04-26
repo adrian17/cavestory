@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "graphics.h"
+#include "input.h"
 #include "animatedSprite.h"
 #include "SDL.h"
 #include <cstdio>
@@ -22,7 +23,7 @@ Game::~Game(){
 void Game::eventLoop(){
 
 	Graphics graphics;
-
+	Input input;
 	SDL_Event event;
 
 	sprite.reset(new AnimatedSprite(graphics, "content/myChar.bmp", 0, 0, tileSize, tileSize, 15, 3));
@@ -31,17 +32,21 @@ void Game::eventLoop(){
 	bool done = false;
 	while (!done){
 		const int startTime = SDL_GetTicks();
+		input.BeginNewFrame();
 		while (SDL_PollEvent(&event)){
 			switch (event.type){
 			case SDL_QUIT:
 				done = true;
 				break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE)
-					done = true;
+				input.KeyDownEvent(event);
+				break;
+			case SDL_KEYUP:
+				input.KeyUpEvent(event);
 				break;
 			}
 		}
+		if (input.WasKeyPressed(SDLK_ESCAPE)) done = true;
 
 		const int currentTime = SDL_GetTicks();
 		update(currentTime-lastUpdateTime);
