@@ -40,6 +40,7 @@ void Game::eventLoop(){
 				done = true;
 				break;
 			case SDL_KEYDOWN:
+				if (event.key.repeat != 0) break;
 				input.keyDownEvent(event);
 				break;
 			case SDL_KEYUP:
