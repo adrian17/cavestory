@@ -1,7 +1,7 @@
 #include "animatedSprite.h"
 
-#include "graphics.h"
-#include "game.h"
+#include "../graphics.h"
+#include "../game.h"
 
 AnimatedSprite::AnimatedSprite(Graphics &graphics, const std::string filePath,
 	int srcX, int srcY, int width, int height, int fps, int nFrames) :

@@ -1,7 +1,7 @@
 #include "player.h"
 
 #include "game.h"
-#include "animatedSprite.h"
+#include "sprite/animatedSprite.h"
 #include <algorithm>
 #include <cmath>
 

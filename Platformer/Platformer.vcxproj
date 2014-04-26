@@ -79,23 +79,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="animatedSprite.cpp" />
+    <ClCompile Include="sprite\animatedSprite.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="sprite\sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="animatedSprite.h" />
+    <ClInclude Include="sprite\animatedSprite.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="sprite.h" />
+    <ClInclude Include="sprite\sprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

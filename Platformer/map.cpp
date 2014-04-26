@@ -2,7 +2,7 @@
 
 #include "game.h"
 #include "graphics.h"
-#include "sprite.h"
+#include "sprite/sprite.h"
 
 Map::Map()
 {

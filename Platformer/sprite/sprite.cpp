@@ -1,6 +1,6 @@
 #include "sprite.h"
 
-#include "graphics.h"
+#include "../graphics.h"
 
 Sprite::Sprite(Graphics &graphics, const std::string filePath, 
 	int srcX, int srcY, int width, int height)
