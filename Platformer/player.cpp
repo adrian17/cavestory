@@ -15,6 +15,9 @@ namespace {
 
 	const double jumpSpeed = 0.325;
 	const int jumpTime = 275;
+
+	const int jumpFrame = 1;
+	const int fallFrame = 2;
 }
 
 bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
@@ -97,18 +100,34 @@ void Player::initSprites(Graphics &graphics){
 	sprites[SpriteState(WALKING, LEFT)] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, "content/myChar.bmp",
 		0, 0,
 		tileSize, tileSize, 15, 3));
+	sprites[SpriteState(JUMPING, LEFT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
+		jumpFrame*tileSize, 0,
+		tileSize, tileSize));
+	sprites[SpriteState(FALLING, LEFT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
+		fallFrame*tileSize, 0,
+		tileSize, tileSize));
 	sprites[SpriteState(STANDING, RIGHT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
 		0, tileSize,
 		tileSize, tileSize));
 	sprites[SpriteState(WALKING, RIGHT)] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, "content/myChar.bmp",
 		0, tileSize,
 		tileSize, tileSize, 15, 3));
+	sprites[SpriteState(JUMPING, RIGHT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
+		jumpFrame*tileSize, tileSize,
+		tileSize, tileSize));
+	sprites[SpriteState(FALLING, RIGHT)] = std::unique_ptr<Sprite>(new Sprite(graphics, "content/myChar.bmp",
+		fallFrame*tileSize, tileSize,
+		tileSize, tileSize));
 
 }
 
 Player::SpriteState Player::getSpriteState(){
+	MotionType motion;
+	if (onGround) motion = accX == 0.0 ? STANDING : WALKING;
+	else motion = velY < 0.0 ? JUMPING : FALLING;
+
 	return SpriteState(
-		accX == 0.0 ? STANDING : WALKING,
+		motion,
 		horizontalFacing);
 }
 

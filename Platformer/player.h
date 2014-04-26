@@ -22,7 +22,7 @@ public:
 	void startJump();
 	void stopJump();
 private:
-	enum MotionType { STANDING, WALKING };
+	enum MotionType { STANDING, WALKING, JUMPING, FALLING };
 	enum HorizontalFacing { LEFT, RIGHT };
 
 	struct SpriteState{
