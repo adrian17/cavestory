@@ -21,4 +21,3 @@ protected:
 private:
 	SDL_Texture *spriteSheet;
 };
-
