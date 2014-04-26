@@ -54,6 +54,9 @@ void Game::eventLoop(){
 		else if (input.isKeyHeld(SDLK_RIGHT)) player->startMovingRight();
 		else player->stopMoving();
 
+		if (input.wasKeyPressed(SDLK_z)) player->startJump();
+		else if (input.wasKeyReleased(SDLK_z)) player->stopJump();
+
 		const int currentTime = SDL_GetTicks();
 		update(currentTime-lastUpdateTime);
 		lastUpdateTime = currentTime;

@@ -9,6 +9,12 @@ namespace {
 	const double slowdownFactor = 0.8;
 	const double walkingAcceleration = 0.0012;
 	const double maxVelX = 0.325;
+
+	const double gravity = 0.0012;
+	const double maxVelY = 0.325;
+
+	const double jumpSpeed = 0.325;
+	const int jumpTime = 275;
 }
 
 bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
@@ -31,12 +37,26 @@ Player::~Player(){
 void Player::update(int dt){
 	sprites[getSpriteState()]->update(dt);
 
+	jump.update(dt);
+
 	x += velX * dt;
+	y += velY * dt;
 	velX += accX * dt;
 
 	if (accX<0.0) velX = std::max(velX, -maxVelX);
 	else if (accX>0.0) velX = std::min(velX, maxVelX);
-	else velX *= slowdownFactor;
+	else if (onGround) velX *= slowdownFactor;
+
+	if (jump.isActive() == false){
+		velY += gravity * dt;
+		velY = std::min(velY, maxVelY);
+	}
+
+	if (y > 320){
+		y = 320;
+		velY = 0.0;
+	}
+	onGround = (y == 320);
 }
 
 void Player::draw(Graphics &graphics){
@@ -57,10 +77,17 @@ void Player::stopMoving(){
 	accX = 0.0;
 }
 
-Player::SpriteState Player::getSpriteState(){
-	return SpriteState(
-		accX == 0.0 ? STANDING : WALKING,
-		horizontalFacing);
+void Player::startJump(){
+	if (onGround){
+		jump.reset();
+		velY = -jumpSpeed;
+	} else if (velY < 0.0) {	//mid jump
+		jump.reactivate();
+	}
+}
+
+void Player::stopJump(){
+	jump.deactivate();
 }
 
 void Player::initSprites(Graphics &graphics){
@@ -77,4 +104,23 @@ void Player::initSprites(Graphics &graphics){
 		0, tileSize,
 		tileSize, tileSize, 15, 3));
 
+}
+
+Player::SpriteState Player::getSpriteState(){
+	return SpriteState(
+		accX == 0.0 ? STANDING : WALKING,
+		horizontalFacing);
+}
+
+void Player::Jump::update(int dt){
+	if (active){
+		timeRemaining -= dt;
+		if (timeRemaining <= 0)
+			deactivate();
+	}
+}
+
+void Player::Jump::reset(){
+	timeRemaining = jumpTime;
+	reactivate();
 }
