@@ -16,6 +16,7 @@ public:
 	~Graphics();
 
 	void drawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *dest);
+	void clear();
 	void flip();
 
 	SDL_Texture *createTexture(const std::string &path);

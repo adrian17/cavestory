@@ -24,6 +24,10 @@ void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *des
 	SDL_RenderCopy(renderer, texture, source, dest);
 }
 
+void Graphics::clear(){
+	SDL_RenderFillRect(renderer, nullptr);
+}
+
 void Graphics::flip(){
 	SDL_RenderPresent(renderer);
 }

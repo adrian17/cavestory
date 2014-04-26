@@ -49,6 +49,11 @@ void Game::eventLoop(){
 		}
 		if (input.wasKeyPressed(SDLK_ESCAPE)) done = true;
 
+		if (input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) player->stopMoving();
+		else if (input.isKeyHeld(SDLK_LEFT)) player->startMovingLeft();
+		else if (input.isKeyHeld(SDLK_RIGHT)) player->startMovingRight();
+		else player->stopMoving();
+
 		const int currentTime = SDL_GetTicks();
 		update(currentTime-lastUpdateTime);
 		lastUpdateTime = currentTime;
@@ -68,6 +73,7 @@ void Game::update(int dt){
 }
 
 void Game::draw(Graphics &graphics){
+	graphics.clear();
 	player->draw(graphics);
 	graphics.flip();
 }
