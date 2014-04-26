@@ -12,6 +12,6 @@ public:
 private:
 	const int frameTime;
 	const int nFrames;
-	int currentFrame;
-	int elapsedTime;
+	int currentFrame = 0;
+	int elapsedTime = 0;
 };

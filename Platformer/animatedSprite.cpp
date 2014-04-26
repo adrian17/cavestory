@@ -7,15 +7,11 @@ AnimatedSprite::AnimatedSprite(Graphics &graphics, const std::string filePath,
 	int srcX, int srcY, int width, int height, int fps, int nFrames) :
 	Sprite(graphics, filePath, srcX, srcY, width, height),
 	frameTime(1000/fps),
-	nFrames(nFrames),
-	currentFrame(0),
-	elapsedTime(0)
+	nFrames(nFrames)
 {
-
 }
 
 AnimatedSprite::~AnimatedSprite(){
-
 }
 
 void AnimatedSprite::update(int dt){

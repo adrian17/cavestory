@@ -10,7 +10,6 @@ Sprite::Sprite(Graphics &graphics, const std::string filePath,
 	sourceRect.w = width; sourceRect.h = height;
 }
 
-
 Sprite::~Sprite(){
 	SDL_DestroyTexture(spriteSheet);
 }
