@@ -68,9 +68,10 @@ void Game::eventLoop(){
 		lastUpdateTime = currentTime;
 		draw(graphics);
 
-		int elapsedTime = SDL_GetTicks() - startTime;
-		if (elapsedTime > 10) elapsedTime = 10;
-		SDL_Delay(1000 / fps - elapsedTime);
+		const int msPerFrame = 1000 / fps;
+		const int elapsedTime = SDL_GetTicks() - startTime;
+		if(elapsedTime < msPerFrame)
+			SDL_Delay(1000 / fps - elapsedTime);
 
 		//const float fps = 1000.0 / (SDL_GetTicks() - startTime);
 		//printf("fps=%f\n", fps);
