@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <string>
 
 struct SDL_Renderer;
@@ -12,16 +13,19 @@ const int windowHeight = 480;
 
 class Graphics{
 public:
+	typedef SDL_Texture* TextureID;
+
 	Graphics();
 	~Graphics();
 
-	void drawTexture(SDL_Texture *texture, SDL_Rect *source, SDL_Rect *dest);
+	void drawTexture(TextureID texture, SDL_Rect *source, SDL_Rect *dest);
 	void clear();
 	void flip();
 
-	SDL_Texture *createTexture(const std::string &path);
+	TextureID createTexture(const std::string &path);
 private:
+	std::map<std::string, TextureID> spriteSheets;
+
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-
 };
