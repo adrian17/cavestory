@@ -53,8 +53,9 @@ private:
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
 	double x, y;
-	double velX=0.0, velY=0.0;
-	double accX=0.0, accY=0.0;
+	double velX = 0.0, velY = 0.0;
+	int accX = 0; //only >0, ==0, <0
+	double accY = 0.0;
 	HorizontalFacing horizontalFacing = LEFT;
 	VerticalFacing verticalFacing = HORIZONTAL;
 	bool onGround = true;

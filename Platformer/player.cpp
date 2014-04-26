@@ -8,12 +8,12 @@
 #include <cmath>
 
 namespace {
-	const double slowdownFactor = 0.8;	//walk
-	const double walkingAcceleration = 0.0012;
-	const double maxVelX = 0.325;
+	const double walkingAcceleration = 0.00083007812;
+	const double maxVelX = 0.15859375;
+	const double friction = 0.00049804687; // (pixels / ms) / ms
 
-	const double gravity = 0.0012;	//fall
-	const double maxVelY = 0.325;
+	const double gravity = 0.00078125;	//fall
+	const double maxVelY = 0.2998046875;
 
 	const double jumpSpeed = 0.25;	//jump
 	const double airAcceleration = 0.0003125;
@@ -83,11 +83,14 @@ void Player::update(int dt, const Map &map){
 }
 
 void Player::updateX(int dt, const Map &map){
-	velX += accX * dt;
+	double acceleration = 0.0f;
+	if (accX < 0) acceleration = onGround ? -walkingAcceleration : -airAcceleration;
+	if (accX > 0) acceleration = onGround ? walkingAcceleration : airAcceleration;
+	velX += acceleration * dt;
 
-	if (accX<0.0) velX = std::max(velX, -maxVelX);
-	else if (accX>0.0) velX = std::min(velX, maxVelX);
-	else if (onGround) velX *= slowdownFactor;
+	if (accX<0) velX = std::max(velX, -maxVelX);
+	else if (accX>0) velX = std::min(velX, maxVelX);
+	else if (onGround) velX = velX > 0.f ? std::max(0.0, velX - friction*dt) : std::min(0.0, velX + friction*dt);
 
 	const int delta = (int)round(velX * dt);
 	if (delta > 0){
@@ -166,17 +169,17 @@ void Player::draw(Graphics &graphics){
 }
 
 void Player::startMovingLeft(){
-	accX = -walkingAcceleration;
+	accX = -1;
 	horizontalFacing = LEFT;
 }
 
 void Player::startMovingRight(){
-	accX = walkingAcceleration;
+	accX = 1;
 	horizontalFacing = RIGHT;
 }
 
 void Player::stopMoving(){
-	accX = 0.0;
+	accX = 0;
 }
 
 void Player::loopUp(){
@@ -248,7 +251,7 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 
 Player::SpriteState Player::getSpriteState(){
 	MotionType motion;
-	if (onGround) motion = accX == 0.0 ? STANDING : WALKING;
+	if (onGround) motion = accX == 0 ? STANDING : WALKING;
 	else motion = velY < 0.0 ? JUMPING : FALLING;
 
 	return SpriteState(
