@@ -3,6 +3,7 @@
 #include <memory>
 
 class Graphics;
+class Map;
 class Player;
 class Sprite;
 
@@ -19,4 +20,5 @@ private:
 	void draw(Graphics &graphics);
 
 	std::unique_ptr<Player> player;
+	std::unique_ptr<Map> map;
 };

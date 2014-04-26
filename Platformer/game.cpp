@@ -2,6 +2,7 @@
 
 #include "graphics.h"
 #include "input.h"
+#include "map.h"
 #include "player.h"
 #include "SDL.h"
 #include <cstdio>
@@ -27,6 +28,7 @@ void Game::eventLoop(){
 	SDL_Event event;
 
 	player.reset(new Player(graphics, 320, 240));
+	map.reset(Map::createTestMap(graphics));
 
 	int lastUpdateTime = SDL_GetTicks();
 	bool done = false;
@@ -80,10 +82,12 @@ void Game::eventLoop(){
 
 void Game::update(int dt){
 	player->update(dt);
+	map->update(dt);
 }
 
 void Game::draw(Graphics &graphics){
 	graphics.clear();
 	player->draw(graphics);
+	map->draw(graphics);
 	graphics.flip();
 }
