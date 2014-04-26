@@ -4,8 +4,7 @@
 
 Graphics::Graphics(){
 	SDL_ShowCursor(SDL_DISABLE);
-	window = SDL_CreateWindow("Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
-	renderer = SDL_CreateRenderer(window, 01, SDL_RENDERER_ACCELERATED);
+	SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &window, &renderer);
 }
 
 Graphics::~Graphics(){

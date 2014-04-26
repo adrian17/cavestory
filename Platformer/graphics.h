@@ -7,6 +7,9 @@ struct SDL_Rect;
 struct SDL_Texture;
 struct SDL_Window;
 
+const int windowWidth = 640;
+const int windowHeight = 480;
+
 class Graphics{
 public:
 	Graphics();

@@ -5,6 +5,8 @@
 class Graphics;
 class Sprite;
 
+const int fps = 60;
+
 class Game{
 public:
 	Game();
