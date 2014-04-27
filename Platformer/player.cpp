@@ -252,6 +252,7 @@ void Player::stopJump(){
 
 void Player::takeDamage(){
 	if (invincible) return;
+	interacting = false;
 	velY = std::min(-shortJumpSpeed, velY);
 	invincible = true;
 	invincibleTime = 0;
