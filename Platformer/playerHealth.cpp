@@ -70,7 +70,7 @@ void Player::Health::draw(Graphics &graphics){
 		damageFillSprite.draw(graphics, healthFillX + fillOffset(currentHealth - damageTaken), healthFillY);
 	}
 
-	NumberSprite(graphics, currentHealth, numDigits).draw(graphics, healthNumberX, healthNumberY);
+	NumberSprite::HUDNumber(graphics, currentHealth, numDigits).draw(graphics, healthNumberX, healthNumberY);
 }
 
 bool Player::Health::takeDamage(Units::HP damage){
