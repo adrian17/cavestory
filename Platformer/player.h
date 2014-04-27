@@ -1,5 +1,6 @@
 #pragma once
 
+#include "damageText.h"
 #include "sprite\sprite.h"
 #include "sprite/varyingWidthSprite.h"
 #include "util\timer.h"
@@ -39,6 +40,7 @@ public:
 
 	Rectangle damageRectangle() const;
 	Units::Game centerX() const{ return x + Units::halfTile; }
+	Units::Game centerY() const{ return y + Units::halfTile; }
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE};
 	enum HorizontalFacing { LEFT, RIGHT, LAST_HORIZONTAL_FACING };
@@ -92,6 +94,7 @@ private:
 
 	Health health;
 	Timer invincibleTimer;
+	DamageText damageText;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 };

@@ -1,7 +1,6 @@
 #include "numberSprite.h"
 
 #include "graphics.h"
-#include "sprite.h"
 
 namespace {
 	const std::string spritePath = "content/TextBox.bmp";
@@ -42,4 +41,8 @@ void NumberSprite::draw(Graphics &graphics, Units::Game x, Units::Game y){
 		sprite->draw(graphics, x + offset + padding, y);
 		offset -= Units::halfTile;
 	}
+}
+
+void NumberSprite::drawCentered(Graphics &graphics, Units::Game x, Units::Game y){
+	draw(graphics, x - width() / 2, y - height() / 2);
 }

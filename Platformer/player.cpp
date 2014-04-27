@@ -85,6 +85,7 @@ void Player::update(Units::MS dt, const Map &map){
 	sprites[getSpriteState()]->update(dt);
 
 	health.update(dt);
+	damageText.update(dt);
 
 	updateX(dt, map);
 	updateY(dt, map);
@@ -176,6 +177,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible())
 		sprites[getSpriteState()]->draw(graphics, x, y);
+	damageText.draw(graphics, centerX(), centerY());
 }
 
 void Player::drawHUD(Graphics &graphics){
@@ -232,6 +234,7 @@ void Player::takeDamage(){
 	if (invincibleTimer.active()) return;
 
 	health.takeDamage(2);
+	damageText.setDamage(2);
 
 	interacting = false;
 	velY = std::min(-shortJumpSpeed, velY);
