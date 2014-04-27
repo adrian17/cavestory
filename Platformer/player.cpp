@@ -72,7 +72,8 @@ bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
 
 Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
 	x(x), y(y),
-	health(graphics)
+	health(graphics),
+	invincibleTimer(invincibleTimeLimit)
 {
 	initSprites(graphics);
 }
@@ -83,10 +84,6 @@ Player::~Player(){
 void Player::update(Units::MS dt, const Map &map){
 	sprites[getSpriteState()]->update(dt);
 
-	if (invincible) {
-		invincibleTime += dt;
-		invincible = invincibleTime < invincibleTimeLimit;
-	}
 	health.update(dt);
 
 	updateX(dt, map);
@@ -232,14 +229,13 @@ void Player::stopJump(){
 }
 
 void Player::takeDamage(){
-	if (invincible) return;
+	if (invincibleTimer.active()) return;
 
 	health.takeDamage(2);
 
 	interacting = false;
 	velY = std::min(-shortJumpSpeed, velY);
-	invincible = true;
-	invincibleTime = 0;
+	invincibleTimer.reset();
 }
 
 Rectangle Player::damageRectangle() const{
@@ -343,5 +339,5 @@ Rectangle Player::bottomCollision(Units::Game delta) const{
 }
 
 bool Player::spriteIsVisible() const{
-	return !(invincible && invincibleTime / invincibleFlashTime % 3 == 0);
+	return !(invincibleTimer.active() && invincibleTimer.getCurrentTime() / invincibleFlashTime % 3 == 0);
 }

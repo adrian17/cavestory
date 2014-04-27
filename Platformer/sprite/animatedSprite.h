@@ -2,6 +2,8 @@
 
 #include "sprite.h"
 
+#include "util\timer.h"
+
 class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite(Graphics &graphics, const std::string filePath,
@@ -11,8 +13,7 @@ public:
 
 	void update(Units::MS dt);
 private:
-	const Units::MS frameTime;
 	const Units::Frame nFrames;
 	Units::Frame currentFrame = 0;
-	Units::MS elapsedTime = 0;
+	Timer frameTimer;
 };

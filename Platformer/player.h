@@ -2,6 +2,7 @@
 
 #include "sprite\sprite.h"
 #include "sprite/varyingWidthSprite.h"
+#include "util\timer.h"
 #include "util/units.h"
 #include <map>
 #include <memory>
@@ -67,7 +68,7 @@ private:
 		VaryingWidthSprite damageFillSprite;
 
 		Units::HP damageTaken = 0;
-		Units::MS damageTime = 0;
+		Timer damageTimer;
 	};
 
 	Rectangle leftCollision(Units::Game delta) const;
@@ -90,8 +91,7 @@ private:
 	bool interacting = false;
 
 	Health health;
-	bool invincible = false;
-	Units::MS invincibleTime = 0;
+	Timer invincibleTimer;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 };

@@ -45,20 +45,17 @@ Player::Health::Health(Graphics &graphics) :
 		maxFillWidth, healthFillSourceH),
 	damageFillSprite(graphics, spritePath,
 		healthDamageSourceX, healthDamageSourceY,
-		0, healthDamageSourceH)
+		0, healthDamageSourceH),
+		damageTimer(damageDelay)
 {
 
 }
 
 
 void Player::Health::update(Units::MS dt){
-	if (damageTaken > 0)
-	{
-		damageTime += dt;
-		if (damageTime > damageDelay){
-			currentHealth -= damageTaken;
-			damageTaken = 0;
-		}
+	if (damageTaken > 0 && damageTimer.expired()){
+		currentHealth -= damageTaken;
+		damageTaken = 0;
 	}
 }
 
@@ -75,7 +72,7 @@ void Player::Health::draw(Graphics &graphics){
 
 bool Player::Health::takeDamage(Units::HP damage){
 	damageTaken = damage;
-	damageTime = 0;
+	damageTimer.reset();
 	healthFillSprite.setWidth(Units::gameToPixel(fillOffset(currentHealth - damage)));
 	damageFillSprite.setWidth(Units::gameToPixel(fillOffset(damage)));
 	return false;
