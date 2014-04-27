@@ -5,6 +5,7 @@
 #include <memory>
 
 class Map;
+class NumberSprite;
 class Graphics;
 class Rectangle;
 class Sprite;
@@ -76,6 +77,6 @@ private:
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 	std::unique_ptr<Sprite> healthBarSprite;
 	std::unique_ptr<Sprite> healthFillSprite;
-	std::unique_ptr<Sprite> threeSprite;	//TODO!
+	std::unique_ptr<NumberSprite> healthNumberSprite;
 };
 
