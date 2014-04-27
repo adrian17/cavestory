@@ -212,6 +212,11 @@ void Player::stopJump(){
 	jumping = false;
 }
 
+Rectangle Player::damageRectangle() const{
+	return Rectangle(x + collisionX.left(), y + collisionY.top(),
+		collisionX.width(), collisionY.height());
+}
+
 void Player::initSprites(Graphics &graphics){
 	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
 		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){

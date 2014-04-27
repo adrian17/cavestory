@@ -12,7 +12,7 @@ namespace {
 }
 
 FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
-	x(x), y(y)
+	x(x), y(y), centerY(y)
 {
 	initSprites(graphics);
 }
@@ -25,12 +25,13 @@ void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 
 	horizontalFacing = x + Units::tileToGame(1) / 2.0 > playerX ? LEFT : RIGHT;
 
+	y = centerY + Units::tileToGame(5) / 2.0 * std::sin(Units::degreesToRadians(flightAngle));
+
 	sprites[getSpriteState()]->update(dt);
 }
 
 void FirstCaveBat::draw(Graphics &graphics){
-	const Units::Game drawY = y + Units::tileToGame(5) / 2.0 * std::sin(Units::degreesToRadians(flightAngle));
-	sprites[getSpriteState()]->draw(graphics, x, drawY);
+	sprites[getSpriteState()]->draw(graphics, x, y);
 }
 
 void FirstCaveBat::initSprites(Graphics &graphics){

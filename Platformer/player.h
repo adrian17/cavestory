@@ -31,6 +31,7 @@ public:
 	void startJump();
 	void stopJump();
 
+	Rectangle damageRectangle() const;
 	Units::Game centerX() const{ return x + Units::tileToGame(1) / 2.0; }
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE};

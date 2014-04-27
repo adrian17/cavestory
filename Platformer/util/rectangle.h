@@ -14,6 +14,13 @@ public:
 	Units::Game bottom() const{ return y + h; }
 	Units::Game width() const{ return w; }
 	Units::Game height() const{ return h; }
+
+	bool collidesWith(const Rectangle &other) const{
+		return right() >= other.left() &&
+			left() <= other.right() &&
+			top() <= other.bottom() &&
+			bottom() >= other.top();
+	}
 private:
 	const Units::Game x, y, w, h;
 };

@@ -32,7 +32,7 @@ void Game::eventLoop(){
 
 	player.reset(new Player(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2)));
 	map.reset(Map::createTestMap(graphics));
-	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(5), Units::tileToGame(screenHeight / 2)));
+	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(8), Units::tileToGame(screenHeight / 2+1)));
 
 	Units::MS lastUpdateTime = SDL_GetTicks();
 	bool done = false;
@@ -86,9 +86,10 @@ void Game::eventLoop(){
 }
 
 void Game::update(Units::MS dt){
+	//map->update(dt);
 	player->update(dt, *map);
 	bat->update(dt, player->centerX());
-	map->update(dt);
+	if (bat->damageRectangle().collidesWith(player->damageRectangle()));
 }
 
 void Game::draw(Graphics &graphics){
