@@ -73,7 +73,8 @@ bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
 Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
 	x(x), y(y),
 	health(graphics),
-	invincibleTimer(invincibleTimeLimit)
+	invincibleTimer(invincibleTimeLimit),
+	polarStar(graphics)
 {
 	initSprites(graphics);
 }
@@ -175,8 +176,10 @@ void Player::updateY(Units::MS dt, const Map &map){
 }
 
 void Player::draw(Graphics &graphics){
-	if (spriteIsVisible())
+	if (spriteIsVisible()){
+		polarStar.draw(graphics, horizontalFacing, verticalFacing, x, y);
 		sprites[getSpriteState()]->draw(graphics, x, y);
+	}
 }
 
 void Player::drawHUD(Graphics &graphics){

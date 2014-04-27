@@ -83,6 +83,7 @@
     <ClCompile Include="damageText.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
     <ClCompile Include="playerHealth.cpp" />
+    <ClCompile Include="weapons\polarStar.cpp" />
     <ClCompile Include="sprite\numberSprite.cpp" />
     <ClCompile Include="sprite\animatedSprite.cpp" />
     <ClCompile Include="game.cpp" />
@@ -98,6 +99,8 @@
     <ClInclude Include="backdrop.h" />
     <ClInclude Include="damageText.h" />
     <ClInclude Include="enemy\firstCaveBat.h" />
+    <ClInclude Include="spriteState.h" />
+    <ClInclude Include="weapons\polarStar.h" />
     <ClInclude Include="sprite\numberSprite.h" />
     <ClInclude Include="sprite\varyingWidthSprite.h" />
     <ClInclude Include="util\timer.h" />

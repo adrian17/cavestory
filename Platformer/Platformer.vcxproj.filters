@@ -57,6 +57,9 @@
     <ClCompile Include="damageText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="weapons\polarStar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -102,6 +105,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="damageText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="weapons\polarStar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spriteState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
