@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sprite\sprite.h"
 #include "util/units.h"
 #include <map>
 #include <memory>
@@ -8,7 +9,6 @@ class Map;
 class NumberSprite;
 class Graphics;
 class Rectangle;
-class Sprite;
 
 class Player
 {
@@ -20,7 +20,7 @@ public:
 	void updateX(Units::MS dt, const Map &map);
 	void updateY(Units::MS dt, const Map &map);
 	void draw(Graphics &graphics);
-	void drawHUD(Graphics &graphics) const;
+	void drawHUD(Graphics &graphics);
 
 	void startMovingLeft();
 	void startMovingRight();
@@ -52,6 +52,14 @@ private:
 	friend bool operator<(const SpriteState &a, const SpriteState &b);
 	SpriteState getSpriteState();
 
+	struct Health {
+		Health(Graphics &graphics);
+		void draw(Graphics &graphics);
+	private:
+		Sprite healthBarSprite;
+		Sprite healthFillSprite;
+	};
+
 	Rectangle leftCollision(Units::Game delta) const;
 	Rectangle rightCollision(Units::Game delta) const;
 	Rectangle topCollision(Units::Game delta) const;
@@ -71,12 +79,10 @@ private:
 	bool jumping = false;
 	bool interacting = false;
 
+	Health health;
 	bool invincible = false;
 	Units::MS invincibleTime = 0;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
-	std::unique_ptr<Sprite> healthBarSprite;
-	std::unique_ptr<Sprite> healthFillSprite;
-	std::unique_ptr<NumberSprite> healthNumberSprite;
 };
 

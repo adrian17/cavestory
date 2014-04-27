@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
+    <ClCompile Include="playerHealth.cpp" />
     <ClCompile Include="sprite\numberSprite.cpp" />
     <ClCompile Include="sprite\animatedSprite.cpp" />
     <ClCompile Include="game.cpp" />

@@ -42,25 +42,6 @@ namespace {
 	const Units::MS invincibleTimeLimit = 3000;
 	const Units::MS invincibleFlashTime = 50;
 
-	//HUD
-	const Units::Game healthBarX = Units::tileToGame(1);
-	const Units::Game healthBarY = Units::tileToGame(2);
-	const Units::Pixel healthBarSourceX = 0;
-	const Units::Pixel healthBarSourceY = Units::gameToPixel(5 * Units::halfTile);
-	const Units::Pixel healthBarSourceW = Units::tileToPixel(4);
-	const Units::Pixel healthBarSourceH = Units::gameToPixel(Units::halfTile);
-
-	const Units::Game healthFillX = 5 * Units::halfTile;
-	const Units::Game healthFillY = Units::tileToGame(2);
-	const Units::Pixel healthFillSourceX = 0;
-	const Units::Pixel healthFillSourceY = Units::gameToPixel(3 * Units::halfTile);
-	//const Units::Pixel healthFillSourceW <- chagnes
-	const Units::Pixel healthFillSourceH = Units::gameToPixel(Units::halfTile);
-
-	const Units::Game healthNumberX = Units::tileToGame(3) / 2.0;
-	const Units::Game healthNumberY = Units::tileToGame(2);
-	const int numDigits = 2;
-
 	struct CollisionInfo{
 		bool collided;
 		Units::Tile row, col;
@@ -90,7 +71,8 @@ bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
 }
 
 Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
-	x(x), y(y)
+	x(x), y(y),
+	health(graphics)
 {
 	initSprites(graphics);
 }
@@ -198,11 +180,9 @@ void Player::draw(Graphics &graphics){
 		sprites[getSpriteState()]->draw(graphics, (int)round(x), (int)round(y));
 }
 
-void Player::drawHUD(Graphics &graphics) const{
+void Player::drawHUD(Graphics &graphics){
 	if (spriteIsVisible()){
-		healthBarSprite->draw(graphics, healthBarX, healthBarY);
-		healthFillSprite->draw(graphics, healthFillX, healthFillY);
-		healthNumberSprite->draw(graphics, healthNumberX, healthNumberY);
+		health.draw(graphics);
 	}
 }
 
@@ -264,14 +244,6 @@ Rectangle Player::damageRectangle() const{
 }
 
 void Player::initSprites(Graphics &graphics){
-	healthBarSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
-		healthBarSourceX, healthBarSourceY,
-		healthBarSourceW, healthBarSourceH));
-	healthFillSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
-		healthFillSourceX, healthFillSourceY,
-		Units::gameToPixel(5 * Units::halfTile - 2.0), healthFillSourceH));
-	healthNumberSprite.reset(new NumberSprite(graphics, 13, numDigits));
-
 	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
 		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){
 			for (int verticalFacing = 0; verticalFacing < LAST_VERTICAL_FACING; ++verticalFacing){
