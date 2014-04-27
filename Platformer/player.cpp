@@ -41,6 +41,21 @@ namespace {
 	const Units::MS invincibleTimeLimit = 3000;
 	const Units::MS invincibleFlashTime = 50;
 
+	//HUD
+	const Units::Game healthBarX = Units::tileToGame(1);
+	const Units::Game healthBarY = Units::tileToGame(2);
+	const Units::Pixel healthBarSourceX = 0;
+	const Units::Pixel healthBarSourceY = Units::gameToPixel(5 * Units::halfTile);
+	const Units::Pixel healthBarSourceW = Units::tileToPixel(4);
+	const Units::Pixel healthBarSourceH = Units::gameToPixel(Units::halfTile);
+
+	const Units::Game healthFillX = 5 * Units::halfTile;
+	const Units::Game healthFillY = Units::tileToGame(2);
+	const Units::Pixel healthFillSourceX = 0;
+	const Units::Pixel healthFillSourceY = Units::gameToPixel(3 * Units::halfTile);
+	//const Units::Pixel healthFillSourceW <- chagnes
+	const Units::Pixel healthFillSourceH = Units::gameToPixel(Units::halfTile);
+
 	struct CollisionInfo{
 		bool collided;
 		Units::Tile row, col;
@@ -174,12 +189,16 @@ void Player::updateY(Units::MS dt, const Map &map){
 }
 
 void Player::draw(Graphics &graphics){
-	if (invincible && invincibleTime / invincibleFlashTime % 3 == 0) return;
-	sprites[getSpriteState()]->draw(graphics, (int)round(x), (int)round(y));
+	if (spriteIsVisible())
+		sprites[getSpriteState()]->draw(graphics, (int)round(x), (int)round(y));
 }
 
 void Player::drawHUD(Graphics &graphics) const{
-	healthBarSprite->draw(graphics, Units::tileToGame(1), Units::tileToGame(2));
+	if (spriteIsVisible()){
+		healthBarSprite->draw(graphics, healthBarX, healthBarY);
+		healthFillSprite->draw(graphics, healthFillX, healthFillY);
+		threeSprite->draw(graphics, Units::tileToGame(2), Units::tileToGame(2));
+	}
 }
 
 void Player::startMovingLeft(){
@@ -240,8 +259,14 @@ Rectangle Player::damageRectangle() const{
 
 void Player::initSprites(Graphics &graphics){
 	healthBarSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
-		0, Units::gameToPixel(5 * Units::halfTile),
-		Units::tileToPixel(4), Units::gameToPixel(Units::halfTile)));
+		healthBarSourceX, healthBarSourceY,
+		healthBarSourceW, healthBarSourceH));
+	healthFillSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
+		healthFillSourceX, healthFillSourceY,
+		Units::gameToPixel(5 * Units::halfTile - 2.0), healthFillSourceH));
+	threeSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
+		Units::gameToPixel(3*Units::halfTile), Units::gameToPixel(7 * Units::halfTile),
+		Units::gameToPixel(Units::halfTile), Units::gameToPixel(Units::halfTile)));
 
 	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
 		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){
@@ -335,4 +360,8 @@ Rectangle Player::bottomCollision(Units::Game delta) const{
 		y + collisionY.top() + collisionY.height() / 2,
 		collisionY.width(),
 		collisionY.height() / 2 + delta);
+}
+
+bool Player::spriteIsVisible() const{
+	return !(invincible && invincibleTime / invincibleFlashTime % 3 == 0);
 }

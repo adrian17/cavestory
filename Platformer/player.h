@@ -56,6 +56,8 @@ private:
 	Rectangle topCollision(Units::Game delta) const;
 	Rectangle bottomCollision(Units::Game delta) const;
 
+	bool spriteIsVisible() const;
+
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
@@ -73,5 +75,7 @@ private:
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 	std::unique_ptr<Sprite> healthBarSprite;
+	std::unique_ptr<Sprite> healthFillSprite;
+	std::unique_ptr<Sprite> threeSprite;	//TODO!
 };
 
