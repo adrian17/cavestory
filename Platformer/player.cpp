@@ -177,13 +177,13 @@ void Player::updateY(Units::MS dt, const Map &map){
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible())
 		sprites[getSpriteState()]->draw(graphics, x, y);
-	damageText.draw(graphics, centerX(), centerY());
 }
 
 void Player::drawHUD(Graphics &graphics){
 	if (spriteIsVisible()){
 		health.draw(graphics);
 	}
+	damageText.draw(graphics, centerX(), centerY());
 }
 
 void Player::startMovingLeft(){

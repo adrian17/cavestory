@@ -5,7 +5,7 @@
 #include <algorithm>
 
 namespace {
-	const Units::Velocity velocity = -Units::halfTile / 500;
+	const Units::Velocity velocity = -Units::halfTile / 250;
 	const Units::MS damageTime = 2000;
 }
 
