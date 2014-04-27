@@ -19,6 +19,7 @@ public:
 	void updateX(Units::MS dt, const Map &map);
 	void updateY(Units::MS dt, const Map &map);
 	void draw(Graphics &graphics);
+	void drawHUD(Graphics &graphics) const;
 
 	void startMovingLeft();
 	void startMovingRight();
@@ -71,5 +72,6 @@ private:
 	Units::MS invincibleTime = 0;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
+	std::unique_ptr<Sprite> healthBarSprite;
 };
 

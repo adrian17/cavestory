@@ -178,6 +178,10 @@ void Player::draw(Graphics &graphics){
 	sprites[getSpriteState()]->draw(graphics, (int)round(x), (int)round(y));
 }
 
+void Player::drawHUD(Graphics &graphics) const{
+	healthBarSprite->draw(graphics, Units::tileToGame(1), Units::tileToGame(2));
+}
+
 void Player::startMovingLeft(){
 	accX = -1;
 	horizontalFacing = LEFT;
@@ -235,6 +239,10 @@ Rectangle Player::damageRectangle() const{
 }
 
 void Player::initSprites(Graphics &graphics){
+	healthBarSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
+		0, Units::gameToPixel(5 * Units::halfTile),
+		Units::tileToPixel(4), Units::gameToPixel(Units::halfTile)));
+
 	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
 		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){
 			for (int verticalFacing = 0; verticalFacing < LAST_VERTICAL_FACING; ++verticalFacing){
