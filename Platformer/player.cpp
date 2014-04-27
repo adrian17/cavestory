@@ -175,7 +175,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible())
-		sprites[getSpriteState()]->draw(graphics, (int)round(x), (int)round(y));
+		sprites[getSpriteState()]->draw(graphics, x, y);
 }
 
 void Player::drawHUD(Graphics &graphics){
