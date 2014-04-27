@@ -33,6 +33,7 @@ private:
 		std::shared_ptr<Sprite> sprite;
 	};
 	std::shared_ptr<Backdrop> backdrop;
+	std::vector<std::vector<std::shared_ptr<Sprite>>> backgroundTiles;
 	std::vector<std::vector<Tile>> tiles;
 };
 

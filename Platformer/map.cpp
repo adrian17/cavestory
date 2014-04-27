@@ -18,6 +18,10 @@ Map* Map::createTestMap(Graphics &graphics){
 		nRows, std::vector<Tile>(
 			nCols, Tile()));
 
+	map->backgroundTiles = std::vector<std::vector<std::shared_ptr<Sprite>>>(
+		nRows, std::vector<std::shared_ptr<Sprite>>(
+			nCols, std::shared_ptr<Sprite>()));
+
 	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "content/PrtCave.bmp", tileSize, 0, tileSize, tileSize));
 	Tile tile(WALL_TILE, sprite);
 
@@ -28,6 +32,20 @@ Map* Map::createTestMap(Graphics &graphics){
 	map->tiles[10][5] = tile;
 	map->tiles[9][4] = tile;
 	map->tiles[8][7] = tile;
+
+	std::shared_ptr<Sprite> chain_top(new Sprite(graphics, "content/PrtCave.bmp",
+		11*tileSize, 2*tileSize, tileSize, tileSize));
+	std::shared_ptr<Sprite> chain_middle(new Sprite(graphics, "content/PrtCave.bmp",
+		12 * tileSize, 2 * tileSize, tileSize, tileSize));
+	std::shared_ptr<Sprite> chain_bottom(new Sprite(graphics, "content/PrtCave.bmp",
+		13 * tileSize, 2 * tileSize, tileSize, tileSize));
+
+	map->backgroundTiles[10][13] = chain_bottom;
+	map->backgroundTiles[9][13] = chain_middle;
+	map->backgroundTiles[8][13] = chain_middle;
+	map->backgroundTiles[7][13] = chain_middle;
+	map->backgroundTiles[6][13] = chain_top;
+	map->tiles[5][13] = tile;
 
 	return map;
 }
@@ -59,6 +77,13 @@ void Map::update(int dt){
 
 void Map::drawBackground(Graphics &graphics){
 	backdrop->draw(graphics);
+	for (size_t row = 0; row < backgroundTiles.size(); ++row){
+		for (size_t col = 0; col < backgroundTiles[row].size(); ++col){
+			if (backgroundTiles[row][col]){
+				backgroundTiles[row][col]->draw(graphics, col * tileSize, row * tileSize);
+			}
+		}
+	}
 }
 
 void Map::draw(Graphics &graphics){
