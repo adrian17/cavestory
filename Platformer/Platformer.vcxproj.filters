@@ -51,6 +51,9 @@
     <ClCompile Include="playerHealth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="util\timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sprite\varyingWidthSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

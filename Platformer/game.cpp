@@ -6,6 +6,7 @@
 #include "player.h"
 #include "SDL.h"
 #include "enemy\firstCaveBat.h"
+#include "util\timer.h"
 #include <algorithm>
 //#include <cstdio>
 
@@ -86,6 +87,7 @@ void Game::eventLoop(){
 }
 
 void Game::update(Units::MS dt){
+	Timer::updateAll(dt);
 	//map->update(dt);
 	player->update(dt, *map);
 	bat->update(dt, player->centerX());

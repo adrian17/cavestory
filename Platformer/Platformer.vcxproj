@@ -91,12 +91,14 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="sprite\sprite.cpp" />
+    <ClCompile Include="util\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backdrop.h" />
     <ClInclude Include="enemy\firstCaveBat.h" />
     <ClInclude Include="sprite\numberSprite.h" />
     <ClInclude Include="sprite\varyingWidthSprite.h" />
+    <ClInclude Include="util\timer.h" />
     <ClInclude Include="util\rectangle.h" />
     <ClInclude Include="sprite\animatedSprite.h" />
     <ClInclude Include="game.h" />
