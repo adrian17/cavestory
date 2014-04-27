@@ -5,10 +5,12 @@
 #include "map.h"
 #include "player.h"
 #include "SDL.h"
+#include <algorithm>
 //#include <cstdio>
 
 namespace {
 	const Units::FPS fps = 60;
+	const Units::MS maxFrameTime = 5 * 1000 / 60;
 }
 
 Game::Game(){
@@ -66,7 +68,8 @@ void Game::eventLoop(){
 		else if (input.wasKeyReleased(SDLK_z)) player->stopJump();
 
 		const Units::MS currentTime = SDL_GetTicks();
-		update(currentTime-lastUpdateTime);
+		const Units::MS dt = currentTime - lastUpdateTime;
+		update(std::min(dt, maxFrameTime));
 		lastUpdateTime = currentTime;
 		draw(graphics);
 
