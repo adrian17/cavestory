@@ -17,8 +17,10 @@ Graphics::~Graphics(){
 Graphics::TextureID Graphics::createTexture(const std::string &path, bool transparency){
 	if (spriteSheets.count(path) == false){
 		SDL_Surface *tempSurface = SDL_LoadBMP(path.c_str());
-		if (transparency)
-			SDL_SetColorKey(tempSurface, SDL_TRUE, 0);
+		if (transparency){
+			const Uint32 blackColor = SDL_MapRGB(tempSurface->format, 0, 0, 0);
+			SDL_SetColorKey(tempSurface, SDL_TRUE, blackColor);
+		}
 		SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 		SDL_FreeSurface(tempSurface);
 		spriteSheets[path] = texture;
