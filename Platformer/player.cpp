@@ -57,6 +57,10 @@ namespace {
 	//const Units::Pixel healthFillSourceW <- chagnes
 	const Units::Pixel healthFillSourceH = Units::gameToPixel(Units::halfTile);
 
+	const Units::Game healthNumberX = Units::tileToGame(3) / 2.0;
+	const Units::Game healthNumberY = Units::tileToGame(2);
+	const int numDigits = 2;
+
 	struct CollisionInfo{
 		bool collided;
 		Units::Tile row, col;
@@ -198,7 +202,7 @@ void Player::drawHUD(Graphics &graphics) const{
 	if (spriteIsVisible()){
 		healthBarSprite->draw(graphics, healthBarX, healthBarY);
 		healthFillSprite->draw(graphics, healthFillX, healthFillY);
-		healthNumberSprite->draw(graphics, Units::tileToGame(2), Units::tileToGame(2));
+		healthNumberSprite->draw(graphics, healthNumberX, healthNumberY);
 	}
 }
 
@@ -265,7 +269,7 @@ void Player::initSprites(Graphics &graphics){
 	healthFillSprite.reset(new Sprite(graphics, "content/TextBox.bmp",
 		healthFillSourceX, healthFillSourceY,
 		Units::gameToPixel(5 * Units::halfTile - 2.0), healthFillSourceH));
-	healthNumberSprite.reset(new NumberSprite(graphics, 3));
+	healthNumberSprite.reset(new NumberSprite(graphics, 13, numDigits));
 
 	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
 		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){
