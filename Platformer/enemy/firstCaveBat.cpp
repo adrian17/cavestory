@@ -1,7 +1,7 @@
 #include "firstCaveBat.h"
 
-#include "../graphics.h"
-#include "../sprite/animatedSprite.h"
+#include "graphics.h"
+#include "sprite/animatedSprite.h"
 
 namespace {
 	const Units::FPS flyFPS = 10;
