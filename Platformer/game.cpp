@@ -5,6 +5,7 @@
 #include "map.h"
 #include "player.h"
 #include "SDL.h"
+#include "enemy\firstCaveBat.h"
 #include <algorithm>
 //#include <cstdio>
 
@@ -29,8 +30,9 @@ void Game::eventLoop(){
 	Input input;
 	SDL_Event event;
 
-	player.reset(new Player(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight/2)));
+	player.reset(new Player(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2)));
 	map.reset(Map::createTestMap(graphics));
+	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(5), Units::tileToGame(screenHeight / 2)));
 
 	Units::MS lastUpdateTime = SDL_GetTicks();
 	bool done = false;
@@ -85,6 +87,7 @@ void Game::eventLoop(){
 
 void Game::update(Units::MS dt){
 	player->update(dt, *map);
+	bat->update(dt);
 	map->update(dt);
 }
 
@@ -92,6 +95,7 @@ void Game::draw(Graphics &graphics){
 	graphics.clear();
 	map->drawBackground(graphics);
 	player->draw(graphics);
+	bat->draw(graphics);
 	map->draw(graphics);
 	graphics.flip();
 }

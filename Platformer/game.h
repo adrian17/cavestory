@@ -3,6 +3,7 @@
 #include "util\units.h"
 #include <memory>
 
+class FirstCaveBat;
 class Graphics;
 class Map;
 class Player;
@@ -20,4 +21,5 @@ private:
 
 	std::unique_ptr<Player> player;
 	std::unique_ptr<Map> map;
+	std::unique_ptr<FirstCaveBat> bat;
 };
