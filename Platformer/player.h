@@ -34,7 +34,7 @@ public:
 	void takeDamage();
 
 	Rectangle damageRectangle() const;
-	Units::Game centerX() const{ return x + Units::tileToGame(1) / 2.0; }
+	Units::Game centerX() const{ return x + Units::halfTile; }
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE};
 	enum HorizontalFacing { LEFT, RIGHT, LAST_HORIZONTAL_FACING };

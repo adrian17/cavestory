@@ -18,7 +18,7 @@ public:
 	void draw(Graphics &graphics);
 
 	Rectangle damageRectangle() const{
-		return Rectangle(x+Units::tileToGame(1) / 2.0, y + Units::tileToGame(1) / 2, 0, 0);
+		return Rectangle(x + Units::halfTile, y + Units::halfTile, 0, 0);
 	}
 private:
 	enum HorizontalFacing { LEFT, RIGHT, LAST_HORIZONTAL_FACING };

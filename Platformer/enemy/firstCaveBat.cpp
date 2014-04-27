@@ -9,6 +9,8 @@ namespace {
 	const Units::Frame nFlyFrames = 3;
 
 	const Units::AngularVelocity angularVelocity = 120.0 / 1000.0;
+
+	const Units::Game flightAmplitude = Units::tileToGame(5) / 2.0;
 }
 
 FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
@@ -23,9 +25,9 @@ FirstCaveBat::~FirstCaveBat(){
 void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 	flightAngle += angularVelocity * dt;
 
-	horizontalFacing = x + Units::tileToGame(1) / 2.0 > playerX ? LEFT : RIGHT;
+	horizontalFacing = x + Units::halfTile > playerX ? LEFT : RIGHT;
 
-	y = centerY + Units::tileToGame(5) / 2.0 * std::sin(Units::degreesToRadians(flightAngle));
+	y = centerY + flightAmplitude * std::sin(Units::degreesToRadians(flightAngle));
 
 	sprites[getSpriteState()]->update(dt);
 }

@@ -43,4 +43,6 @@ namespace Units {
 		return gameToPixel(tileToGame(tile));
 	}
 
+	const Game halfTile = tileToGame(1) / 2.0;
+
 }
