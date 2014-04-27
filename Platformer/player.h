@@ -31,6 +31,8 @@ public:
 	void startJump();
 	void stopJump();
 
+	void takeDamage();
+
 	Rectangle damageRectangle() const;
 	Units::Game centerX() const{ return x + Units::tileToGame(1) / 2.0; }
 private:
@@ -64,6 +66,9 @@ private:
 	bool onGround = true;
 	bool jumping = false;
 	bool interacting = false;
+
+	bool invincible = false;
+	Units::MS invincibleTime = 0;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 };

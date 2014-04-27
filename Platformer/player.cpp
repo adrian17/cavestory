@@ -15,6 +15,7 @@ namespace {
 	const Units::Velocity maxVelY = 0.2998046875;
 
 	const Units::Velocity jumpSpeed = 0.25;	//jump
+	const Units::Velocity shortJumpSpeed = jumpSpeed / 1.5;
 	const Units::Acceleration airAcceleration = 0.0003125;
 	const Units::Acceleration jumpGravity = 0.0003125;
 
@@ -36,6 +37,9 @@ namespace {
 
 	const Rectangle collisionX(6.0, 10.0, 20.0, 12.0);
 	const Rectangle collisionY(10.0, 2.0, 12.0, 30.0);
+
+	const Units::MS invincibleTimeLimit = 3000;
+	const Units::MS invincibleFlashTime = 50;
 
 	struct CollisionInfo{
 		bool collided;
@@ -76,6 +80,11 @@ Player::~Player(){
 
 void Player::update(Units::MS dt, const Map &map){
 	sprites[getSpriteState()]->update(dt);
+
+	if (invincible) {
+		invincibleTime += dt;
+		invincible = invincibleTime < invincibleTimeLimit;
+	}
 
 	updateX(dt, map);
 	updateY(dt, map);
@@ -165,6 +174,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 }
 
 void Player::draw(Graphics &graphics){
+	if (invincible && invincibleTime / invincibleFlashTime % 3 == 0) return;
 	sprites[getSpriteState()]->draw(graphics, (int)round(x), (int)round(y));
 }
 
@@ -210,6 +220,13 @@ void Player::startJump(){
 
 void Player::stopJump(){
 	jumping = false;
+}
+
+void Player::takeDamage(){
+	if (invincible) return;
+	velY = std::min(-shortJumpSpeed, velY);
+	invincible = true;
+	invincibleTime = 0;
 }
 
 Rectangle Player::damageRectangle() const{

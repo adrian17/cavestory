@@ -89,7 +89,8 @@ void Game::update(Units::MS dt){
 	//map->update(dt);
 	player->update(dt, *map);
 	bat->update(dt, player->centerX());
-	if (bat->damageRectangle().collidesWith(player->damageRectangle()));
+	if (bat->damageRectangle().collidesWith(player->damageRectangle()))
+		player->takeDamage();
 }
 
 void Game::draw(Graphics &graphics){
