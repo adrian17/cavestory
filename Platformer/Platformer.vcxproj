@@ -91,7 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backdrop.h" />
-    <ClInclude Include="rectangle.h" />
+    <ClInclude Include="util\rectangle.h" />
     <ClInclude Include="sprite\animatedSprite.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
@@ -99,6 +99,7 @@
     <ClInclude Include="map.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="sprite\sprite.h" />
+    <ClInclude Include="util\units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

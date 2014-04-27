@@ -8,7 +8,7 @@
 #include <cstdio>
 
 namespace {
-	const int fps = 60;
+	const Units::FPS fps = 60;
 }
 
 Game::Game(){
@@ -27,13 +27,13 @@ void Game::eventLoop(){
 	Input input;
 	SDL_Event event;
 
-	player.reset(new Player(graphics, 320, 240));
+	player.reset(new Player(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight/2)));
 	map.reset(Map::createTestMap(graphics));
 
-	int lastUpdateTime = SDL_GetTicks();
+	Units::MS lastUpdateTime = SDL_GetTicks();
 	bool done = false;
 	while (!done){
-		const int startTime = SDL_GetTicks();
+		const Units::MS startTime = SDL_GetTicks();
 		input.beginNewFrame();
 
 		while (SDL_PollEvent(&event)){
@@ -65,13 +65,13 @@ void Game::eventLoop(){
 		if (input.wasKeyPressed(SDLK_z)) player->startJump();
 		else if (input.wasKeyReleased(SDLK_z)) player->stopJump();
 
-		const int currentTime = SDL_GetTicks();
+		const Units::MS currentTime = SDL_GetTicks();
 		update(currentTime-lastUpdateTime);
 		lastUpdateTime = currentTime;
 		draw(graphics);
 
-		const int msPerFrame = 1000 / fps;
-		const int elapsedTime = SDL_GetTicks() - startTime;
+		const Units::MS msPerFrame = 1000 / fps;
+		const Units::MS elapsedTime = SDL_GetTicks() - startTime;
 		if(elapsedTime < msPerFrame)
 			SDL_Delay(1000 / fps - elapsedTime);
 
@@ -80,7 +80,7 @@ void Game::eventLoop(){
 	}
 }
 
-void Game::update(int dt){
+void Game::update(Units::MS dt){
 	player->update(dt, *map);
 	map->update(dt);
 }

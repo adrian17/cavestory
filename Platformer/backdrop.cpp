@@ -1,10 +1,11 @@
 #include "backdrop.h"
 
 #include "graphics.h"
+#include "util/units.h"
 #include "SDL.h"
 
 namespace {
-	const int backgroundSize = 128;
+	const Units::Tile backgroundSize = 4;
 }
 
 FixedBackdrop::FixedBackdrop(const std::string &path, Graphics &graphics){
@@ -12,10 +13,11 @@ FixedBackdrop::FixedBackdrop(const std::string &path, Graphics &graphics){
 }
 
 void FixedBackdrop::draw(Graphics &graphics) const{
-	for (int x = 0; x < screenWidth; x += backgroundSize){
-		for (int y = 0; y < screenHeight; y += backgroundSize){
-			SDL_Rect dest = {x, y, backgroundSize, backgroundSize };
-			graphics.drawTexture(textureID, NULL, &dest);
+	for (Units::Tile x = 0; x < screenWidth; x += backgroundSize){
+		for (Units::Tile y = 0; y < screenHeight; y += backgroundSize){
+			SDL_Rect dest = { Units::tileToPixel(x), Units::tileToPixel(y),
+				Units::tileToPixel(backgroundSize), Units::tileToPixel(backgroundSize) };
+			graphics.drawTexture(textureID, nullptr, &dest);
 		}
 	}
 }

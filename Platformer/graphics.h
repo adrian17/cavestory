@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util\units.h"
 #include <map>
 #include <string>
 
@@ -8,8 +9,8 @@ struct SDL_Rect;
 struct SDL_Texture;
 struct SDL_Window;
 
-const int screenWidth = 640;
-const int screenHeight = 480;
+const Units::Tile screenWidth = 20;
+const Units::Tile screenHeight = 15;
 
 class Graphics{
 public:

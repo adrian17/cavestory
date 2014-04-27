@@ -5,13 +5,14 @@
 class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite(Graphics &graphics, const std::string filePath,
-		int srcX, int srcY, int width, int height, int fps, int nFrames);
+		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height,
+		Units::FPS fps, Units::Frame nFrames);
 	~AnimatedSprite();
 
-	void update(int dt);
+	void update(Units::MS dt);
 private:
-	const int frameTime;
-	const int nFrames;
-	int currentFrame = 0;
-	int elapsedTime = 0;
+	const Units::MS frameTime;
+	const Units::Frame nFrames;
+	Units::Frame currentFrame = 0;
+	Units::MS elapsedTime = 0;
 };

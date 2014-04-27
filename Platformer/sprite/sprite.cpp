@@ -3,7 +3,7 @@
 #include "../graphics.h"
 
 Sprite::Sprite(Graphics &graphics, const std::string filePath, 
-	int srcX, int srcY, int width, int height)
+	Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height)
 {
 	const bool transparency = true;
 	spriteSheet = graphics.createTexture(filePath, transparency);
@@ -14,7 +14,7 @@ Sprite::Sprite(Graphics &graphics, const std::string filePath,
 Sprite::~Sprite(){
 }
 
-void Sprite::draw(Graphics &graphics, int x, int y){
-	SDL_Rect destRect = { x, y, sourceRect.w, sourceRect.h };
+void Sprite::draw(Graphics &graphics, Units::Game x, Units::Game y){
+	SDL_Rect destRect = { Units::gameToPixel(x), Units::gameToPixel(y), sourceRect.w, sourceRect.h };
 	graphics.drawTexture(spriteSheet, &sourceRect, &destRect);
 }

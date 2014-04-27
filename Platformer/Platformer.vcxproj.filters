@@ -65,10 +65,13 @@
     <ClInclude Include="sprite\animatedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rectangle.h">
+    <ClInclude Include="backdrop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="backdrop.h">
+    <ClInclude Include="util\units.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

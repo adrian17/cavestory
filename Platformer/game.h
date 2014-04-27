@@ -1,13 +1,12 @@
 #pragma once
 
+#include "util\units.h"
 #include <memory>
 
 class Graphics;
 class Map;
 class Player;
 class Sprite;
-
-const int tileSize = 32;
 
 class Game{
 public:
@@ -16,7 +15,7 @@ public:
 private:
 	void eventLoop();
 
-	void update(int dt);
+	void update(Units::MS dt);
 	void draw(Graphics &graphics);
 
 	std::unique_ptr<Player> player;

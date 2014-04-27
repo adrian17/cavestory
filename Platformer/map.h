@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util/units.h"
 #include <memory>
 #include <vector>
 
@@ -13,16 +14,16 @@ class Map
 public:
 	enum TileType { AIR_TILE, WALL_TILE };
 	struct CollisionTile{
-		CollisionTile(int row, int col, TileType tileType) :
+		CollisionTile(Units::Tile row, Units::Tile col, TileType tileType) :
 			row(row), col(col), tileType(tileType) {}
-		int row, col;
+		Units::Tile row, col;
 		TileType tileType;
 	};
 	static Map* createTestMap(Graphics &graphics);
 
 	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle) const;
 
-	void update(int dt);
+	void update(Units::MS dt);
 	void drawBackground(Graphics &graphics);
 	void draw(Graphics &graphics);
 private:

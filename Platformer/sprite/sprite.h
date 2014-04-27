@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../util/units.h"
 #include <string>
 #include "SDL.h"
 
@@ -9,11 +10,11 @@ class Sprite
 {
 public:
 	Sprite(Graphics &graphics, const std::string filePath,
-		int srcX, int srcY, int width, int height);
+		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height);
 	virtual ~Sprite();
 
-	virtual void update(int dt){};
-	void draw(Graphics &graphics, int x, int y);
+	virtual void update(Units::MS dt){};
+	void draw(Graphics &graphics, Units::Game x, Units::Game y);
 
 protected:
 	SDL_Rect sourceRect;

@@ -4,8 +4,8 @@
 
 Graphics::Graphics(){
 	SDL_ShowCursor(SDL_DISABLE);
-	//SDL_CreateWindowAndRenderer(screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN, &window, &renderer);
-	SDL_CreateWindowAndRenderer(screenWidth, screenHeight, 0, &window, &renderer);
+	//SDL_CreateWindowAndRenderer(Units::tileToPixel(screenWidth), Units::tileToPixel(screenHeight), SDL_WINDOW_FULLSCREEN, &window, &renderer);
+	SDL_CreateWindowAndRenderer(Units::tileToPixel(screenWidth), Units::tileToPixel(screenHeight), 0, &window, &renderer);
 }
 
 Graphics::~Graphics(){
