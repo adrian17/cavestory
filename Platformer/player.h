@@ -36,7 +36,7 @@ public:
 	void startJump();
 	void stopJump();
 
-	void takeDamage();
+	void takeDamage(Units::HP damage);
 
 	Rectangle damageRectangle() const;
 	Units::Game centerX() const{ return x + Units::halfTile; }

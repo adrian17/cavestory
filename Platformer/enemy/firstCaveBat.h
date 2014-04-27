@@ -20,6 +20,8 @@ public:
 	Rectangle damageRectangle() const{
 		return Rectangle(x + Units::halfTile, y + Units::halfTile, 0, 0);
 	}
+
+	Units::HP getContactDamage() const;
 private:
 	enum HorizontalFacing { LEFT, RIGHT, LAST_HORIZONTAL_FACING };
 	struct SpriteState{

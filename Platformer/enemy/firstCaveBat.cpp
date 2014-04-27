@@ -11,6 +11,8 @@ namespace {
 	const Units::AngularVelocity angularVelocity = 120.0 / 1000.0;
 
 	const Units::Game flightAmplitude = Units::tileToGame(5) / 2.0;
+
+	const Units::HP contactDamage = 1;
 }
 
 FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
@@ -34,6 +36,10 @@ void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 
 void FirstCaveBat::draw(Graphics &graphics){
 	sprites[getSpriteState()]->draw(graphics, x, y);
+}
+
+Units::HP FirstCaveBat::getContactDamage() const{
+	return contactDamage;
 }
 
 void FirstCaveBat::initSprites(Graphics &graphics){

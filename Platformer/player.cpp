@@ -230,11 +230,11 @@ void Player::stopJump(){
 	jumping = false;
 }
 
-void Player::takeDamage(){
+void Player::takeDamage(Units::HP damage){
 	if (invincibleTimer.active()) return;
 
-	health.takeDamage(2);
-	damageText.setDamage(2);
+	health.takeDamage(damage);
+	damageText.setDamage(damage);
 
 	interacting = false;
 	velY = std::min(-shortJumpSpeed, velY);
