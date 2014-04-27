@@ -87,15 +87,15 @@ void Game::eventLoop(){
 
 void Game::update(Units::MS dt){
 	player->update(dt, *map);
-	bat->update(dt);
+	bat->update(dt, player->centerX());
 	map->update(dt);
 }
 
 void Game::draw(Graphics &graphics){
 	graphics.clear();
 	map->drawBackground(graphics);
-	player->draw(graphics);
 	bat->draw(graphics);
+	player->draw(graphics);
 	map->draw(graphics);
 	graphics.flip();
 }

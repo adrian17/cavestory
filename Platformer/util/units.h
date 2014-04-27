@@ -15,8 +15,16 @@ namespace Units {
 	typedef double Velocity;
 	typedef double Acceleration;
 
+	typedef double Degrees;
+	typedef double AngularVelocity;
+
 	namespace {
 		const Game tileSize = 32.0;
+		const double pi = atan(1) * 4;
+	}
+
+	inline double degreesToRadians(Degrees deg){
+		return deg * pi / 180.0;
 	}
 
 	inline Pixel gameToPixel(Game game){
