@@ -22,7 +22,7 @@ Map* Map::createTestMap(Graphics &graphics){
 		nRows, std::vector<std::shared_ptr<Sprite>>(
 			nCols, std::shared_ptr<Sprite>()));
 
-	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "content/PrtCave.bmp", tileSize, 0, tileSize, tileSize));
+	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "content/stage/PrtCave.bmp", tileSize, 0, tileSize, tileSize));
 	Tile tile(WALL_TILE, sprite);
 
 	const int row = 11;
@@ -33,11 +33,11 @@ Map* Map::createTestMap(Graphics &graphics){
 	map->tiles[9][4] = tile;
 	map->tiles[8][7] = tile;
 
-	std::shared_ptr<Sprite> chain_top(new Sprite(graphics, "content/PrtCave.bmp",
+	std::shared_ptr<Sprite> chain_top(new Sprite(graphics, "content/stage/PrtCave.bmp",
 		11*tileSize, 2*tileSize, tileSize, tileSize));
-	std::shared_ptr<Sprite> chain_middle(new Sprite(graphics, "content/PrtCave.bmp",
+	std::shared_ptr<Sprite> chain_middle(new Sprite(graphics, "content/stage/PrtCave.bmp",
 		12 * tileSize, 2 * tileSize, tileSize, tileSize));
-	std::shared_ptr<Sprite> chain_bottom(new Sprite(graphics, "content/PrtCave.bmp",
+	std::shared_ptr<Sprite> chain_bottom(new Sprite(graphics, "content/stage/PrtCave.bmp",
 		13 * tileSize, 2 * tileSize, tileSize, tileSize));
 
 	map->backgroundTiles[10][13] = chain_bottom;
