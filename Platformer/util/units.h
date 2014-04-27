@@ -18,6 +18,8 @@ namespace Units {
 	typedef double Degrees;
 	typedef double AngularVelocity;
 
+	typedef int HP;
+
 	namespace {
 		const Game tileSize = 32.0;
 		const double pi = atan(1) * 4;

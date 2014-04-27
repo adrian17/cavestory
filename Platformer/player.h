@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sprite\sprite.h"
+#include "sprite/varyingWidthSprite.h"
 #include "util/units.h"
 #include <map>
 #include <memory>
@@ -54,10 +55,19 @@ private:
 
 	struct Health {
 		Health(Graphics &graphics);
+		void update(Units::MS dt);
 		void draw(Graphics &graphics);
+		bool takeDamage(Units::HP damage);	//true if dies
 	private:
+		Units::Game fillOffset(Units::HP health) const;
+		Units::HP currentHealth = 6;
+		Units::HP maxHealth = 6;
 		Sprite healthBarSprite;
-		Sprite healthFillSprite;
+		VaryingWidthSprite healthFillSprite;
+		VaryingWidthSprite damageFillSprite;
+
+		Units::HP damageTaken = 0;
+		Units::MS damageTime = 0;
 	};
 
 	Rectangle leftCollision(Units::Game delta) const;

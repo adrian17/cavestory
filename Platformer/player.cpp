@@ -87,6 +87,7 @@ void Player::update(Units::MS dt, const Map &map){
 		invincibleTime += dt;
 		invincible = invincibleTime < invincibleTimeLimit;
 	}
+	health.update(dt);
 
 	updateX(dt, map);
 	updateY(dt, map);
@@ -232,6 +233,9 @@ void Player::stopJump(){
 
 void Player::takeDamage(){
 	if (invincible) return;
+
+	health.takeDamage(2);
+
 	interacting = false;
 	velY = std::min(-shortJumpSpeed, velY);
 	invincible = true;

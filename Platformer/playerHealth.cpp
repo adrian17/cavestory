@@ -8,6 +8,7 @@ namespace {
 
 	const Units::Game healthBarX = Units::tileToGame(1);
 	const Units::Game healthBarY = Units::tileToGame(2);
+
 	const Units::Pixel healthBarSourceX = 0;
 	const Units::Pixel healthBarSourceY = Units::gameToPixel(5 * Units::halfTile);
 	const Units::Pixel healthBarSourceW = Units::tileToPixel(4);
@@ -15,30 +16,71 @@ namespace {
 
 	const Units::Game healthFillX = 5 * Units::halfTile;
 	const Units::Game healthFillY = Units::tileToGame(2);
+
+	const Units::Pixel maxFillWidth = Units::gameToPixel(5 * Units::halfTile - 2.0);
+
+	const Units::Pixel healthDamageSourceX = 0;
+	const Units::Pixel healthDamageSourceY = Units::tileToPixel(2);
+	//const Units::Pixel healthDamageSourceW = 0; <- not used, changes
+	const Units::Pixel healthDamageSourceH = Units::gameToPixel(Units::halfTile);;
+
 	const Units::Pixel healthFillSourceX = 0;
 	const Units::Pixel healthFillSourceY = Units::gameToPixel(3 * Units::halfTile);
-	//const Units::Pixel healthFillSourceW <- chagnes
+	//const Units::Pixel healthFillSourceW <- not used, chagnes
 	const Units::Pixel healthFillSourceH = Units::gameToPixel(Units::halfTile);
 
 	const Units::Game healthNumberX = Units::tileToGame(3) / 2.0;
 	const Units::Game healthNumberY = Units::tileToGame(2);
 	const int numDigits = 2;
 
+	const Units::MS damageDelay = 1500;
 }
 
 Player::Health::Health(Graphics &graphics) :
-healthBarSprite(graphics, spritePath,
-healthBarSourceX, healthBarSourceY,
-healthBarSourceW, healthBarSourceH),
-healthFillSprite(graphics, spritePath,
-healthFillSourceX, healthFillSourceY,
-Units::gameToPixel(5 * Units::halfTile - 2.0), healthFillSourceH)
+	healthBarSprite(graphics, spritePath,
+		healthBarSourceX, healthBarSourceY,
+		healthBarSourceW, healthBarSourceH),
+	healthFillSprite(graphics, spritePath,
+		healthFillSourceX, healthFillSourceY,
+		maxFillWidth, healthFillSourceH),
+	damageFillSprite(graphics, spritePath,
+		healthDamageSourceX, healthDamageSourceY,
+		0, healthDamageSourceH)
 {
+
+}
+
+
+void Player::Health::update(Units::MS dt){
+	if (damageTaken > 0)
+	{
+		damageTime += dt;
+		if (damageTime > damageDelay){
+			currentHealth -= damageTaken;
+			damageTaken = 0;
+		}
+	}
 }
 
 void Player::Health::draw(Graphics &graphics){
 	healthBarSprite.draw(graphics, healthBarX, healthBarY);
 	healthFillSprite.draw(graphics, healthFillX, healthFillY);
 
-	NumberSprite(graphics, 6, numDigits).draw(graphics, healthNumberX, healthNumberY);
+	if (damageTaken > 0){
+		damageFillSprite.draw(graphics, healthFillX + fillOffset(currentHealth - damageTaken), healthFillY);
+	}
+
+	NumberSprite(graphics, currentHealth, numDigits).draw(graphics, healthNumberX, healthNumberY);
+}
+
+bool Player::Health::takeDamage(Units::HP damage){
+	damageTaken = damage;
+	damageTime = 0;
+	healthFillSprite.setWidth(Units::gameToPixel(fillOffset(currentHealth - damage)));
+	damageFillSprite.setWidth(Units::gameToPixel(fillOffset(damage)));
+	return false;
+}
+
+Units::Game Player::Health::fillOffset(Units::HP health) const{
+	return maxFillWidth * health / maxHealth;
 }

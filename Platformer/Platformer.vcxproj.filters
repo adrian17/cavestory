@@ -89,5 +89,8 @@
     <ClInclude Include="sprite\numberSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sprite\varyingWidthSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
