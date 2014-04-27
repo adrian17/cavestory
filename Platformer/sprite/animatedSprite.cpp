@@ -1,8 +1,5 @@
 #include "animatedSprite.h"
 
-#include "../graphics.h"
-#include "../game.h"
-
 AnimatedSprite::AnimatedSprite(Graphics &graphics, const std::string filePath,
 	Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height,
 	Units::FPS fps, Units::Frame nFrames) :

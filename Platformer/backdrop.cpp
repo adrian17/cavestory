@@ -1,7 +1,5 @@
 #include "backdrop.h"
 
-#include "graphics.h"
-#include "util/units.h"
 #include "SDL.h"
 
 namespace {

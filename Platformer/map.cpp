@@ -1,8 +1,6 @@
 #include "map.h"
 
 #include "backdrop.h"
-#include "game.h"
-#include "graphics.h"
 #include "util/rectangle.h"
 #include "sprite/sprite.h"
 

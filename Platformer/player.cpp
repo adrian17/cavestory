@@ -1,6 +1,5 @@
 #include "player.h"
 
-#include "game.h"
 #include "map.h"
 #include "util/rectangle.h"
 #include "sprite/animatedSprite.h"
@@ -43,7 +42,7 @@ namespace {
 		Units::Tile row, col;
 	} info;
 
-	CollisionInfo getWallCollisionInfo(const Map &map, const Rectangle rectangle){
+	CollisionInfo getWallCollisionInfo(const Map &map, const Rectangle &rectangle){
 		CollisionInfo info = { false, 0, 0 };
 		std::vector<Map::CollisionTile> tiles = map.getCollidingTiles(rectangle);
 		for (auto && tile : tiles){

@@ -5,7 +5,7 @@
 #include "map.h"
 #include "player.h"
 #include "SDL.h"
-#include <cstdio>
+//#include <cstdio>
 
 namespace {
 	const Units::FPS fps = 60;
