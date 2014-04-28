@@ -88,6 +88,7 @@
     <ClCompile Include="particle\headBumpParticle.cpp" />
     <ClCompile Include="player\playerHealth.cpp" />
     <ClCompile Include="player\playerWalkingAnimation.cpp" />
+    <ClCompile Include="particle\projectileStarParticle.cpp" />
     <ClCompile Include="weapons\polarStar.cpp" />
     <ClCompile Include="sprite\numberSprite.cpp" />
     <ClCompile Include="sprite\animatedSprite.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="damageTexts.h" />
     <ClInclude Include="enemy\firstCaveBat.h" />
     <ClInclude Include="interfaces\projectile.h" />
+    <ClInclude Include="particle\projectileStarParticle.h" />
     <ClInclude Include="spriteState.h" />
     <ClInclude Include="util\polarVector.h" />
     <ClInclude Include="weapons\polarStar.h" />

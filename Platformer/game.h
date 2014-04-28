@@ -1,10 +1,9 @@
 #pragma once
 
 #include "damageTexts.h"
+#include "particle\particleSystem.h"
 #include "util\units.h"
 #include <memory>
-
-#include "particle\particleSystem.h"
 
 class FirstCaveBat;
 class Graphics;
