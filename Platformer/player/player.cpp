@@ -274,11 +274,11 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 	if (spriteMotionType == WALKING){
 		if (strideType == STRIDE_LEFT) tileX += 1;
 		else if (strideType == STRIDE_RIGHT) tileX += 2;
-		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,
+		sprites[spriteState].reset(new Sprite(graphics, spriteFilePath,
 			Units::tileToPixel(tileX), Units::tileToPixel(tileY),
 			Units::tileToPixel(1), Units::tileToPixel(1)));
 	} else {
-		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,
+		sprites[spriteState].reset(new Sprite(graphics, spriteFilePath,
 			Units::tileToPixel(tileX), Units::tileToPixel(tileY),
 			Units::tileToPixel(1), Units::tileToPixel(1)));
 	}
