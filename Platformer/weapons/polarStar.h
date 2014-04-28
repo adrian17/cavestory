@@ -23,5 +23,7 @@ private:
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
 	std::map<SpriteState, std::shared_ptr<Sprite>> spriteMap;
+	std::shared_ptr<Sprite> horizontalBulletSprite;
+	std::shared_ptr<Sprite> verticalBulletSprite;
 };
 
