@@ -54,6 +54,7 @@ private:
 		WalkingAnimation();
 		StrideType stride() const;
 		void update();
+		void reset();
 	private:
 		Units::Frame currentFrame = 0;
 		Timer frameTimer;

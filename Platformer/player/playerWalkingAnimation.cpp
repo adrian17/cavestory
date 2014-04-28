@@ -31,3 +31,9 @@ void Player::WalkingAnimation::update(){
 		}
 	}
 }
+
+void Player::WalkingAnimation::reset(){
+	forward = true;
+	currentFrame = 0;
+	frameTimer.reset();
+}

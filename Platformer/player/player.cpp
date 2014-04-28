@@ -179,12 +179,14 @@ void Player::drawHUD(Graphics &graphics){
 }
 
 void Player::startMovingLeft(){
+	if (onGround && accX == 0) walkingAnimation.reset();
 	accX = -1;
 	horizontalFacing = LEFT;
 	interacting = false;
 }
 
 void Player::startMovingRight(){
+	if (onGround && accX == 0) walkingAnimation.reset();
 	accX = 1;
 	horizontalFacing = RIGHT;
 	interacting = false;
