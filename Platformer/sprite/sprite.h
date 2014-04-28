@@ -13,7 +13,7 @@ public:
 		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height);
 	virtual ~Sprite();
 
-	virtual void update(Units::MS dt){};
+	virtual void update(){};
 	void draw(Graphics &graphics, Units::Game x, Units::Game y);
 
 protected:

@@ -70,7 +70,7 @@ Player::~Player(){
 }
 
 void Player::update(Units::MS dt, const Map &map){
-	sprites[getSpriteState()]->update(dt);
+	sprites[getSpriteState()]->update();
 
 	health.update(dt);
 	walkingAnimation.update();

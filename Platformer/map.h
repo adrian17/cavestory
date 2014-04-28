@@ -23,7 +23,6 @@ public:
 
 	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle) const;
 
-	void update(Units::MS dt);
 	void drawBackground(Graphics &graphics);
 	void draw(Graphics &graphics);
 private:

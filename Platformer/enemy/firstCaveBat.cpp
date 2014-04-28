@@ -31,7 +31,7 @@ void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 
 	y = centerY + flightAmplitude * std::sin(Units::degreesToRadians(flightAngle));
 
-	sprites[getSpriteState()]->update(dt);
+	sprites[getSpriteState()]->update();
 }
 
 void FirstCaveBat::draw(Graphics &graphics){

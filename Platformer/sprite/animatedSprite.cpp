@@ -12,7 +12,7 @@ AnimatedSprite::AnimatedSprite(Graphics &graphics, const std::string relativePat
 AnimatedSprite::~AnimatedSprite(){
 }
 
-void AnimatedSprite::update(Units::MS dt){
+void AnimatedSprite::update(){
 	if (frameTimer.expired()){
 		frameTimer.reset();
 		++currentFrame;

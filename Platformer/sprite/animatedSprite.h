@@ -11,7 +11,7 @@ public:
 		Units::FPS fps, Units::Frame nFrames);
 	~AnimatedSprite();
 
-	void update(Units::MS dt);
+	void update();
 private:
 	const Units::Frame nFrames;
 	Units::Frame currentFrame = 0;

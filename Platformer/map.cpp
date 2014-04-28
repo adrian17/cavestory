@@ -68,16 +68,6 @@ std::vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle &rectangl
 	return collisionTiles;
 }
 
-void Map::update(Units::MS dt){
-	for (size_t row = 0; row < tiles.size(); ++row){
-		for (size_t col = 0; col < tiles[row].size(); ++col){
-			if (tiles[row][col].sprite){
-				tiles[row][col].sprite->update(dt);
-			}
-		}
-	}
-}
-
 void Map::drawBackground(Graphics &graphics){
 	backdrop->draw(graphics);
 	for (size_t row = 0; row < backgroundTiles.size(); ++row){
