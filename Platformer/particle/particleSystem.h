@@ -25,9 +25,3 @@ public:
 	ParticleSystem &system;
 	Graphics &graphics;
 };
-
-/*particleSystem.addNewParticle(
-	std::shared_ptr<Particle>(
-	new HeadBumpParticle(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2))
-	)
-);*/

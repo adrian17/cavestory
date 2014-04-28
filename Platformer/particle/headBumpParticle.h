@@ -5,8 +5,6 @@
 #include "util\polarVector.h"
 #include "util\timer.h"
 
-class Graphics;
-
 class HeadBumpParticle : public Particle
 {
 public:
