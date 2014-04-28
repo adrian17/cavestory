@@ -26,6 +26,7 @@ public:
 		{ return Rectangle(x, y, Units::tileToGame(1), Units::tileToGame(1)); }
 
 	Units::HP getContactDamage() const;
+	void takeDamage(Units::HP damage){}
 private:
 	typedef std::tuple<HorizontalFacing> SpriteState;
 	SpriteState getSpriteState() const;
