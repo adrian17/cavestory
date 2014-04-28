@@ -26,13 +26,16 @@ PolarStar::~PolarStar()
 {
 }
 
-void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, Units::Game x, Units::Game y){
+void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
+	Units::Game x, Units::Game y){
 	if (horizontalFacing == LEFT)
 		x -= Units::halfTile;
 	if (verticalFacing == UP)
 		y -= Units::halfTile / 2;
 	if (verticalFacing == DOWN)
 		y += Units::halfTile / 2;
+	if (gunUp)
+		y -= 2.0;
 	spriteMap[SpriteState(horizontalFacing, verticalFacing)]->draw(graphics, x, y);
 }
 

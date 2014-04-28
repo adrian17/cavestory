@@ -165,7 +165,8 @@ void Player::updateY(Units::MS dt, const Map &map){
 
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible()){
-		polarStar.draw(graphics, horizontalFacing, verticalFacing, x, y);
+		bool gunUp = (motionType() == WALKING && walkingAnimation.stride() != STRIDE_MIDDLE);
+		polarStar.draw(graphics, horizontalFacing, verticalFacing, gunUp, x, y);
 		sprites[getSpriteState()]->draw(graphics, x, y);
 	}
 }
@@ -283,14 +284,20 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 	}
 }
 
-Player::SpriteState Player::getSpriteState(){
+Player::MotionType Player::motionType() const{
 	MotionType motion;
+
 	if (interacting) motion = INTERACTING;
 	else if (onGround) motion = accX == 0 ? STANDING : WALKING;
 	else motion = velY < 0.0 ? JUMPING : FALLING;
+	return motion;
+}
+
+Player::SpriteState Player::getSpriteState(){
+
 
 	return SpriteState(
-		motion,
+		motionType(),
 		horizontalFacing,
 		verticalFacing,
 		walkingAnimation.stride());

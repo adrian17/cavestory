@@ -90,6 +90,7 @@ private:
 	Units::Game x, y;
 	Units::Velocity velX = 0.0, velY = 0.0;
 	int accX = 0; //only >0, ==0, <0
+	MotionType motionType() const;
 	HorizontalFacing horizontalFacing = LEFT;
 	VerticalFacing verticalFacing = HORIZONTAL;
 	WalkingAnimation walkingAnimation;
