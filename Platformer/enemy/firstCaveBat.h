@@ -1,5 +1,6 @@
 #pragma once
 
+#include "damageText.h"
 #include "spriteState.h"
 #include "util/rectangle.h"
 #include "util/units.h"
@@ -26,20 +27,25 @@ public:
 		{ return Rectangle(x, y, Units::tileToGame(1), Units::tileToGame(1)); }
 
 	Units::HP getContactDamage() const;
-	void takeDamage(Units::HP damage){}
+	void takeDamage(Units::HP damage)
+		{ damageText.setDamage(damage); }
 private:
 	typedef std::tuple<HorizontalFacing> SpriteState;
 	SpriteState getSpriteState() const;
+
+	Units::Game centerX() const{ return x + Units::halfTile; }
+	Units::Game centerY() const{ return y + Units::halfTile; }
 
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
 	Units::Game x, y;
-	const Units::Game centerY;
+	const Units::Game flightCenterY;
 	Units::Degrees flightAngle = 0.0;
 
 	HorizontalFacing horizontalFacing = LEFT;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
+	DamageText damageText;
 };
 

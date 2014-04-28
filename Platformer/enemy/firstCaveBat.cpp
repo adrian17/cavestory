@@ -16,7 +16,7 @@ namespace {
 }
 
 FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
-	x(x), y(y), centerY(y)
+	x(x), y(y), flightCenterY(y)
 {
 	initSprites(graphics);
 }
@@ -29,13 +29,15 @@ void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 
 	horizontalFacing = x + Units::halfTile > playerX ? LEFT : RIGHT;
 
-	y = centerY + flightAmplitude * std::sin(Units::degreesToRadians(flightAngle));
+	y = flightCenterY + flightAmplitude * std::sin(Units::degreesToRadians(flightAngle));
 
 	sprites[getSpriteState()]->update();
+	damageText.update(dt);
 }
 
 void FirstCaveBat::draw(Graphics &graphics){
 	sprites[getSpriteState()]->draw(graphics, x, y);
+	damageText.draw(graphics, centerX(), centerY());
 }
 
 Units::HP FirstCaveBat::getContactDamage() const{
