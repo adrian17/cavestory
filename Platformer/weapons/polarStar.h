@@ -1,7 +1,7 @@
 #pragma once
 
-#include "projectile.h"
 #include "spriteState.h"
+#include "interfaces\projectile.h"
 #include "util\rectangle.h"
 #include "util\units.h"
 #include <map>

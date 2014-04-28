@@ -32,8 +32,10 @@ void Game::eventLoop(){
 	SDL_Event event;
 
 	player.reset(new Player(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2)));
+	damageTexts.addDamageable(player);
 	map.reset(Map::createTestMap(graphics));
 	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(8), Units::tileToGame(screenHeight / 2+1)));
+	damageTexts.addDamageable(bat);
 
 	Units::MS lastUpdateTime = SDL_GetTicks();
 	bool done = false;
@@ -91,7 +93,7 @@ void Game::eventLoop(){
 
 void Game::update(Units::MS dt){
 	Timer::updateAll(dt);
-	//map->update(dt);
+	damageTexts.update(dt);
 	player->update(dt, *map);
 	bat->update(dt, player->centerX());
 	
@@ -112,6 +114,7 @@ void Game::draw(Graphics &graphics){
 	bat->draw(graphics);
 	player->draw(graphics);
 	map->draw(graphics);
+	damageTexts.draw(graphics);
 	player->drawHUD(graphics);
 	graphics.flip();
 }

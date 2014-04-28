@@ -82,6 +82,7 @@
     <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="damageText.cpp" />
+    <ClCompile Include="damageTexts.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
     <ClCompile Include="player\playerHealth.cpp" />
     <ClCompile Include="player\playerWalkingAnimation.cpp" />
@@ -100,9 +101,11 @@
   <ItemGroup>
     <ClInclude Include="backdrop.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="interfaces\damageable.h" />
     <ClInclude Include="damageText.h" />
+    <ClInclude Include="damageTexts.h" />
     <ClInclude Include="enemy\firstCaveBat.h" />
-    <ClInclude Include="weapons\projectile.h" />
+    <ClInclude Include="interfaces\projectile.h" />
     <ClInclude Include="spriteState.h" />
     <ClInclude Include="weapons\polarStar.h" />
     <ClInclude Include="sprite\numberSprite.h" />

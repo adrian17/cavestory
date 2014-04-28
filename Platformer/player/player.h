@@ -2,6 +2,7 @@
 
 #include "damageText.h"
 #include "spriteState.h"
+#include "interfaces\damageable.h"
 #include "sprite\sprite.h"
 #include "sprite/varyingWidthSprite.h"
 #include "util\timer.h"
@@ -16,7 +17,7 @@ class Graphics;
 class Projectile;
 class Rectangle;
 
-class Player
+class Player : public Damageable
 {
 public:
 	Player(Graphics &graphics, Units::Game x, Units::Game y);
@@ -48,6 +49,7 @@ public:
 
 	Units::Game centerX() const{ return x + Units::halfTile; }
 	Units::Game centerY() const{ return y + Units::halfTile; }
+	std::shared_ptr<DamageText> getDamageText() { return damageText; }
 
 	std::vector<std::shared_ptr< ::Projectile>> getProjectiles(){
 		return polarStar.getProjectiles();
@@ -116,7 +118,7 @@ private:
 
 	Health health;
 	Timer invincibleTimer;
-	DamageText damageText;
+	std::shared_ptr<DamageText> damageText;
 
 	PolarStar polarStar;
 

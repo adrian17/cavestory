@@ -1,5 +1,6 @@
 #pragma once
 
+#include "damageTexts.h"
 #include "util\units.h"
 #include <memory>
 
@@ -19,7 +20,8 @@ private:
 	void update(Units::MS dt);
 	void draw(Graphics &graphics);
 
-	std::unique_ptr<Player> player;
+	std::shared_ptr<Player> player;
 	std::unique_ptr<Map> map;
-	std::unique_ptr<FirstCaveBat> bat;
+	std::shared_ptr<FirstCaveBat> bat;
+	DamageTexts damageTexts;
 };
