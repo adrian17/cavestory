@@ -23,7 +23,7 @@ public:
 	void clear();
 	void flip();
 
-	TextureID createTexture(const std::string &path, bool transparency = false);
+	TextureID createTexture(const std::string &relativePath, bool transparency = false);
 private:
 	std::map<std::string, TextureID> spriteSheets;
 

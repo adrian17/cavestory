@@ -1,5 +1,6 @@
 #include "graphics.h"
 
+#include "config.h"
 #include "SDL.h"
 
 Graphics::Graphics(){
@@ -14,7 +15,10 @@ Graphics::~Graphics(){
 	SDL_DestroyWindow(window);
 }
 
-Graphics::TextureID Graphics::createTexture(const std::string &path, bool transparency){
+Graphics::TextureID Graphics::createTexture(const std::string &relativePath, bool transparency){
+	const std::string path = Config::getGraphicsQuality() == Config::HIGH_QUALITY ?
+		"content/" + relativePath :
+		"content/ogph/" + relativePath;
 	if (spriteSheets.count(path) == false){
 		SDL_Surface *tempSurface = SDL_LoadBMP(path.c_str());
 		if (transparency){

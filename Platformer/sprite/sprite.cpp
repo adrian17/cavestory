@@ -2,11 +2,11 @@
 
 #include "graphics.h"
 
-Sprite::Sprite(Graphics &graphics, const std::string filePath, 
+Sprite::Sprite(Graphics &graphics, const std::string relativePath,
 	Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height)
 {
 	const bool transparency = true;
-	spriteSheet = graphics.createTexture(filePath, transparency);
+	spriteSheet = graphics.createTexture(relativePath, transparency);
 	sourceRect.x = srcX; sourceRect.y = srcY;
 	sourceRect.w = width; sourceRect.h = height;
 }

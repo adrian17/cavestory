@@ -4,9 +4,9 @@
 
 class VaryingWidthSprite : public Sprite{
 public:
-	VaryingWidthSprite(Graphics &graphics, const std::string filePath,
+	VaryingWidthSprite(Graphics &graphics, const std::string relativePath,
 		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height) :
-		Sprite(graphics, filePath, srcX, srcY, width, height)
+		Sprite(graphics, relativePath, srcX, srcY, width, height)
 	{
 
 	}

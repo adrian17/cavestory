@@ -1,5 +1,6 @@
 #pragma once
 
+#include "config.h"
 #include <cmath>
 
 namespace Units {
@@ -30,7 +31,9 @@ namespace Units {
 	}
 
 	inline Pixel gameToPixel(Game game){
-		return Pixel(round(game));
+		return Config::getGraphicsQuality() == Config::HIGH_QUALITY ?
+			Pixel(round(game)) :
+			Pixel(round(game) / 2);
 	}
 
 	inline Tile gameToTile(Game game){

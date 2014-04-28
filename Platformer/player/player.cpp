@@ -20,7 +20,7 @@ namespace {
 	const Units::Acceleration airAcceleration = 0.0003125;
 	const Units::Acceleration jumpGravity = 0.0003125;
 
-	const std::string spriteFilePath = "content/myChar.bmp";
+	const std::string spriteFilePath = "myChar.bmp";
 
 	const Units::Frame characterFrame = 0;
 

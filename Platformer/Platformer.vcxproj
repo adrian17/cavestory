@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="backdrop.cpp" />
+    <ClCompile Include="config.cpp" />
     <ClCompile Include="damageText.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
     <ClCompile Include="player\playerHealth.cpp" />
@@ -98,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backdrop.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="damageText.h" />
     <ClInclude Include="enemy\firstCaveBat.h" />
     <ClInclude Include="spriteState.h" />

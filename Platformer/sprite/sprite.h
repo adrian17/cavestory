@@ -9,7 +9,7 @@ class Graphics;
 class Sprite
 {
 public:
-	Sprite(Graphics &graphics, const std::string filePath,
+	Sprite(Graphics &graphics, const std::string relativePath,
 		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height);
 	virtual ~Sprite();
 

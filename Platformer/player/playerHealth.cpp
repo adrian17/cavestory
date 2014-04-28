@@ -4,7 +4,7 @@
 #include "sprite/numberSprite.h"
 
 namespace {
-	const std::string spritePath = "content/TextBox.bmp";
+	const std::string spritePath = "TextBox.bmp";
 
 	const Units::Game healthBarX = Units::tileToGame(1);
 	const Units::Game healthBarY = Units::tileToGame(2);

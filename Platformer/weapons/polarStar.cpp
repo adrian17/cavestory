@@ -4,7 +4,7 @@
 #include "sprite\sprite.h"
 
 namespace {
-	const std::string spritePath = "content/Arms.bmp";
+	const std::string spritePath = "Arms.bmp";
 	const int polarStarIndex = 2;
 	const Units::Pixel gunWidth = Units::gameToPixel(3 * Units::halfTile);
 	const Units::Pixel gunHeight = Units::gameToPixel(2 * Units::halfTile);
