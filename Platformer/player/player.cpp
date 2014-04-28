@@ -1,9 +1,11 @@
 #include "player.h"
 
 #include "map.h"
-#include "util/rectangle.h"
+#include "particle\headBumpParticle.h"
+#include "particle\particleSystem.h"
 #include "sprite/animatedSprite.h"
 #include "sprite/numberSprite.h"
+#include "util/rectangle.h"
 #include <algorithm>
 #include <cmath>
 
@@ -78,18 +80,18 @@ Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
 Player::~Player(){
 }
 
-void Player::update(Units::MS dt, const Map &map){
+void Player::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	sprites[getSpriteState()]->update();
 
 	health.update(dt);
 	walkingAnimation.update();
 	polarStar.updateProjectiles(dt, map);
 
-	updateX(dt, map);
-	updateY(dt, map);
+	updateX(dt, map, particleTools);
+	updateY(dt, map, particleTools);
 }
 
-void Player::updateX(Units::MS dt, const Map &map){
+void Player::updateX(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	Units::Acceleration acceleration = 0.0f;
 	if (accX < 0) acceleration = onGround ? -walkingAcceleration : -airAcceleration;
 	if (accX > 0) acceleration = onGround ? walkingAcceleration : airAcceleration;
@@ -131,7 +133,7 @@ void Player::updateX(Units::MS dt, const Map &map){
 	}
 }
 
-void Player::updateY(Units::MS dt, const Map &map){
+void Player::updateY(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	const Units::Acceleration grav = jumping && velY < 0.0f ? jumpGravity : gravity;
 	velY += grav * dt;
 	velY = std::min(velY, maxVelY);
@@ -152,11 +154,15 @@ void Player::updateY(Units::MS dt, const Map &map){
 		info = getWallCollisionInfo(map, topCollision(0));
 		if (info.collided){
 			y = Units::tileToGame(info.row) + collisionYHeight;
+			particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+				new HeadBumpParticle(particleTools.graphics, centerX(), y + collisionYTop)));
 		}
 	} else {
 		CollisionInfo info = getWallCollisionInfo(map, topCollision(delta));
 		if (info.collided){
 			y = Units::tileToGame(info.row) + collisionYHeight;
+			particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+				new HeadBumpParticle(particleTools.graphics, centerX(), y + collisionYTop)));
 			velY = 0.0;
 		}
 		else {

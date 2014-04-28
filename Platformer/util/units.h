@@ -30,6 +30,14 @@ namespace Units {
 		return deg * pi / 180.0;
 	}
 
+	inline Game sin(Degrees degrees){
+		return std::sin(degreesToRadians(degrees));
+	}
+
+	inline Game cos(Degrees degrees){
+		return std::cos(degreesToRadians(degrees));
+	}
+
 	inline Pixel gameToPixel(Game game){
 		return Config::getGraphicsQuality() == Config::HIGH_QUALITY ?
 			Pixel(round(game)) :

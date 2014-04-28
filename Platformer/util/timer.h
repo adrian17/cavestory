@@ -6,8 +6,9 @@
 class Timer
 {
 public:
-	Timer(Units::MS expirationTime) :
-		currentTime(expirationTime), expirationTime(expirationTime) 
+	Timer(Units::MS expirationTime, bool startNow = false) :
+		currentTime(startNow ? 0 : expirationTime),
+		expirationTime(expirationTime) 
 	{
 		timers.insert(this);
 	}

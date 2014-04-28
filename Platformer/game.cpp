@@ -8,6 +8,8 @@
 #include "util\timer.h"
 #include "SDL.h"
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 //#include <cstdio>
 
 namespace {
@@ -17,7 +19,7 @@ namespace {
 
 Game::Game(){
 	SDL_Init(SDL_INIT_EVERYTHING);
-
+	srand((unsigned int)time(nullptr));
 	eventLoop();
 }
 
@@ -77,7 +79,7 @@ void Game::eventLoop(){
 
 		const Units::MS currentTime = SDL_GetTicks();
 		const Units::MS dt = currentTime - lastUpdateTime;
-		update(std::min(dt, maxFrameTime));
+		update(std::min(dt, maxFrameTime), graphics);
 		lastUpdateTime = currentTime;
 		draw(graphics);
 
@@ -91,10 +93,13 @@ void Game::eventLoop(){
 	}
 }
 
-void Game::update(Units::MS dt){
+void Game::update(Units::MS dt, Graphics &graphics){
 	Timer::updateAll(dt);
+	particleSystem.update(dt);
 	damageTexts.update(dt);
-	player->update(dt, *map);
+
+	ParticleTools particleTools = {particleSystem, graphics};
+	player->update(dt, *map, particleTools);
 	if (bat){
 		if (bat->update(dt, player->centerX()) == false)
 			bat.reset();
@@ -119,6 +124,7 @@ void Game::draw(Graphics &graphics){
 		bat->draw(graphics);
 	player->draw(graphics);
 	map->draw(graphics);
+	particleSystem.draw(graphics);
 	damageTexts.draw(graphics);
 	player->drawHUD(graphics);
 	graphics.flip();

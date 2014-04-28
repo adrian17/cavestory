@@ -14,6 +14,7 @@
 
 class Map;
 class Graphics;
+class ParticleTools;
 class Projectile;
 class Rectangle;
 
@@ -23,9 +24,9 @@ public:
 	Player(Graphics &graphics, Units::Game x, Units::Game y);
 	~Player();
 
-	void update(Units::MS dt, const Map &map);
-	void updateX(Units::MS dt, const Map &map);
-	void updateY(Units::MS dt, const Map &map);
+	void update(Units::MS dt, const Map &map, ParticleTools &particleTools);
+	void updateX(Units::MS dt, const Map &map, ParticleTools &particleTools);
+	void updateY(Units::MS dt, const Map &map, ParticleTools &particleTools);
 	void draw(Graphics &graphics);
 	void drawHUD(Graphics &graphics);
 

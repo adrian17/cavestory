@@ -4,6 +4,8 @@
 #include "util\units.h"
 #include <memory>
 
+#include "particle\particleSystem.h"
+
 class FirstCaveBat;
 class Graphics;
 class Map;
@@ -17,11 +19,12 @@ public:
 private:
 	void eventLoop();
 
-	void update(Units::MS dt);
+	void update(Units::MS dt, Graphics &graphics);
 	void draw(Graphics &graphics);
 
 	std::shared_ptr<Player> player;
 	std::unique_ptr<Map> map;
 	std::shared_ptr<FirstCaveBat> bat;
 	DamageTexts damageTexts;
+	ParticleSystem particleSystem;
 };
