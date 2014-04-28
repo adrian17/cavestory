@@ -41,7 +41,7 @@ public:
 	void startJump();
 	void stopJump();
 
-	void startFire();
+	void startFire(ParticleTools &particleTools);
 	void stopFire();
 
 	void takeDamage(Units::HP damage);

@@ -11,6 +11,7 @@
 
 class Graphics;
 class Map;
+class ParticleTools;
 class Sprite;
 
 class PolarStar
@@ -19,11 +20,12 @@ public:
 	PolarStar(Graphics &graphics);
 
 	void startFire(Units::Game playerX, Units::Game playerY, 
-		HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp);
+		HorizontalFacing horizontalFacing, VerticalFacing verticalFacing,
+		bool gunUp, ParticleTools &particleTools);
 	void stopFire();
 
 	std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
-	void updateProjectiles(Units::MS dt, const Map &map);
+	void updateProjectiles(Units::MS dt, const Map &map, ParticleTools &particleTools);
 	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y);
 private:
 	typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteState;
@@ -31,8 +33,8 @@ private:
 	class Projectile : public ::Projectile{
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
-			Units::Game x, Units::Game y);
-		bool update(Units::MS dt, const Map &map);
+			Units::Game x, Units::Game y, ParticleTools &particleTools);
+		bool update(Units::MS dt, const Map &map, ParticleTools &particleTools);
 		void draw(Graphics &graphics);
 
 		Rectangle collisionRectangle() const;

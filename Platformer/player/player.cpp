@@ -85,7 +85,7 @@ void Player::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
 
 	health.update(dt);
 	walkingAnimation.update();
-	polarStar.updateProjectiles(dt, map);
+	polarStar.updateProjectiles(dt, map, particleTools);
 
 	updateX(dt, map, particleTools);
 	updateY(dt, map, particleTools);
@@ -237,8 +237,8 @@ void Player::stopJump(){
 	jumping = false;
 }
 
-void Player::startFire(){
-	polarStar.startFire(x, y, horizontalFacing, verticalFacing(), gunUp());
+void Player::startFire(ParticleTools &particleTools){
+	polarStar.startFire(x, y, horizontalFacing, verticalFacing(), gunUp(), particleTools);
 }
 
 void Player::stopFire(){

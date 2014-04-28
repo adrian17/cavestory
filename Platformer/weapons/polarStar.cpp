@@ -2,6 +2,8 @@
 
 #include "map.h"
 #include "graphics.h"
+#include "particle\particleSystem.h"
+#include "particle\projectileStarParticle.h"
 #include "sprite\sprite.h"
 
 namespace {
@@ -47,7 +49,8 @@ PolarStar::PolarStar(Graphics &graphics)
 }
 
 void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
-	HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp)
+	HorizontalFacing horizontalFacing, VerticalFacing verticalFacing,
+	bool gunUp, ParticleTools &particleTools)
 {
 	if (projectileA && projectileB) return;
 	Units::Game bulletX = gunX(horizontalFacing, playerX) - Units::halfTile;
@@ -68,11 +71,11 @@ void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
 	if(!projectileA)
 		projectileA.reset(new Projectile(
 			verticalFacing == HORIZONTAL ? horizontalBulletSprite : verticalBulletSprite,
-			horizontalFacing, verticalFacing, bulletX, bulletY));
+			horizontalFacing, verticalFacing, bulletX, bulletY, particleTools));
 	else if (!projectileB)
 		projectileB.reset(new Projectile(
 			verticalFacing == HORIZONTAL ? horizontalBulletSprite : verticalBulletSprite,
-			horizontalFacing, verticalFacing, bulletX, bulletY));
+			horizontalFacing, verticalFacing, bulletX, bulletY, particleTools));
 }
 
 void PolarStar::stopFire(){
@@ -86,13 +89,13 @@ std::vector<std::shared_ptr< ::Projectile>> PolarStar::getProjectiles(){
 	return projectiles;
 }
 
-void PolarStar::updateProjectiles(Units::MS dt, const Map &map){
+void PolarStar::updateProjectiles(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	if (projectileA){
-		if (projectileA->update(dt, map) == false)
+		if (projectileA->update(dt, map, particleTools) == false)
 			projectileA.reset();
 	}
 	if (projectileB){
-		if (projectileB->update(dt, map) == false)
+		if (projectileB->update(dt, map, particleTools) == false)
 			projectileB.reset();
 	}
 }
@@ -112,6 +115,7 @@ Units::Game PolarStar::gunX(HorizontalFacing horizontalFacing, Units::Game playe
 { 
 	return (horizontalFacing == LEFT) ? playerX - Units::halfTile : playerX;
 }
+
 Units::Game PolarStar::gunY(VerticalFacing verticalFacing, bool gunUp, Units::Game playerY){
 	Units::Game gunY = playerY;
 	if (verticalFacing == UP)
@@ -154,13 +158,13 @@ void PolarStar::initSprite(Graphics &graphics, const SpriteState spriteState){
 }
 
 PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
-	Units::Game x, Units::Game y) :
+	Units::Game x, Units::Game y, ParticleTools &particleTools) :
 	x(x), y(y), horizontalDirection(horizontalDirection), verticalDirection(verticalDirection), sprite(sprite)
 {
-
+	particleTools.system.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, x, y)));
 }
 
-bool PolarStar::Projectile::update(Units::MS dt, const Map &map){
+bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	offset += projectileVelocity * dt;
 
 	std::vector<Map::CollisionTile> collidingTiles = map.getCollidingTiles(collisionRectangle());
@@ -169,8 +173,14 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map){
 			return false;
 	}
 
-
-	return alive && offset < projectileMaxOffset;
+	if (!alive)
+		return false;
+	else if (offset >= projectileMaxOffset){
+		particleTools.system.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, getX(), getY())));
+		return false;
+	}
+	else
+		return true;
 }
 
 void PolarStar::Projectile::draw(Graphics &graphics){
