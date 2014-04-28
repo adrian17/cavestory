@@ -27,7 +27,7 @@ private:
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
 			Units::Game x, Units::Game y);
-		void update(Units::MS dt);
+		bool update(Units::MS dt);
 		void draw(Graphics &graphics);
 	private:
 		Units::Game x, y;

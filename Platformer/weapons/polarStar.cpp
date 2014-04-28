@@ -35,6 +35,7 @@ namespace {
 	const Units::Pixel verticalProjectileSourceX = Units::tileToPixel(9);
 
 	const Units::Velocity projectileVelocity = 0.6;
+	const Units::Game projectileMaxOffset = 7 * Units::halfTile;
 }
 
 PolarStar::PolarStar(Graphics &graphics)
@@ -69,8 +70,10 @@ void PolarStar::stopFire(){
 }
 
 void PolarStar::updateProjectiles(Units::MS dt){
-	if (projectile)
-		projectile->update(dt);
+	if (projectile){
+		if (projectile->update(dt) == false)
+			projectile.reset();
+	}
 }
 
 void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
@@ -134,8 +137,9 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 
 }
 
-void PolarStar::Projectile::update(Units::MS dt){
+bool PolarStar::Projectile::update(Units::MS dt){
 	offset += projectileVelocity * dt;
+	return offset < projectileMaxOffset;
 }
 
 void PolarStar::Projectile::draw(Graphics &graphics){
