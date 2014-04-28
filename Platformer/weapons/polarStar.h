@@ -1,12 +1,14 @@
 #pragma once
 
 #include "spriteState.h"
+#include "util\rectangle.h"
 #include "util\units.h"
 #include <map>
 #include <memory>
 #include <tuple>
 
 class Graphics;
+class Map;
 class Sprite;
 
 class PolarStar
@@ -18,7 +20,7 @@ public:
 		HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp);
 	void stopFire();
 
-	void updateProjectiles(Units::MS dt);
+	void updateProjectiles(Units::MS dt, const Map &map);
 	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y);
 private:
 	typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteState;
@@ -27,9 +29,12 @@ private:
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
 			Units::Game x, Units::Game y);
-		bool update(Units::MS dt);
+		bool update(Units::MS dt, const Map &map);
 		void draw(Graphics &graphics);
 	private:
+		Rectangle collisionRectangle() const;
+		Units::Game getX() const;
+		Units::Game getY() const;
 		Units::Game x, y;
 		Units::Game offset = 0;
 		HorizontalFacing horizontalDirection;

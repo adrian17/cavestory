@@ -1,5 +1,6 @@
 #include "polarStar.h"
 
+#include "map.h"
 #include "graphics.h"
 #include "sprite\sprite.h"
 
@@ -36,6 +37,8 @@ namespace {
 
 	const Units::Velocity projectileVelocity = 0.6;
 	const Units::Game projectileMaxOffset = 7 * Units::halfTile;
+
+	const Units::Game projectileWidth = 4.0;
 }
 
 PolarStar::PolarStar(Graphics &graphics)
@@ -76,13 +79,13 @@ void PolarStar::stopFire(){
 
 }
 
-void PolarStar::updateProjectiles(Units::MS dt){
+void PolarStar::updateProjectiles(Units::MS dt, const Map &map){
 	if (projectileA){
-		if (projectileA->update(dt) == false)
+		if (projectileA->update(dt, map) == false)
 			projectileA.reset();
 	}
 	if (projectileB){
-		if (projectileB->update(dt) == false)
+		if (projectileB->update(dt, map) == false)
 			projectileB.reset();
 	}
 }
@@ -150,15 +153,42 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 
 }
 
-bool PolarStar::Projectile::update(Units::MS dt){
+bool PolarStar::Projectile::update(Units::MS dt, const Map &map){
 	offset += projectileVelocity * dt;
+
+	std::vector<Map::CollisionTile> collidingTiles = map.getCollidingTiles(collisionRectangle());
+	for (auto&& tile : collidingTiles){
+		if (tile.tileType == Map::WALL_TILE)
+			return false;
+	}
+
+
 	return offset < projectileMaxOffset;
 }
 
 void PolarStar::Projectile::draw(Graphics &graphics){
-	Units::Game drawX = x, drawY = y;
-	if (verticalDirection == HORIZONTAL) drawX += (horizontalDirection == LEFT) ? -offset : offset;
-	else if (verticalDirection == UP) drawY -= offset;
-	else if (verticalDirection == DOWN) drawY += offset;
-	sprite->draw(graphics, drawX, drawY);
+	sprite->draw(graphics, getX(), getY());
+}
+
+Rectangle PolarStar::Projectile::collisionRectangle() const{
+	const Units::Game width = (verticalDirection == HORIZONTAL ? Units::tileToGame(1) : projectileWidth);
+	const Units::Game height = (verticalDirection != HORIZONTAL ? Units::tileToGame(1) : projectileWidth);
+	return Rectangle(
+		getX() + Units::halfTile - width / 2,
+		getY() + Units::halfTile - height / 2,
+		width, height);
+}
+
+Units::Game PolarStar::Projectile::getX() const{
+	if (verticalDirection == HORIZONTAL)
+		return x + (horizontalDirection == LEFT ? -offset : offset);
+	return x;
+}
+
+Units::Game PolarStar::Projectile::getY() const{
+	if (verticalDirection == UP)
+		return y - offset;
+	else if (verticalDirection == DOWN)
+		return y + offset;
+	return y;
 }
