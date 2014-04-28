@@ -17,7 +17,7 @@ namespace {
 	const Units::Game healthFillX = 5 * Units::halfTile;
 	const Units::Game healthFillY = Units::tileToGame(2);
 
-	const Units::Pixel maxFillWidth = Units::gameToPixel(5 * Units::halfTile - 2.0);
+	const Units::Game maxFillWidth = 5 * Units::halfTile - 2.0;
 
 	const Units::Pixel healthDamageSourceX = 0;
 	const Units::Pixel healthDamageSourceY = Units::tileToPixel(2);
@@ -42,7 +42,7 @@ Player::Health::Health(Graphics &graphics) :
 		healthBarSourceW, healthBarSourceH),
 	healthFillSprite(graphics, spritePath,
 		healthFillSourceX, healthFillSourceY,
-		maxFillWidth, healthFillSourceH),
+		Units::gameToPixel(maxFillWidth), healthFillSourceH),
 	damageFillSprite(graphics, spritePath,
 		healthDamageSourceX, healthDamageSourceY,
 		0, healthDamageSourceH),
