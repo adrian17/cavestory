@@ -79,6 +79,13 @@ void PolarStar::stopFire(){
 
 }
 
+std::vector<std::shared_ptr< ::Projectile>> PolarStar::getProjectiles(){
+	std::vector<std::shared_ptr< ::Projectile>> projectiles;
+	if(projectileA) projectiles.push_back(projectileA);
+	if(projectileB) projectiles.push_back(projectileB);
+	return projectiles;
+}
+
 void PolarStar::updateProjectiles(Units::MS dt, const Map &map){
 	if (projectileA){
 		if (projectileA->update(dt, map) == false)
@@ -163,7 +170,7 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map){
 	}
 
 
-	return offset < projectileMaxOffset;
+	return alive && offset < projectileMaxOffset;
 }
 
 void PolarStar::Projectile::draw(Graphics &graphics){

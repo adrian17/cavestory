@@ -94,6 +94,12 @@ void Game::update(Units::MS dt){
 	//map->update(dt);
 	player->update(dt, *map);
 	bat->update(dt, player->centerX());
+	
+	for (auto&& projectile : player->getProjectiles()){
+		if (bat->collisionRectangle().collidesWith(projectile->collisionRectangle()))
+			projectile->collideWithEnemy();
+	}
+
 	if (bat->damageRectangle().collidesWith(player->damageRectangle()))
 		player->takeDamage(bat->getContactDamage());
 }

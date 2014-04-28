@@ -19,9 +19,11 @@ public:
 	void update(Units::MS dt, Units::Game playerX);
 	void draw(Graphics &graphics);
 
-	Rectangle damageRectangle() const{
-		return Rectangle(x + Units::halfTile, y + Units::halfTile, 0, 0);
-	}
+	Rectangle damageRectangle() const
+		{ return Rectangle(x + Units::halfTile, y + Units::halfTile, 0, 0); }
+
+	Rectangle collisionRectangle() const
+		{ return Rectangle(x, y, Units::tileToGame(1), Units::tileToGame(1)); }
 
 	Units::HP getContactDamage() const;
 private:

@@ -13,6 +13,7 @@
 
 class Map;
 class Graphics;
+class Projectile;
 class Rectangle;
 
 class Player
@@ -44,8 +45,13 @@ public:
 	void takeDamage(Units::HP damage);
 
 	Rectangle damageRectangle() const;
+
 	Units::Game centerX() const{ return x + Units::halfTile; }
 	Units::Game centerY() const{ return y + Units::halfTile; }
+
+	std::vector<std::shared_ptr< ::Projectile>> getProjectiles(){
+		return polarStar.getProjectiles();
+	}
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE };
 	enum StrideType { STRIDE_MIDDLE, STRIDE_LEFT, STRIDE_RIGHT, LAST_STRIDE_TYPE };

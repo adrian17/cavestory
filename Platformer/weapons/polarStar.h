@@ -1,11 +1,13 @@
 #pragma once
 
+#include "projectile.h"
 #include "spriteState.h"
 #include "util\rectangle.h"
 #include "util\units.h"
 #include <map>
 #include <memory>
 #include <tuple>
+#include <vector>
 
 class Graphics;
 class Map;
@@ -20,19 +22,23 @@ public:
 		HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp);
 	void stopFire();
 
+	std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
 	void updateProjectiles(Units::MS dt, const Map &map);
 	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y);
 private:
 	typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteState;
 
-	class Projectile{
+	class Projectile : public ::Projectile{
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
 			Units::Game x, Units::Game y);
 		bool update(Units::MS dt, const Map &map);
 		void draw(Graphics &graphics);
-	private:
+
 		Rectangle collisionRectangle() const;
+		Units::HP contactDamage() const{ return 1; }
+		void collideWithEnemy(){ alive = false; }
+	private:
 		Units::Game getX() const;
 		Units::Game getY() const;
 		Units::Game x, y;
@@ -40,6 +46,7 @@ private:
 		HorizontalFacing horizontalDirection;
 		VerticalFacing verticalDirection;
 		std::shared_ptr<Sprite> sprite;
+		bool alive = true;
 	};
 
 	Units::Game gunX(HorizontalFacing horizontalFacing, Units::Game playerX);
