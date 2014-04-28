@@ -93,7 +93,9 @@ private:
 	int accX = 0; //only >0, ==0, <0
 	MotionType motionType() const;
 	HorizontalFacing horizontalFacing = LEFT;
-	VerticalFacing verticalFacing = HORIZONTAL;
+	VerticalFacing intendedVerticalFacing = HORIZONTAL;
+	VerticalFacing verticalFacing() const
+		{ return (onGround && intendedVerticalFacing == DOWN) ? HORIZONTAL : intendedVerticalFacing; }
 	WalkingAnimation walkingAnimation;
 	bool onGround = true;
 	bool jumping = false;

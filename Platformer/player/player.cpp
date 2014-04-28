@@ -166,7 +166,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible()){
 		bool gunUp = (motionType() == WALKING && walkingAnimation.stride() != STRIDE_MIDDLE);
-		polarStar.draw(graphics, horizontalFacing, verticalFacing, gunUp, x, y);
+		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp, x, y);
 		sprites[getSpriteState()]->draw(graphics, x, y);
 	}
 }
@@ -197,18 +197,18 @@ void Player::stopMoving(){
 }
 
 void Player::loopUp(){
-	verticalFacing = UP;
+	intendedVerticalFacing = UP;
 	interacting = false;
 }
 
 void Player::lookDown(){
-	if (verticalFacing == DOWN) return;
-	verticalFacing = DOWN;
+	if (intendedVerticalFacing == DOWN) return;
+	intendedVerticalFacing = DOWN;
 	interacting = (onGround && accX == 0) ? true : false;
 }
 
 void Player::lookHorizontal(){
-	verticalFacing = HORIZONTAL;
+	intendedVerticalFacing = HORIZONTAL;
 }
 
 void Player::startJump(){
@@ -268,7 +268,8 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 	else if (spriteMotionType == JUMPING) tileX = jumpFrame;
 	else if (spriteMotionType == FALLING) tileX = fallFrame;
 
-	tileX = spriteVerticalFacing == UP ? tileX + upFrameOffset : tileX;
+	if (spriteVerticalFacing == UP) tileX += upFrameOffset;
+	else if (spriteVerticalFacing == DOWN) tileX = downFrame;
 
 	if (spriteMotionType == WALKING){
 		if (strideType == STRIDE_LEFT) tileX += 1;
@@ -277,9 +278,6 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 			Units::tileToPixel(tileX), Units::tileToPixel(tileY),
 			Units::tileToPixel(1), Units::tileToPixel(1)));
 	} else {
-		if (spriteVerticalFacing == DOWN && (spriteMotionType == JUMPING || spriteMotionType == FALLING)){
-			tileX = downFrame;
-		}
 		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,
 			Units::tileToPixel(tileX), Units::tileToPixel(tileY),
 			Units::tileToPixel(1), Units::tileToPixel(1)));
@@ -301,7 +299,7 @@ Player::SpriteState Player::getSpriteState(){
 	return SpriteState(
 		motionType(),
 		horizontalFacing,
-		verticalFacing,
+		verticalFacing(),
 		walkingAnimation.stride());
 }
 
