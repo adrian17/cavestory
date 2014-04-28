@@ -60,16 +60,6 @@ namespace {
 	}
 }
 
-bool operator<(const Player::SpriteState &a, const Player::SpriteState &b){
-	if (a.motionType != b.motionType)
-		return a.motionType < b.motionType;
-	if (a.horizontalFacing != b.horizontalFacing)
-		return a.horizontalFacing < b.horizontalFacing;
-	if (a.verticalFacing != b.verticalFacing)
-		return a.verticalFacing < b.verticalFacing;
-	return false;
-}
-
 Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
 	x(x), y(y),
 	health(graphics),
@@ -260,9 +250,13 @@ void Player::initSprites(Graphics &graphics){
 }
 
 void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
-	Units::Tile tileY = spriteState.horizontalFacing == LEFT ? characterFrame : characterFrame + 1;
+	MotionType spriteMotionType = std::get<0>(spriteState);
+	HorizontalFacing spriteHorizontalFacing = std::get<1>(spriteState);
+	VerticalFacing spriteVerticalFacing = std::get<2>(spriteState);
+
+	Units::Tile tileY = spriteHorizontalFacing == LEFT ? characterFrame : characterFrame + 1;
 	Units::Tile tileX;
-	switch (spriteState.motionType){
+	switch (spriteMotionType){
 	case WALKING:
 		tileX = walkFrame;
 		break;
@@ -279,15 +273,15 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 		tileX = fallFrame;
 		break;
 	}
-	tileX = spriteState.verticalFacing == UP ? tileX + upFrameOffset : tileX;
+	tileX = spriteVerticalFacing == UP ? tileX + upFrameOffset : tileX;
 
-	if (spriteState.motionType == WALKING){
+	if (spriteMotionType == WALKING){
 		sprites[spriteState] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, spriteFilePath,
 			Units::tileToPixel(tileX), Units::tileToPixel(tileY),
 			Units::tileToPixel(1), Units::tileToPixel(1),
 			walkFps, nWalkFrames));
 	} else {
-		if (spriteState.verticalFacing == DOWN && (spriteState.motionType == JUMPING || spriteState.motionType == FALLING)){
+		if (spriteVerticalFacing == DOWN && (spriteMotionType == JUMPING || spriteMotionType == FALLING)){
 			tileX = downFrame;
 		}
 		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,

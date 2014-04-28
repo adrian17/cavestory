@@ -1,9 +1,11 @@
 #pragma once
 
+#include "spriteState.h"
 #include "util/rectangle.h"
 #include "util/units.h"
 #include <map>
 #include <memory>
+#include <tuple>
 
 class Graphics;
 class Sprite;
@@ -23,15 +25,7 @@ public:
 
 	Units::HP getContactDamage() const;
 private:
-	enum HorizontalFacing { LEFT, RIGHT, LAST_HORIZONTAL_FACING };
-	struct SpriteState{
-		SpriteState(HorizontalFacing horizontalFacing = LEFT) :
-			horizontalFacing(horizontalFacing){};
-		HorizontalFacing horizontalFacing;
-	};
-	friend bool operator<(const SpriteState &a, const SpriteState &b){
-		return a.horizontalFacing < b.horizontalFacing;
-	}
+	typedef std::tuple<HorizontalFacing> SpriteState;
 	SpriteState getSpriteState() const;
 
 	void initSprites(Graphics &graphics);

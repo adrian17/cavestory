@@ -9,9 +9,9 @@
 #include "weapons\polarStar.h"
 #include <map>
 #include <memory>
+#include <tuple>
 
 class Map;
-class NumberSprite;
 class Graphics;
 class Rectangle;
 
@@ -45,15 +45,7 @@ public:
 	Units::Game centerY() const{ return y + Units::halfTile; }
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE };
-
-	struct SpriteState{
-		SpriteState(MotionType motionType = STANDING, HorizontalFacing horizontalFacing = LEFT, VerticalFacing verticalFacing = HORIZONTAL) :
-			motionType(motionType), horizontalFacing(horizontalFacing), verticalFacing(verticalFacing) {};
-		MotionType motionType;
-		HorizontalFacing horizontalFacing;
-		VerticalFacing verticalFacing;
-	};
-	friend bool operator<(const SpriteState &a, const SpriteState &b);
+	typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing> SpriteState;
 	SpriteState getSpriteState();
 
 	struct Health {

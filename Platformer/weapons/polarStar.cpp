@@ -45,10 +45,13 @@ void PolarStar::initSprites(Graphics &graphics){
 }
 
 void PolarStar::initSprite(Graphics &graphics, const SpriteState spriteState){
-	Units::Pixel srcY = (spriteState.horizontalFacing == LEFT) ? leftOffset : rightOffset;
-	if (spriteState.verticalFacing == HORIZONTAL) srcY += horizontalOffset;
-	else if (spriteState.verticalFacing == UP) srcY += upOffset;
-	else if (spriteState.verticalFacing == DOWN) srcY += downOffset;
+	HorizontalFacing spriteHorizontalFacing = std::get<0>(spriteState);
+	VerticalFacing spriteVerticalFacing = std::get<1>(spriteState);
+
+	Units::Pixel srcY = (spriteHorizontalFacing == LEFT) ? leftOffset : rightOffset;
+	if (spriteVerticalFacing == HORIZONTAL) srcY += horizontalOffset;
+	else if (spriteVerticalFacing == UP) srcY += upOffset;
+	else if (spriteVerticalFacing == DOWN) srcY += downOffset;
 
 	spriteMap[spriteState] = std::shared_ptr<Sprite>(new Sprite(graphics, spritePath,
 		polarStarIndex*gunWidth, srcY,
