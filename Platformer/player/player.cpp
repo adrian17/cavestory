@@ -34,7 +34,15 @@ namespace {
 	const Units::Frame backFrame = 7;
 
 	const Rectangle collisionX(6.0, 10.0, 20.0, 12.0);
-	const Rectangle collisionY(10.0, 2.0, 12.0, 30.0);
+
+	const Units::Game collisionYTop = 2;
+	const Units::Game collisionYHeight = 30;
+	const Units::Game collisionYBottom = collisionYTop + collisionYHeight;
+
+	const Units::Game collisionYTopWidth = 18;
+	const Units::Game collisionYBottomWidth = 10;
+	const Units::Game collisionYTopLeft = (Units::tileToGame(1) - collisionYTopWidth) / 2;
+	const Units::Game collisionYBottomLeft = (Units::tileToGame(1) - collisionYBottomWidth) / 2;
 
 	const Units::MS invincibleTimeLimit = 3000;
 	const Units::MS invincibleFlashTime = 50;
@@ -133,7 +141,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 	if (delta > 0){
 		CollisionInfo info = getWallCollisionInfo(map, bottomCollision(delta));
 		if (info.collided){
-			y = Units::tileToGame(info.row) - collisionY.bottom();
+			y = Units::tileToGame(info.row) - collisionYBottom;
 			velY = 0.0;
 			onGround = true;
 		} else {
@@ -143,12 +151,12 @@ void Player::updateY(Units::MS dt, const Map &map){
 		//other dir
 		info = getWallCollisionInfo(map, topCollision(0));
 		if (info.collided){
-			y = Units::tileToGame(info.row) + collisionY.height();
+			y = Units::tileToGame(info.row) + collisionYHeight;
 		}
 	} else {
 		CollisionInfo info = getWallCollisionInfo(map, topCollision(delta));
 		if (info.collided){
-			y = Units::tileToGame(info.row) + collisionY.height();
+			y = Units::tileToGame(info.row) + collisionYHeight;
 			velY = 0.0;
 		}
 		else {
@@ -158,7 +166,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 		//other dir
 		info = getWallCollisionInfo(map, bottomCollision(0));
 		if (info.collided){
-			y = Units::tileToGame(info.row) - collisionY.bottom();
+			y = Units::tileToGame(info.row) - collisionYBottom;
 			onGround = true;
 		}
 	}
@@ -243,8 +251,8 @@ void Player::takeDamage(Units::HP damage){
 }
 
 Rectangle Player::damageRectangle() const{
-	return Rectangle(x + collisionX.left(), y + collisionY.top(),
-		collisionX.width(), collisionY.height());
+	return Rectangle(x + collisionX.left(), y + collisionYTop,
+		collisionX.width(), collisionYHeight);
 }
 
 void Player::initSprites(Graphics &graphics){
@@ -331,19 +339,19 @@ Rectangle Player::rightCollision(Units::Game delta) const{
 Rectangle Player::topCollision(Units::Game delta) const{
 	_ASSERT(delta <= 0);
 	return Rectangle(
-		x + collisionY.left(),
-		y + collisionY.top() + delta,
-		collisionY.width(),
-		collisionY.height() / 2 - delta);
+		x + collisionYTopLeft,
+		y + collisionYTop + delta,
+		collisionYTopWidth,
+		collisionYHeight / 2 - delta);
 }
 
 Rectangle Player::bottomCollision(Units::Game delta) const{
 	_ASSERT(delta >= 0);
 	return Rectangle(
-		x + collisionY.left(),
-		y + collisionY.top() + collisionY.height() / 2,
-		collisionY.width(),
-		collisionY.height() / 2 + delta);
+		x + collisionYBottomLeft,
+		y + collisionYTop + collisionYHeight / 2,
+		collisionYBottomWidth,
+		collisionYHeight / 2 + delta);
 }
 
 bool Player::spriteIsVisible() const{

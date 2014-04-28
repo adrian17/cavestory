@@ -33,6 +33,9 @@ Map* Map::createTestMap(Graphics &graphics){
 	map->tiles[9][4] = tile;
 	map->tiles[8][7] = tile;
 
+	map->tiles[9][15] = tile;
+	map->tiles[7][15] = tile;
+
 	std::shared_ptr<Sprite> chain_top(new Sprite(graphics, "stage/PrtCave.bmp",
 		Units::tileToPixel(11), Units::tileToPixel(2),
 		Units::tileToPixel(1), Units::tileToPixel(1)));
