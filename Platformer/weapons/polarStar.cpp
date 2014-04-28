@@ -33,6 +33,8 @@ namespace {
 	const Units::Pixel projectileSourceY = Units::tileToPixel(2);
 	const Units::Pixel horizontalProjectileSourceX = Units::tileToPixel(8);
 	const Units::Pixel verticalProjectileSourceX = Units::tileToPixel(9);
+
+	const Units::Velocity projectileVelocity = 0.6;
 }
 
 PolarStar::PolarStar(Graphics &graphics)
@@ -64,6 +66,11 @@ void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
 
 void PolarStar::stopFire(){
 
+}
+
+void PolarStar::updateProjectiles(Units::MS dt){
+	if (projectile)
+		projectile->update(dt);
 }
 
 void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
@@ -127,6 +134,14 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 
 }
 
+void PolarStar::Projectile::update(Units::MS dt){
+	offset += projectileVelocity * dt;
+}
+
 void PolarStar::Projectile::draw(Graphics &graphics){
-	sprite->draw(graphics, x, y);
+	Units::Game drawX = x, drawY = y;
+	if (verticalDirection == HORIZONTAL) drawX += (horizontalDirection == LEFT) ? -offset : offset;
+	else if (verticalDirection == UP) drawY -= offset;
+	else if (verticalDirection == DOWN) drawY += offset;
+	sprite->draw(graphics, drawX, drawY);
 }

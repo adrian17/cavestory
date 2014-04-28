@@ -18,6 +18,7 @@ public:
 		HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp);
 	void stopFire();
 
+	void updateProjectiles(Units::MS dt);
 	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y);
 private:
 	typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteState;
@@ -26,6 +27,7 @@ private:
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
 			Units::Game x, Units::Game y);
+		void update(Units::MS dt);
 		void draw(Graphics &graphics);
 	private:
 		Units::Game x, y;

@@ -75,6 +75,7 @@ void Player::update(Units::MS dt, const Map &map){
 	health.update(dt);
 	walkingAnimation.update();
 	damageText.update(dt);
+	polarStar.updateProjectiles(dt);
 
 	updateX(dt, map);
 	updateY(dt, map);
