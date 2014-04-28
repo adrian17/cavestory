@@ -30,7 +30,12 @@ void DamageText::update(Units::MS dt){
 		offsetY = std::max(-Units::tileToGame(1), offsetY + velocity * dt);
 }
 
-void DamageText::draw(Graphics &graphics, Units::Game centerX, Units::Game centerY){
+void DamageText::setPosition(Units::Game centerX, Units::Game centerY){
+	this->centerX = centerX;
+	this->centerY = centerY;
+}
+
+void DamageText::draw(Graphics &graphics){
 	if (timer.expired()) return;
 	NumberSprite::DamageNumber(graphics, damage).drawCentered(graphics, centerX, centerY+offsetY);
 }

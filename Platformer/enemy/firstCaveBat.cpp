@@ -33,11 +33,12 @@ void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 
 	sprites[getSpriteState()]->update();
 	damageText.update(dt);
+	damageText.setPosition(centerX(), centerY());
 }
 
 void FirstCaveBat::draw(Graphics &graphics){
 	sprites[getSpriteState()]->draw(graphics, x, y);
-	damageText.draw(graphics, centerX(), centerY());
+	damageText.draw(graphics);
 }
 
 Units::HP FirstCaveBat::getContactDamage() const{

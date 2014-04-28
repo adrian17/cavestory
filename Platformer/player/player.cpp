@@ -75,6 +75,7 @@ void Player::update(Units::MS dt, const Map &map){
 	health.update(dt);
 	walkingAnimation.update();
 	damageText.update(dt);
+	damageText.setPosition(centerX(), centerY());
 	polarStar.updateProjectiles(dt, map);
 
 	updateX(dt, map);
@@ -175,7 +176,7 @@ void Player::drawHUD(Graphics &graphics){
 	if (spriteIsVisible()){
 		health.draw(graphics);
 	}
-	damageText.draw(graphics, centerX(), centerY());
+	damageText.draw(graphics);
 }
 
 void Player::startMovingLeft(){
