@@ -22,12 +22,13 @@ void DamageText::setDamage(Units::HP newDamage){
 	timer.reset();
 }
 
-void DamageText::update(Units::MS dt){
+bool DamageText::update(Units::MS dt){
 	if (timer.expired()) {
 		damage = 0;
 	}
 	else if(rises)
 		offsetY = std::max(-Units::tileToGame(1), offsetY + velocity * dt);
+	return !timer.expired();
 }
 
 void DamageText::setPosition(Units::Game centerX, Units::Game centerY){

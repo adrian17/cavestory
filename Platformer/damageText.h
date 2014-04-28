@@ -11,7 +11,7 @@ public:
 	DamageText();
 
 	void setDamage(Units::HP damage);
-	void update(Units::MS dt);
+	bool update(Units::MS dt);
 	void setPosition(Units::Game centerX, Units::Game centerY);
 	void draw(Graphics &graphics);
 private:

@@ -26,7 +26,7 @@ FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
 FirstCaveBat::~FirstCaveBat(){
 }
 
-void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
+bool FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 	flightAngle += angularVelocity * dt;
 
 	horizontalFacing = x + Units::halfTile > playerX ? LEFT : RIGHT;
@@ -34,6 +34,7 @@ void FirstCaveBat::update(Units::MS dt, Units::Game playerX){
 	y = flightCenterY + flightAmplitude * std::sin(Units::degreesToRadians(flightAngle));
 
 	sprites[getSpriteState()]->update();
+	return alive;
 }
 
 void FirstCaveBat::draw(Graphics &graphics){

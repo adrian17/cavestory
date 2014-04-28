@@ -18,7 +18,7 @@ public:
 	FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y);
 	~FirstCaveBat();
 
-	void update(Units::MS dt, Units::Game playerX);
+	bool update(Units::MS dt, Units::Game playerX);
 	void draw(Graphics &graphics);
 
 	Rectangle damageRectangle() const
@@ -28,8 +28,10 @@ public:
 		{ return Rectangle(x, y, Units::tileToGame(1), Units::tileToGame(1)); }
 
 	Units::HP getContactDamage() const;
-	void takeDamage(Units::HP damage)
-		{ damageText->setDamage(damage); }
+	void takeDamage(Units::HP damage){
+		damageText->setDamage(damage);
+		alive = false;
+	}
 
 	Units::Game centerX() const{ return x + Units::halfTile; }
 	Units::Game centerY() const{ return y + Units::halfTile; }
@@ -41,6 +43,7 @@ private:
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
+	bool alive = true;
 	Units::Game x, y;
 	const Units::Game flightCenterY;
 	Units::Degrees flightAngle = 0.0;

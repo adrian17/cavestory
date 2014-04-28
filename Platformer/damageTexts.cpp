@@ -4,12 +4,15 @@
 #include "damageText.h"
 
 void DamageTexts::update(Units::MS dt){
-	for (auto&& kv : damageTextMap){
-		if (!kv.second.expired()){
-			std::shared_ptr<Damageable> damageable(kv.second);
-			kv.first->setPosition(damageable->centerX(), damageable->centerY());
+	for (auto iter = damageTextMap.begin(); iter != damageTextMap.end();){
+		if (!iter->second.expired()){
+			std::shared_ptr<Damageable> damageable(iter->second);
+			iter->first->setPosition(damageable->centerX(), damageable->centerY());
 		}
-		kv.first->update(dt);
+		if (iter->first->update(dt) || !iter->second.expired())
+			++iter;
+		else
+			damageTextMap.erase(iter++);
 
 	}
 }

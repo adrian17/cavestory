@@ -95,23 +95,28 @@ void Game::update(Units::MS dt){
 	Timer::updateAll(dt);
 	damageTexts.update(dt);
 	player->update(dt, *map);
-	bat->update(dt, player->centerX());
+	if (bat){
+		if (bat->update(dt, player->centerX()) == false)
+			bat.reset();
+	}
 	
 	for (auto&& projectile : player->getProjectiles()){
 		if (bat->collisionRectangle().collidesWith(projectile->collisionRectangle())){
 			projectile->collideWithEnemy();
-			bat->takeDamage(projectile->contactDamage());
+			if (bat)
+				bat->takeDamage(projectile->contactDamage());
 		}
 	}
 
-	if (bat->damageRectangle().collidesWith(player->damageRectangle()))
+	if (bat && bat->damageRectangle().collidesWith(player->damageRectangle()))
 		player->takeDamage(bat->getContactDamage());
 }
 
 void Game::draw(Graphics &graphics){
 	graphics.clear();
 	map->drawBackground(graphics);
-	bat->draw(graphics);
+	if (bat)
+		bat->draw(graphics);
 	player->draw(graphics);
 	map->draw(graphics);
 	damageTexts.draw(graphics);
