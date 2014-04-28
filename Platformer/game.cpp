@@ -70,6 +70,9 @@ void Game::eventLoop(){
 		if (input.wasKeyPressed(SDLK_z)) player->startJump();
 		else if (input.wasKeyReleased(SDLK_z)) player->stopJump();
 
+		if (input.wasKeyPressed(SDLK_x)) player->startFire();
+		else if (input.wasKeyReleased(SDLK_x)) player->stopFire();
+
 		const Units::MS currentTime = SDL_GetTicks();
 		const Units::MS dt = currentTime - lastUpdateTime;
 		update(std::min(dt, maxFrameTime));

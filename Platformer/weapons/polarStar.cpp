@@ -40,38 +40,54 @@ PolarStar::PolarStar(Graphics &graphics)
 	initSprites(graphics);
 }
 
-PolarStar::~PolarStar()
+void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
+	HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp)
 {
-}
-
-void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
-	Units::Game x, Units::Game y){
-	if (horizontalFacing == LEFT)
-		x -= Units::halfTile;
-	if (verticalFacing == UP)
-		y -= Units::halfTile / 2;
-	if (verticalFacing == DOWN)
-		y += Units::halfTile / 2;
-	if (gunUp)
-		y -= 2.0;
-	spriteMap[SpriteState(horizontalFacing, verticalFacing)]->draw(graphics, x, y);
-
-	Units::Game bulletX = x - Units::halfTile;
-	Units::Game bulletY = y - Units::halfTile;
+	Units::Game bulletX = gunX(horizontalFacing, playerX) - Units::halfTile;
+	Units::Game bulletY = gunY(verticalFacing, gunUp, playerY) - Units::halfTile;
 	if (verticalFacing == HORIZONTAL) {
 		bulletY += nozzleHorizontalY;
 		bulletX += horizontalFacing == LEFT ? nozzleHorizontalLeftX : nozzleHorizontalRightX;
-	} else if (verticalFacing == UP) {
+	}
+	else if (verticalFacing == UP) {
 		bulletY += nozzleUpY;
 		bulletX += horizontalFacing == LEFT ? nozzleUpLeftX : nozzleUpRightX;
-	} else if (verticalFacing == DOWN) {
+	}
+	else if (verticalFacing == DOWN) {
 		bulletY += nozzleDownY;
 		bulletX += horizontalFacing == LEFT ? nozzleDownLeftX : nozzleDownRightX;
 	}
-	if (verticalFacing == HORIZONTAL)
-		horizontalBulletSprite->draw(graphics, bulletX, bulletY);
-	else
-		verticalBulletSprite->draw(graphics, bulletX, bulletY);
+	projectile.reset(new Projectile(
+		verticalFacing == HORIZONTAL ? horizontalBulletSprite : verticalBulletSprite,
+		horizontalFacing, verticalFacing, bulletX, bulletY));
+}
+
+void PolarStar::stopFire(){
+
+}
+
+void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
+		Units::Game playerX, Units::Game playerY){
+	Units::Game x = gunX(horizontalFacing, playerX);
+	Units::Game y = gunY(verticalFacing, gunUp, playerY);
+	spriteMap[SpriteState(horizontalFacing, verticalFacing)]->draw(graphics, x, y);
+	if(projectile)
+		projectile->draw(graphics);
+}
+
+Units::Game PolarStar::gunX(HorizontalFacing horizontalFacing, Units::Game playerX)
+{ 
+	return (horizontalFacing == LEFT) ? playerX - Units::halfTile : playerX;
+}
+Units::Game PolarStar::gunY(VerticalFacing verticalFacing, bool gunUp, Units::Game playerY){
+	Units::Game gunY = playerY;
+	if (verticalFacing == UP)
+		gunY -= Units::halfTile / 2;
+	else if (verticalFacing == DOWN)
+		gunY += Units::halfTile / 2;
+	if (gunUp)
+		gunY -= 2.0;
+	return gunY;
 }
 
 void PolarStar::initSprites(Graphics &graphics){
@@ -102,4 +118,15 @@ void PolarStar::initSprite(Graphics &graphics, const SpriteState spriteState){
 	spriteMap[spriteState].reset(new Sprite(graphics, spritePath,
 		polarStarIndex*gunWidth, srcY,
 		gunWidth, gunHeight));
+}
+
+PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
+	Units::Game x, Units::Game y) :
+	x(x), y(y), horizontalDirection(horizontalDirection), verticalDirection(verticalDirection), sprite(sprite)
+{
+
+}
+
+void PolarStar::Projectile::draw(Graphics &graphics){
+	sprite->draw(graphics, x, y);
 }

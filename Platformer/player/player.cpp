@@ -165,8 +165,7 @@ void Player::updateY(Units::MS dt, const Map &map){
 
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible()){
-		bool gunUp = (motionType() == WALKING && walkingAnimation.stride() != STRIDE_MIDDLE);
-		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp, x, y);
+		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp(), x, y);
 		sprites[getSpriteState()]->draw(graphics, x, y);
 	}
 }
@@ -222,6 +221,14 @@ void Player::startJump(){
 
 void Player::stopJump(){
 	jumping = false;
+}
+
+void Player::startFire(){
+	polarStar.startFire(x, y, horizontalFacing, verticalFacing(), gunUp());
+}
+
+void Player::stopFire(){
+	polarStar.stopFire();
 }
 
 void Player::takeDamage(Units::HP damage){

@@ -38,6 +38,9 @@ public:
 	void startJump();
 	void stopJump();
 
+	void startFire();
+	void stopFire();
+
 	void takeDamage(Units::HP damage);
 
 	Rectangle damageRectangle() const;
@@ -97,6 +100,10 @@ private:
 	VerticalFacing verticalFacing() const
 		{ return (onGround && intendedVerticalFacing == DOWN) ? HORIZONTAL : intendedVerticalFacing; }
 	WalkingAnimation walkingAnimation;
+
+	bool gunUp() const 
+		{ return (motionType() == WALKING && walkingAnimation.stride() != STRIDE_MIDDLE); }
+
 	bool onGround = true;
 	bool jumping = false;
 	bool interacting = false;
