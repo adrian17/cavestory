@@ -15,14 +15,19 @@ DamageText::DamageText() :
 }
 
 void DamageText::setDamage(Units::HP newDamage){
-	damage = newDamage;
-	offsetY = 0.0;
+	rises = (damage == 0);
+	if (rises)
+		offsetY = 0.0;
+	damage += newDamage;
 	timer.reset();
 }
 
 void DamageText::update(Units::MS dt){
-	if (timer.expired()) return;
-	offsetY = std::max(-Units::tileToGame(1), offsetY + velocity * dt);
+	if (timer.expired()) {
+		damage = 0;
+	}
+	else if(rises)
+		offsetY = std::max(-Units::tileToGame(1), offsetY + velocity * dt);
 }
 
 void DamageText::draw(Graphics &graphics, Units::Game centerX, Units::Game centerY){

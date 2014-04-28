@@ -17,5 +17,6 @@ private:
 	Units::HP damage = 0;
 	Units::Game offsetY = 0.0;
 	Timer timer;
+	bool rises = true;
 };
 
