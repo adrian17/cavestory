@@ -46,6 +46,7 @@ PolarStar::PolarStar(Graphics &graphics)
 void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
 	HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp)
 {
+	if (projectileA && projectileB) return;
 	Units::Game bulletX = gunX(horizontalFacing, playerX) - Units::halfTile;
 	Units::Game bulletY = gunY(verticalFacing, gunUp, playerY) - Units::halfTile;
 	if (verticalFacing == HORIZONTAL) {
@@ -60,9 +61,15 @@ void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
 		bulletY += nozzleDownY;
 		bulletX += horizontalFacing == LEFT ? nozzleDownLeftX : nozzleDownRightX;
 	}
-	projectile.reset(new Projectile(
-		verticalFacing == HORIZONTAL ? horizontalBulletSprite : verticalBulletSprite,
-		horizontalFacing, verticalFacing, bulletX, bulletY));
+
+	if(!projectileA)
+		projectileA.reset(new Projectile(
+			verticalFacing == HORIZONTAL ? horizontalBulletSprite : verticalBulletSprite,
+			horizontalFacing, verticalFacing, bulletX, bulletY));
+	else if (!projectileB)
+		projectileB.reset(new Projectile(
+			verticalFacing == HORIZONTAL ? horizontalBulletSprite : verticalBulletSprite,
+			horizontalFacing, verticalFacing, bulletX, bulletY));
 }
 
 void PolarStar::stopFire(){
@@ -70,9 +77,13 @@ void PolarStar::stopFire(){
 }
 
 void PolarStar::updateProjectiles(Units::MS dt){
-	if (projectile){
-		if (projectile->update(dt) == false)
-			projectile.reset();
+	if (projectileA){
+		if (projectileA->update(dt) == false)
+			projectileA.reset();
+	}
+	if (projectileB){
+		if (projectileB->update(dt) == false)
+			projectileB.reset();
 	}
 }
 
@@ -81,8 +92,10 @@ void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, Vert
 	Units::Game x = gunX(horizontalFacing, playerX);
 	Units::Game y = gunY(verticalFacing, gunUp, playerY);
 	spriteMap[SpriteState(horizontalFacing, verticalFacing)]->draw(graphics, x, y);
-	if(projectile)
-		projectile->draw(graphics);
+	if(projectileA)
+		projectileA->draw(graphics);
+	if (projectileB)
+		projectileB->draw(graphics);
 }
 
 Units::Game PolarStar::gunX(HorizontalFacing horizontalFacing, Units::Game playerX)
