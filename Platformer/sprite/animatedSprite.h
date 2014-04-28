@@ -12,8 +12,11 @@ public:
 	~AnimatedSprite();
 
 	void update();
+	int completedLoops() const 
+		{ return nCompletedLoops; }
 private:
 	const Units::Frame nFrames;
 	Units::Frame currentFrame = 0;
 	Timer frameTimer;
+	int nCompletedLoops = 0;
 };

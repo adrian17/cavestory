@@ -21,6 +21,7 @@ void AnimatedSprite::update(){
 		} else {
 			sourceRect.x -= sourceRect.w * (nFrames - 1);
 			currentFrame = 0;
+			nCompletedLoops++;
 		}
 	}
 }

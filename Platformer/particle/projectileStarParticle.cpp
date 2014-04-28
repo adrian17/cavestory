@@ -20,7 +20,7 @@ ProjectileStarParticle::ProjectileStarParticle(Graphics &graphics, Units::Game x
 
 bool ProjectileStarParticle::update(Units::MS dt){
 	sprite.update();
-	return true;
+	return sprite.completedLoops() == 0;
 }
 
 void ProjectileStarParticle::draw(Graphics &graphics){
