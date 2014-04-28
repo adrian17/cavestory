@@ -3,10 +3,10 @@
 #include "graphics.h"
 #include "input.h"
 #include "map.h"
-#include "player.h"
-#include "SDL.h"
 #include "enemy\firstCaveBat.h"
+#include "player/player.h"
 #include "util\timer.h"
+#include "SDL.h"
 #include <algorithm>
 //#include <cstdio>
 

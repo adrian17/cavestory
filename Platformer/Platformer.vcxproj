@@ -82,7 +82,8 @@
     <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="damageText.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
-    <ClCompile Include="playerHealth.cpp" />
+    <ClCompile Include="player\playerHealth.cpp" />
+    <ClCompile Include="player\playerWalkingAnimation.cpp" />
     <ClCompile Include="weapons\polarStar.cpp" />
     <ClCompile Include="sprite\numberSprite.cpp" />
     <ClCompile Include="sprite\animatedSprite.cpp" />
@@ -91,7 +92,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="player.cpp" />
+    <ClCompile Include="player\player.cpp" />
     <ClCompile Include="sprite\sprite.cpp" />
     <ClCompile Include="util\timer.cpp" />
   </ItemGroup>
@@ -110,7 +111,7 @@
     <ClInclude Include="graphics.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="map.h" />
-    <ClInclude Include="player.h" />
+    <ClInclude Include="player\player.h" />
     <ClInclude Include="sprite\sprite.h" />
     <ClInclude Include="util\units.h" />
   </ItemGroup>

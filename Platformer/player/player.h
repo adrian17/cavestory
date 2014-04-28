@@ -45,8 +45,20 @@ public:
 	Units::Game centerY() const{ return y + Units::halfTile; }
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE };
-	typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing> SpriteState;
+	enum StrideType { STRIDE_MIDDLE, STRIDE_LEFT, STRIDE_RIGHT, LAST_STRIDE_TYPE };
+
+	typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing, StrideType> SpriteState;
 	SpriteState getSpriteState();
+
+	struct WalkingAnimation{
+		WalkingAnimation();
+		StrideType stride() const;
+		void update();
+	private:
+		Units::Frame currentFrame = 0;
+		Timer frameTimer;
+		bool forward = true;
+	};
 
 	struct Health {
 		Health(Graphics &graphics);
@@ -80,6 +92,7 @@ private:
 	int accX = 0; //only >0, ==0, <0
 	HorizontalFacing horizontalFacing = LEFT;
 	VerticalFacing verticalFacing = HORIZONTAL;
+	WalkingAnimation walkingAnimation;
 	bool onGround = true;
 	bool jumping = false;
 	bool interacting = false;

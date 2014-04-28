@@ -33,9 +33,6 @@ namespace {
 	const Units::Frame downFrame = 6;
 	const Units::Frame backFrame = 7;
 
-	const Units::MS walkFps = 15;	//animation
-	const Units::Frame nWalkFrames = 3;
-
 	const Rectangle collisionX(6.0, 10.0, 20.0, 12.0);
 	const Rectangle collisionY(10.0, 2.0, 12.0, 30.0);
 
@@ -76,6 +73,7 @@ void Player::update(Units::MS dt, const Map &map){
 	sprites[getSpriteState()]->update(dt);
 
 	health.update(dt);
+	walkingAnimation.update();
 	damageText.update(dt);
 
 	updateX(dt, map);
@@ -243,7 +241,10 @@ void Player::initSprites(Graphics &graphics){
 	for (int motionType = 0; motionType < LAST_MOTION_TYPE; ++motionType){
 		for (int horizontalFacing = 0; horizontalFacing < LAST_HORIZONTAL_FACING; ++horizontalFacing){
 			for (int verticalFacing = 0; verticalFacing < LAST_VERTICAL_FACING; ++verticalFacing){
-				initSprite(graphics, SpriteState((MotionType)motionType, (HorizontalFacing)horizontalFacing, (VerticalFacing)verticalFacing));
+				for (int strideType = 0; strideType < LAST_STRIDE_TYPE; ++strideType){
+					initSprite(graphics, SpriteState((MotionType)motionType, (HorizontalFacing)horizontalFacing, 
+						(VerticalFacing)verticalFacing, (StrideType)strideType));
+				}
 			}
 		}
 	}
@@ -253,33 +254,25 @@ void Player::initSprite(Graphics &graphics, const SpriteState spriteState){
 	MotionType spriteMotionType = std::get<0>(spriteState);
 	HorizontalFacing spriteHorizontalFacing = std::get<1>(spriteState);
 	VerticalFacing spriteVerticalFacing = std::get<2>(spriteState);
+	StrideType strideType = std::get<3>(spriteState);
 
 	Units::Tile tileY = spriteHorizontalFacing == LEFT ? characterFrame : characterFrame + 1;
 	Units::Tile tileX;
-	switch (spriteMotionType){
-	case WALKING:
-		tileX = walkFrame;
-		break;
-	case STANDING:
-		tileX = standFrame;
-		break;
-	case INTERACTING:
-		tileX = backFrame;
-		break;
-	case JUMPING:
-		tileX = jumpFrame;
-		break;
-	case FALLING:
-		tileX = fallFrame;
-		break;
-	}
+
+	if (spriteMotionType == WALKING) tileX = walkFrame;
+	else if (spriteMotionType == STANDING) tileX = standFrame;
+	else if (spriteMotionType == INTERACTING) tileX = backFrame;
+	else if (spriteMotionType == JUMPING) tileX = jumpFrame;
+	else if (spriteMotionType == FALLING) tileX = fallFrame;
+
 	tileX = spriteVerticalFacing == UP ? tileX + upFrameOffset : tileX;
 
 	if (spriteMotionType == WALKING){
-		sprites[spriteState] = std::unique_ptr<Sprite>(new AnimatedSprite(graphics, spriteFilePath,
+		if (strideType == STRIDE_LEFT) tileX += 1;
+		else if (strideType == STRIDE_RIGHT) tileX += 2;
+		sprites[spriteState] = std::unique_ptr<Sprite>(new Sprite(graphics, spriteFilePath,
 			Units::tileToPixel(tileX), Units::tileToPixel(tileY),
-			Units::tileToPixel(1), Units::tileToPixel(1),
-			walkFps, nWalkFrames));
+			Units::tileToPixel(1), Units::tileToPixel(1)));
 	} else {
 		if (spriteVerticalFacing == DOWN && (spriteMotionType == JUMPING || spriteMotionType == FALLING)){
 			tileX = downFrame;
@@ -299,7 +292,8 @@ Player::SpriteState Player::getSpriteState(){
 	return SpriteState(
 		motion,
 		horizontalFacing,
-		verticalFacing);
+		verticalFacing,
+		walkingAnimation.stride());
 }
 
 Rectangle Player::leftCollision(Units::Game delta) const{
