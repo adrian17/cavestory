@@ -9,5 +9,7 @@ public:
 	virtual Rectangle collisionRectangle() const = 0;
 	virtual Units::HP contactDamage() const = 0;
 	virtual void collideWithEnemy() = 0;
-	virtual ~Projectile() {}
+	virtual ~Projectile() = 0;
 };
+
+inline Projectile::~Projectile(){}
