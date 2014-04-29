@@ -61,11 +61,12 @@ void Player::Health::update(Units::MS dt){
 
 void Player::Health::draw(Graphics &graphics){
 	healthBarSprite.draw(graphics, healthBarX, healthBarY);
-	healthFillSprite.draw(graphics, healthFillX, healthFillY);
 
 	if (damageTaken > 0){
-		damageFillSprite.draw(graphics, healthFillX + fillOffset(currentHealth - damageTaken), healthFillY);
+		damageFillSprite.draw(graphics, healthFillX, healthFillY);
 	}
+
+	healthFillSprite.draw(graphics, healthFillX, healthFillY);
 
 	NumberSprite::HUDNumber(graphics, currentHealth, numDigits).draw(graphics, healthNumberX, healthNumberY);
 }
@@ -74,7 +75,7 @@ bool Player::Health::takeDamage(Units::HP damage){
 	damageTaken = damage;
 	damageTimer.reset();
 	healthFillSprite.setWidth(Units::gameToPixel(fillOffset(currentHealth - damage)));
-	damageFillSprite.setWidth(Units::gameToPixel(fillOffset(damage)));
+	damageFillSprite.setWidth(Units::gameToPixel(fillOffset(currentHealth)));
 	return false;
 }
 
