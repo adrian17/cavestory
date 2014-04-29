@@ -154,14 +154,14 @@ void Player::updateY(Units::MS dt, const Map &map, ParticleTools &particleTools)
 		info = getWallCollisionInfo(map, topCollision(0));
 		if (info.collided){
 			y = Units::tileToGame(info.row) + collisionYHeight;
-			particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
 				new HeadBumpParticle(particleTools.graphics, centerX(), y + collisionYTop)));
 		}
 	} else {
 		CollisionInfo info = getWallCollisionInfo(map, topCollision(delta));
 		if (info.collided){
 			y = Units::tileToGame(info.row) + collisionYHeight;
-			particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
 				new HeadBumpParticle(particleTools.graphics, centerX(), y + collisionYTop)));
 			velY = 0.0;
 		}

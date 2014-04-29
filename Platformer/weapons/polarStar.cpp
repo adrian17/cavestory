@@ -162,7 +162,7 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 	Units::Game x, Units::Game y, ParticleTools &particleTools) :
 	x(x), y(y), horizontalDirection(horizontalDirection), verticalDirection(verticalDirection), sprite(sprite)
 {
-	particleTools.system.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, x, y)));
+	particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, x, y)));
 }
 
 bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
@@ -184,7 +184,7 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &
 				particleY -= Units::halfTile;
 				particleX = getX();
 			}
-			particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
 				new ProjectileNoEffectParticle(particleTools.graphics, particleX, particleY)));
 			return false;
 		}
@@ -193,7 +193,7 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &
 	if (!alive)
 		return false;
 	else if (offset >= projectileMaxOffset){
-		particleTools.system.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, getX(), getY())));
+		particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, getX(), getY())));
 		return false;
 	}
 	else

@@ -20,7 +20,7 @@ void DeathCloudParticle::createRandomDeathClouds(ParticleTools particleTools,
 	int nParticles)
 {
 	for (int i = 0; i < nParticles; ++i){
-		particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+		particleTools.entitySystem.addNewParticle(std::shared_ptr<Particle>(
 			new DeathCloudParticle(particleTools.graphics,
 				centerX, centerY,
 				(rand() % 3) * baseVelocity,

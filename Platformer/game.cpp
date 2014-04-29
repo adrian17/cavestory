@@ -75,7 +75,7 @@ void Game::eventLoop(){
 		if (input.wasKeyPressed(SDLK_z)) player->startJump();
 		else if (input.wasKeyReleased(SDLK_z)) player->stopJump();
 
-		ParticleTools particleTools = { particleSystem, graphics };
+		ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
 		if (input.wasKeyPressed(SDLK_x)) player->startFire(particleTools);
 		else if (input.wasKeyReleased(SDLK_x)) player->stopFire();
 
@@ -97,10 +97,11 @@ void Game::eventLoop(){
 
 void Game::update(Units::MS dt, Graphics &graphics){
 	Timer::updateAll(dt);
-	particleSystem.update(dt);
+	frontParticleSystem.update(dt);
+	entityParticleSystem.update(dt);
 	damageTexts.update(dt);
 
-	ParticleTools particleTools = {particleSystem, graphics};
+	ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
 	player->update(dt, *map, particleTools);
 	if (bat){
 		if (bat->update(dt, player->centerX()) == false){
@@ -123,13 +124,19 @@ void Game::update(Units::MS dt, Graphics &graphics){
 
 void Game::draw(Graphics &graphics){
 	graphics.clear();
+
 	map->drawBackground(graphics);
+
 	if (bat)
 		bat->draw(graphics);
+	entityParticleSystem.draw(graphics);
 	player->draw(graphics);
+
 	map->draw(graphics);
-	particleSystem.draw(graphics);
+
+	frontParticleSystem.draw(graphics);
 	damageTexts.draw(graphics);
 	player->drawHUD(graphics);
+
 	graphics.flip();
 }

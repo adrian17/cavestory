@@ -22,6 +22,7 @@ private:
 
 class ParticleTools{
 public:
-	ParticleSystem &system;
+	ParticleSystem &frontSystem;
+	ParticleSystem &entitySystem;
 	Graphics &graphics;
 };
