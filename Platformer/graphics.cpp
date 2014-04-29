@@ -21,6 +21,13 @@ Graphics::TextureID Graphics::createTexture(const std::string &relativePath, boo
 		"content/ogph/" + relativePath;
 	if (spriteSheets.count(path) == false){
 		SDL_Surface *tempSurface = SDL_LoadBMP(path.c_str());
+		if (!tempSurface){
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+				"Missing file",
+				"File is missing.",
+				NULL);
+			exit(1);
+		}
 		if (transparency){
 			const Uint32 blackColor = SDL_MapRGB(tempSurface->format, 0, 0, 0);
 			SDL_SetColorKey(tempSurface, SDL_TRUE, blackColor);
