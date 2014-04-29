@@ -3,6 +3,7 @@
 #include "damageText.h"
 #include "spriteState.h"
 #include "interfaces\damageable.h"
+#include "player\gunExperienceHUD.h"
 #include "sprite\sprite.h"
 #include "sprite/varyingWidthSprite.h"
 #include "util\timer.h"
@@ -120,6 +121,7 @@ private:
 	Timer invincibleTimer;
 	std::shared_ptr<DamageText> damageText;
 
+	GunExperienceHUD gunExperienceHUD;
 	PolarStar polarStar;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;

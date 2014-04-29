@@ -5,6 +5,7 @@
 #include "particle\particleSystem.h"
 #include "particle\projectileNoEffectParticle.h"
 #include "particle\projectileStarParticle.h"
+#include "player\gunExperienceHUD.h"
 #include "sprite\sprite.h"
 
 namespace {
@@ -102,6 +103,10 @@ void PolarStar::updateProjectiles(Units::MS dt, const Map &map, ParticleTools &p
 		if (projectileB->update(dt, map, particleTools) == false)
 			projectileB.reset();
 	}
+}
+
+void PolarStar::drawHUD(Graphics &graphics, GunExperienceHUD &hud){
+	hud.draw(graphics, currentLevel, 7, 10);
 }
 
 void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,

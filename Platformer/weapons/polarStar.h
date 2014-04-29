@@ -10,6 +10,7 @@
 #include <vector>
 
 class Graphics;
+class GunExperienceHUD;
 class Map;
 class ParticleTools;
 class Sprite;
@@ -26,6 +27,7 @@ public:
 
 	std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
 	void updateProjectiles(Units::MS dt, const Map &map, ParticleTools &particleTools);
+	void drawHUD(Graphics &graphics, GunExperienceHUD &hud);
 	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y);
 private:
 	typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteState;
@@ -58,7 +60,7 @@ private:
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
-	Units::GunLevel currentLevel = 3;
+	Units::GunLevel currentLevel = 1;
 
 	std::map<SpriteState, std::shared_ptr<Sprite>> spriteMap;
 	

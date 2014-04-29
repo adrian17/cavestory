@@ -72,6 +72,7 @@ Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
 	health(graphics),
 	invincibleTimer(invincibleTimeLimit),
 	damageText(new DamageText()),
+	gunExperienceHUD(graphics),
 	polarStar(graphics)
 {
 	initSprites(graphics);
@@ -188,6 +189,7 @@ void Player::draw(Graphics &graphics){
 void Player::drawHUD(Graphics &graphics){
 	if (spriteIsVisible()){
 		health.draw(graphics);
+		polarStar.drawHUD(graphics, gunExperienceHUD);
 	}
 }
 
