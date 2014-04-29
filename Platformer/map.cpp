@@ -25,10 +25,19 @@ Map* Map::createTestMap(Graphics &graphics){
 		Units::tileToPixel(1), Units::tileToPixel(1)));
 	Tile tile(WALL_TILE, sprite);
 
-	const Units::Tile row = 11;
-	for (Units::Tile col = 0; col < nCols; ++col){
-		map->tiles[row][col] = tile;
+	for (auto&& vec : map->tiles){
+		vec.front() = tile;
+		vec.back() = tile;
 	}
+
+	for (Units::Tile col = 0; col < nCols; ++col){
+		map->tiles[0][col] = tile;
+		map->tiles[nRows - 1][col] = tile;
+		map->tiles[nRows - 2][col] = tile;
+		map->tiles[nRows - 3][col] = tile;
+		map->tiles[nRows - 4][col] = tile;
+	}
+
 	map->tiles[10][5] = tile;
 	map->tiles[9][4] = tile;
 	map->tiles[8][7] = tile;
@@ -45,6 +54,12 @@ Map* Map::createTestMap(Graphics &graphics){
 	std::shared_ptr<Sprite> chain_bottom(new Sprite(graphics, "stage/PrtCave.bmp",
 		Units::tileToPixel(13), Units::tileToPixel(2),
 		Units::tileToPixel(1), Units::tileToPixel(1)));
+
+	map->tiles[5][5] = tile;
+	map->backgroundTiles[4][5] = chain_bottom;
+	map->backgroundTiles[3][5] = chain_middle;
+	map->backgroundTiles[2][5] = chain_middle;
+	map->backgroundTiles[1][5] = chain_top;
 
 	map->backgroundTiles[10][13] = chain_bottom;
 	map->backgroundTiles[9][13] = chain_middle;
