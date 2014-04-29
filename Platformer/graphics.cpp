@@ -5,8 +5,12 @@
 
 Graphics::Graphics(){
 	SDL_ShowCursor(SDL_DISABLE);
-	//SDL_CreateWindowAndRenderer(Units::tileToPixel(screenWidth), Units::tileToPixel(screenHeight), SDL_WINDOW_FULLSCREEN, &window, &renderer);
-	SDL_CreateWindowAndRenderer(Units::tileToPixel(screenWidth), Units::tileToPixel(screenHeight), 0, &window, &renderer);
+
+	//do not use: in fullscreen, it uses 640x480 anyway.
+	//SDL_CreateWindowAndRenderer(Units::tileToPixel(screenWidth), Units::tileToPixel(screenHeight), 0, &window, &renderer);
+
+	SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
+	//SDL_CreateWindowAndRenderer(640, 480, SDL_WINDOW_FULLSCREEN, &window, &renderer); //fullscreen
 }
 
 Graphics::~Graphics(){
@@ -40,7 +44,12 @@ Graphics::TextureID Graphics::createTexture(const std::string &relativePath, boo
 }
 
 void Graphics::drawTexture(TextureID texture, SDL_Rect *source, SDL_Rect *dest){
-	SDL_RenderCopy(renderer, texture, source, dest);
+	SDL_Rect newDest = (*dest);
+	if (Config::getGraphicsQuality() == Config::LOW_QUALITY){
+		newDest.x *= 2; newDest.y *= 2;
+		newDest.w *= 2; newDest.h *= 2;
+	}
+	SDL_RenderCopy(renderer, texture, source, &newDest);
 }
 
 void Graphics::clear(){
