@@ -79,7 +79,6 @@ private:
 		void draw(Graphics &graphics);
 		bool takeDamage(Units::HP damage);	//true if dies
 	private:
-		Units::Game fillOffset(Units::HP health) const;
 		Units::HP currentHealth = 6;
 		Units::HP maxHealth = 6;
 		Sprite healthBarSprite;

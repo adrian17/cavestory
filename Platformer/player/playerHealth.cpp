@@ -17,7 +17,7 @@ namespace {
 	const Units::Game healthFillX = 5 * Units::halfTile;
 	const Units::Game healthFillY = Units::tileToGame(2);
 
-	const Units::Game maxFillWidth = 5 * Units::halfTile - 2.0;
+	const Units::Pixel maxFillWidth = Units::gameToPixel(5 * Units::halfTile - 2.0);
 
 	const Units::Pixel healthDamageSourceX = 0;
 	const Units::Pixel healthDamageSourceY = Units::tileToPixel(2);
@@ -42,9 +42,11 @@ Player::Health::Health(Graphics &graphics) :
 		healthBarSourceW, healthBarSourceH),
 	healthFillSprite(graphics, spritePath,
 		healthFillSourceX, healthFillSourceY,
+		maxFillWidth,
 		Units::gameToPixel(maxFillWidth), healthFillSourceH),
 	damageFillSprite(graphics, spritePath,
 		healthDamageSourceX, healthDamageSourceY,
+		maxFillWidth,
 		0, healthDamageSourceH),
 		damageTimer(damageDelay)
 {
@@ -74,11 +76,7 @@ void Player::Health::draw(Graphics &graphics){
 bool Player::Health::takeDamage(Units::HP damage){
 	damageTaken = damage;
 	damageTimer.reset();
-	healthFillSprite.setWidth(Units::gameToPixel(fillOffset(currentHealth - damage)));
-	damageFillSprite.setWidth(Units::gameToPixel(fillOffset(currentHealth)));
+	healthFillSprite.setPercentageWidth((currentHealth - damage) * 1.0 / maxHealth);
+	damageFillSprite.setPercentageWidth(currentHealth * 1.0 / maxHealth);
 	return false;
-}
-
-Units::Game Player::Health::fillOffset(Units::HP health) const{
-	return maxFillWidth * health / maxHealth;
 }
