@@ -21,6 +21,7 @@ namespace Units {
 
 	typedef int HP;
 	typedef unsigned int GunLevel;
+	const GunLevel maxGunLevel = 3;
 	typedef unsigned int gunExperience;
 
 	namespace {

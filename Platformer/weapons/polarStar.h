@@ -33,18 +33,19 @@ private:
 	class Projectile : public ::Projectile{
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
-			Units::Game x, Units::Game y, ParticleTools &particleTools);
+			Units::Game x, Units::Game y, Units::GunLevel gunLevel, ParticleTools &particleTools);
 		bool update(Units::MS dt, const Map &map, ParticleTools &particleTools);
 		void draw(Graphics &graphics);
 
 		Rectangle collisionRectangle() const;
-		Units::HP contactDamage() const{ return 1; }
+		Units::HP contactDamage() const;
 		void collideWithEnemy(){ alive = false; }
 	private:
 		Units::Game getX() const;
 		Units::Game getY() const;
 		Units::Game x, y;
 		Units::Game offset = 0;
+		const Units::GunLevel gunLevel;
 		HorizontalFacing horizontalDirection;
 		VerticalFacing verticalDirection;
 		std::shared_ptr<Sprite> sprite;
@@ -57,10 +58,12 @@ private:
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
+	Units::GunLevel currentLevel = 3;
+
 	std::map<SpriteState, std::shared_ptr<Sprite>> spriteMap;
 	
-	std::shared_ptr<Sprite> horizontalBulletSprite;
-	std::shared_ptr<Sprite> verticalBulletSprite;
+	std::shared_ptr<Sprite> horizontalProjectiles[Units::maxGunLevel];
+	std::shared_ptr<Sprite> verticalProjectiles[Units::maxGunLevel];
 
 	std::shared_ptr<Projectile> projectileA;
 	std::shared_ptr<Projectile> projectileB;
