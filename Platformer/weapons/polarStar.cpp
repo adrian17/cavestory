@@ -3,6 +3,7 @@
 #include "map.h"
 #include "graphics.h"
 #include "particle\particleSystem.h"
+#include "particle\projectileNoEffectParticle.h"
 #include "particle\projectileStarParticle.h"
 #include "sprite\sprite.h"
 
@@ -169,8 +170,24 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &
 
 	std::vector<Map::CollisionTile> collidingTiles = map.getCollidingTiles(collisionRectangle());
 	for (auto&& tile : collidingTiles){
-		if (tile.tileType == Map::WALL_TILE)
+		if (tile.tileType == Map::WALL_TILE){
+			const Rectangle tileRect(
+				Units::tileToGame(tile.col), Units::tileToGame(tile.row),
+				Units::tileToGame	(1), Units::tileToGame(1));
+			Units::Game particleX, particleY;
+			if (verticalDirection == HORIZONTAL){
+				particleX = (horizontalDirection == LEFT) ? tileRect.right() : tileRect.left();
+				particleX -= Units::halfTile;
+				particleY = getY();
+			} else {
+				particleY = (verticalDirection == UP) ? tileRect.bottom() : tileRect.top();
+				particleY -= Units::halfTile;
+				particleX = getX();
+			}
+			particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+				new ProjectileNoEffectParticle(particleTools.graphics, particleX, particleY)));
 			return false;
+		}
 	}
 
 	if (!alive)
