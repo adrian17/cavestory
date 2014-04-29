@@ -20,6 +20,7 @@ namespace Units {
 	typedef double AngularVelocity;
 
 	typedef int HP;
+	typedef unsigned int GunLevel;
 
 	namespace {
 		const Game tileSize = 32.0;
