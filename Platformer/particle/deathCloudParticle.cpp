@@ -1,5 +1,7 @@
 #include "deathCloudParticle.h"
 
+#include "particle\particleSystem.h"
+
 namespace {
 	const std::string spritePath = "npc/NpcSym.bmp";
 	const Units::Pixel sourceX = Units::tileToPixel(1);
@@ -9,6 +11,21 @@ namespace {
 
 	const Units::FPS fps = 18;
 	const Units::Frame nFrames = 7;
+
+	const Units::Velocity baseVelocity = 0.12;
+}
+
+void DeathCloudParticle::createRandomDeathClouds(ParticleTools particleTools,
+	Units::Game centerX, Units::Game centerY,
+	int nParticles)
+{
+	for (int i = 0; i < nParticles; ++i){
+		particleTools.system.addNewParticle(std::shared_ptr<Particle>(
+			new DeathCloudParticle(particleTools.graphics,
+				centerX, centerY,
+				(rand() % 3) * baseVelocity,
+				rand() % 360)));
+	}
 }
 
 DeathCloudParticle::DeathCloudParticle(Graphics &graphics,

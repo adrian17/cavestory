@@ -104,8 +104,7 @@ void Game::update(Units::MS dt, Graphics &graphics){
 	player->update(dt, *map, particleTools);
 	if (bat){
 		if (bat->update(dt, player->centerX()) == false){
-			particleSystem.addNewParticle(std::shared_ptr<Particle>(
-				new DeathCloudParticle(graphics, bat->centerX(), bat->centerY(), 0.12, rand() % 360)));
+			DeathCloudParticle::createRandomDeathClouds(particleTools, bat->centerX(), bat->centerY(), 3);
 			bat.reset();
 		}
 	}

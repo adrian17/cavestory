@@ -5,6 +5,7 @@
 #include "util\polarVector.h"
 
 class Graphics;
+class ParticleTools;
 
 class DeathCloudParticle : public Particle
 {
@@ -17,6 +18,8 @@ public:
 
 	bool update(Units::MS dt);
 	void draw(Graphics &graphics);
+
+	static void createRandomDeathClouds(ParticleTools particleTools, Units::Game centerX, Units::Game centerY, int nParticles);
 
 private:
 	const Units::Game centerX, centerY;
