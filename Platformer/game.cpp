@@ -4,6 +4,7 @@
 #include "input.h"
 #include "map.h"
 #include "enemy\firstCaveBat.h"
+#include "particle\deathCloudParticle.h"
 #include "player/player.h"
 #include "util\timer.h"
 #include "SDL.h"
@@ -102,8 +103,11 @@ void Game::update(Units::MS dt, Graphics &graphics){
 	ParticleTools particleTools = {particleSystem, graphics};
 	player->update(dt, *map, particleTools);
 	if (bat){
-		if (bat->update(dt, player->centerX()) == false)
+		if (bat->update(dt, player->centerX()) == false){
+			particleSystem.addNewParticle(std::shared_ptr<Particle>(
+				new DeathCloudParticle(graphics, bat->centerX(), bat->centerY(), 0.12, rand() % 360)));
 			bat.reset();
+		}
 	}
 	
 	for (auto&& projectile : player->getProjectiles()){

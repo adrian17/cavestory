@@ -84,6 +84,9 @@
     <ClCompile Include="particle\projectileNoEffectParticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="particle\deathCloudParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -168,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="particle\projectileNoEffectParticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="particle\deathCloudParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -83,6 +83,7 @@
     <ClCompile Include="config.cpp" />
     <ClCompile Include="damageText.cpp" />
     <ClCompile Include="damageTexts.cpp" />
+    <ClCompile Include="particle\deathCloudParticle.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
     <ClCompile Include="particle\immobileSingleLoopParticle.cpp" />
     <ClCompile Include="particle\particleSystem.cpp" />
@@ -106,6 +107,7 @@
   <ItemGroup>
     <ClInclude Include="backdrop.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="particle\deathCloudParticle.h" />
     <ClInclude Include="particle\immobileSingleLoopParticle.h" />
     <ClInclude Include="particle\particle.h" />
     <ClInclude Include="particle\particleSystem.h" />

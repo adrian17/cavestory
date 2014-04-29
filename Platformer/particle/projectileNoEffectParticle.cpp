@@ -7,7 +7,7 @@ namespace {
 	const Units::Pixel sourceW = Units::tileToPixel(1);
 	const Units::Pixel sourceH = Units::tileToPixel(1);
 
-	const Units::FPS fps = 20;
+	const Units::FPS fps = 18;
 	const Units::Frame nFrames = 4;
 }
 
