@@ -26,9 +26,10 @@ Graphics::TextureID Graphics::createTexture(const std::string &relativePath, boo
 	if (spriteSheets.count(path) == false){
 		SDL_Surface *tempSurface = SDL_LoadBMP(path.c_str());
 		if (!tempSurface){
+			std::string errorString = relativePath + " is missing";
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
 				"Missing file",
-				"File is missing.",
+				errorString.c_str(),
 				NULL);
 			exit(1);
 		}
