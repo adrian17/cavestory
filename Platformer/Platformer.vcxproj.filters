@@ -93,6 +93,9 @@
     <ClCompile Include="mapCollidable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="util\accelerators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -192,6 +195,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util\kinematics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\accelerators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,7 @@
 #include "particle\particleSystem.h"
 #include "sprite/animatedSprite.h"
 #include "sprite/numberSprite.h"
+#include "util\accelerators.h"
 #include "util\collisionRectangle.h"
 #include "util/rectangle.h"
 #include <algorithm>
@@ -13,15 +14,17 @@
 namespace {
 	const Units::Acceleration walkingAcceleration = 0.00083007812;
 	const Units::Velocity maxVelX = 0.15859375;
-	const Units::Acceleration friction = 0.00049804687; // (pixels / ms) / ms
+	const BidirectionalAccelerators walkingAccelerators(walkingAcceleration, maxVelX);
 
-	const Units::Acceleration gravity = 0.00078125;	//fall
-	const Units::Velocity maxVelY = 0.2998046875;
+	const Units::Acceleration friction = 0.00049804687; // (pixels / ms) / ms
+	const FrictionAccelerator frictionAccelerator(friction);
 
 	const Units::Velocity jumpSpeed = 0.25;	//jump
 	const Units::Velocity shortJumpSpeed = jumpSpeed / 1.5;
 	const Units::Acceleration airAcceleration = 0.0003125;
 	const Units::Acceleration jumpGravity = 0.0003125;
+	const BidirectionalAccelerators airAccelerators(airAcceleration, maxVelX);
+	const ConstantAccelerator jumpGravityAccelerator(jumpGravity, terminalSpeed);
 
 	const std::string spriteFilePath = "myChar.bmp";
 
@@ -83,24 +86,22 @@ void Player::update(Units::MS dt, const Map &map){
 }
 
 void Player::updateX(Units::MS dt, const Map &map){
-	Units::Acceleration acceleration = 0.0f;
-	if (accX < 0) acceleration = onGround ? -walkingAcceleration : -airAcceleration;
-	if (accX > 0) acceleration = onGround ? walkingAcceleration : airAcceleration;
-	kinematicsX.velocity += acceleration * dt;
+	const Accelerator* accelerator;
+	if (onGround){
+		if (accX == 0) accelerator = &frictionAccelerator;
+		else accelerator = (accX < 0) ? &walkingAccelerators.negative : &walkingAccelerators.positive;
+	} else {
+		if (accX == 0) accelerator = &ZeroAccelerator::zero;
+		else accelerator = (accX < 0) ? &airAccelerators.negative : &airAccelerators.positive;
+	}
 
-	if (accX<0) kinematicsX.velocity = std::max(kinematicsX.velocity, -maxVelX);
-	else if (accX>0) kinematicsX.velocity = std::min(kinematicsX.velocity, maxVelX);
-	else if (onGround) kinematicsX.velocity = kinematicsX.velocity > 0.f ? std::max(0.0, kinematicsX.velocity - friction*dt) : std::min(0.0, kinematicsX.velocity + friction*dt);
-
-	MapCollidable::updateX(collisionRectangle, kinematicsX, kinematicsY, dt, map);
+	MapCollidable::updateX(collisionRectangle, *accelerator, kinematicsX, kinematicsY, dt, map);
 }
 
 void Player::updateY(Units::MS dt, const Map &map){
-	const Units::Acceleration grav = jumping && kinematicsY.velocity < 0.0f ? jumpGravity : gravity;
-	kinematicsY.velocity += grav * dt;
-	kinematicsY.velocity = std::min(kinematicsY.velocity, maxVelY);
+	const Accelerator &accelerator = (jumping && kinematicsY.velocity < 0.0) ? jumpGravityAccelerator : ConstantAccelerator::gravity;
 
-	MapCollidable::updateY(collisionRectangle, kinematicsX, kinematicsY, dt, map);
+	MapCollidable::updateY(collisionRectangle, accelerator, kinematicsX, kinematicsY, dt, map);
 }
 
 void Player::draw(Graphics &graphics){

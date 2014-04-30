@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="util\accelerators.cpp" />
     <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="damageText.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="util\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="util\accelerators.h" />
     <ClInclude Include="backdrop.h" />
     <ClInclude Include="util\collisionRectangle.h" />
     <ClInclude Include="config.h" />

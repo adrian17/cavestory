@@ -2,6 +2,7 @@
 
 #include "util\units.h"
 
+struct Accelerator;
 class CollisionRectangle;
 struct Kinematics;
 class Map;
@@ -12,9 +13,11 @@ public:
 	enum SideType { TOP_SIDE, BOTTOM_SIDE, LEFT_SIDE, RIGHT_SIDE };
 
 	void updateX(const CollisionRectangle &collisionRectangle,
+		const Accelerator &accelerator,
 		Kinematics &kinematicsX, const Kinematics &kinematicsY,
 		Units::MS dt, const Map &map);
 	void updateY(const CollisionRectangle collisionRectangle,
+		const Accelerator &accelerator,
 		const Kinematics &kinematicsX, Kinematics &kinematicsY,
 		Units::MS dt, const Map &map);
 

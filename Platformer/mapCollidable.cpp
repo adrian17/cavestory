@@ -1,5 +1,6 @@
 #include "mapCollidable.h"
 
+#include "util\accelerators.h"
 #include "util\collisionRectangle.h"
 #include "util\kinematics.h"
 #include "map.h"
@@ -24,8 +25,11 @@ namespace {
 }
 
 void MapCollidable::updateX(const CollisionRectangle &collisionRectangle,
+	const Accelerator &accelerator,
 	Kinematics &kinematicsX, const Kinematics &kinematicsY,
-	Units::MS dt, const Map &map){
+	Units::MS dt, const Map &map)
+{
+	accelerator.updateVelocity(kinematicsX, dt);
 
 	const Units::Game delta = kinematicsX.velocity * dt;
 
@@ -64,8 +68,11 @@ void MapCollidable::updateX(const CollisionRectangle &collisionRectangle,
 }
 
 void MapCollidable::updateY(const CollisionRectangle collisionRectangle,
+	const Accelerator &accelerator,
 	const Kinematics &kinematicsX, Kinematics &kinematicsY,
-	Units::MS dt, const Map &map){
+	Units::MS dt, const Map &map)
+{
+	accelerator.updateVelocity(kinematicsY, dt);
 
 	const Units::Game delta = kinematicsY.velocity * dt;
 
