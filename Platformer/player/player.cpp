@@ -194,41 +194,41 @@ Rectangle Player::damageRectangle() const{
 		collisionRectangle.boundingBox().height());
 }
 
-void Player::onCollision(MapCollidable::SideType side, bool isDeltaDirection){
+void Player::onCollision(SideType side, bool isDeltaDirection){
 	switch (side){
-	case MapCollidable::TOP_SIDE:
+	case TOP_SIDE:
 		particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
 			new HeadBumpParticle(particleTools.graphics, centerX(), kinematicsY.position + collisionRectangle.boundingBox().top())));
 		if (isDeltaDirection)
 			kinematicsY.velocity = 0.0;
 		break;
-	case MapCollidable::BOTTOM_SIDE:
+	case BOTTOM_SIDE:
 		onGround = true;
 		if (isDeltaDirection)
 			kinematicsY.velocity = 0.0;
 		break;
-	case MapCollidable::LEFT_SIDE:
+	case LEFT_SIDE:
 		if (isDeltaDirection)
 			kinematicsX.velocity = 0.0;
 		break;
-	case MapCollidable::RIGHT_SIDE:
+	case RIGHT_SIDE:
 		if (isDeltaDirection)
 			kinematicsX.velocity = 0.0;
 		break;
 	}
 }
 
-void Player::onDelta(MapCollidable::SideType side){
+void Player::onDelta(SideType side){
 	switch (side){
-	case MapCollidable::TOP_SIDE:
+	case TOP_SIDE:
 		onGround = false;
 		break;
-	case MapCollidable::BOTTOM_SIDE:
+	case BOTTOM_SIDE:
 		onGround = false;
 		break;
-	case MapCollidable::LEFT_SIDE:
+	case LEFT_SIDE:
 		break;
-	case MapCollidable::RIGHT_SIDE:
+	case RIGHT_SIDE:
 		break;
 	}
 }

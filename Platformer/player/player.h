@@ -100,8 +100,8 @@ private:
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
-	void onCollision(MapCollidable::SideType side, bool isDeltaDirection);
-	void onDelta(MapCollidable::SideType side);
+	void onCollision(SideType side, bool isDeltaDirection);
+	void onDelta(SideType side);
 
 	ParticleTools &particleTools;
 
