@@ -41,7 +41,7 @@ void Game::eventLoop(){
 	player.reset(new Player(graphics, particleTools, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2)));
 	damageTexts.addDamageable(player);
 	map.reset(Map::createTestMap(graphics));
-	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(8), Units::tileToGame(screenHeight / 2+1)));
+	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(8), Units::tileToGame(screenHeight / 2)));
 	damageTexts.addDamageable(bat);
 
 	Units::MS lastUpdateTime = SDL_GetTicks();
