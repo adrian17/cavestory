@@ -5,6 +5,7 @@
 #include "particle\particleSystem.h"
 #include "sprite/animatedSprite.h"
 #include "sprite/numberSprite.h"
+#include "util\collisionRectangle.h"
 #include "util/rectangle.h"
 #include <algorithm>
 #include <cmath>
@@ -35,40 +36,29 @@ namespace {
 	const Units::Frame downFrame = 6;
 	const Units::Frame backFrame = 7;
 
-	const Rectangle collisionX(6.0, 10.0, 20.0, 12.0);
-
 	const Units::Game collisionYTop = 2;
 	const Units::Game collisionYHeight = 30;
-	const Units::Game collisionYBottom = collisionYTop + collisionYHeight;
 
 	const Units::Game collisionYTopWidth = 18;
 	const Units::Game collisionYBottomWidth = 10;
 	const Units::Game collisionYTopLeft = (Units::tileToGame(1) - collisionYTopWidth) / 2;
 	const Units::Game collisionYBottomLeft = (Units::tileToGame(1) - collisionYBottomWidth) / 2;
 
+	const CollisionRectangle collisionRectangle(
+		Rectangle(collisionYTopLeft, collisionYTop, collisionYTopWidth, collisionYHeight / 2),
+		Rectangle(collisionYBottomLeft, collisionYTop + collisionYHeight / 2,
+					collisionYBottomWidth, collisionYHeight / 2),
+		Rectangle(6.0, 10.0, 10.0, 12.0),
+		Rectangle(16.0, 10.0, 10.0, 12.0));
+
 	const Units::MS invincibleTimeLimit = 3000;
 	const Units::MS invincibleFlashTime = 50;
-
-	struct CollisionInfo{
-		bool collided;
-		Units::Tile row, col;
-	} info;
-
-	CollisionInfo getWallCollisionInfo(const Map &map, const Rectangle &rectangle){
-		CollisionInfo info = { false, 0, 0 };
-		std::vector<Map::CollisionTile> tiles = map.getCollidingTiles(rectangle);
-		for (auto && tile : tiles){
-			if (tile.tileType == Map::WALL_TILE){
-				info = { true, tile.row, tile.col };
-				break;
-			}
-		}
-		return info;
-	}
 }
 
-Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
-	x(x), y(y),
+Player::Player(Graphics &graphics, ParticleTools &particleTools, Units::Game x, Units::Game y) :
+	particleTools(particleTools),
+	kinematicsX(x, 0.0),
+	kinematicsY(y, 0.0),
 	health(graphics),
 	invincibleTimer(invincibleTimeLimit),
 	damageText(new DamageText()),
@@ -81,108 +71,42 @@ Player::Player(Graphics &graphics, Units::Game x, Units::Game y) :
 Player::~Player(){
 }
 
-void Player::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
+void Player::update(Units::MS dt, const Map &map){
 	sprites[getSpriteState()]->update();
 
 	health.update(dt);
 	walkingAnimation.update();
 	polarStar.updateProjectiles(dt, map, particleTools);
 
-	updateX(dt, map, particleTools);
-	updateY(dt, map, particleTools);
+	updateX(dt, map);
+	updateY(dt, map);
 }
 
-void Player::updateX(Units::MS dt, const Map &map, ParticleTools &particleTools){
+void Player::updateX(Units::MS dt, const Map &map){
 	Units::Acceleration acceleration = 0.0f;
 	if (accX < 0) acceleration = onGround ? -walkingAcceleration : -airAcceleration;
 	if (accX > 0) acceleration = onGround ? walkingAcceleration : airAcceleration;
-	velX += acceleration * dt;
+	kinematicsX.velocity += acceleration * dt;
 
-	if (accX<0) velX = std::max(velX, -maxVelX);
-	else if (accX>0) velX = std::min(velX, maxVelX);
-	else if (onGround) velX = velX > 0.f ? std::max(0.0, velX - friction*dt) : std::min(0.0, velX + friction*dt);
+	if (accX<0) kinematicsX.velocity = std::max(kinematicsX.velocity, -maxVelX);
+	else if (accX>0) kinematicsX.velocity = std::min(kinematicsX.velocity, maxVelX);
+	else if (onGround) kinematicsX.velocity = kinematicsX.velocity > 0.f ? std::max(0.0, kinematicsX.velocity - friction*dt) : std::min(0.0, kinematicsX.velocity + friction*dt);
 
-	const Units::Game delta = velX * dt;
-
-	if (delta > 0.0){
-		CollisionInfo info = getWallCollisionInfo(map, rightCollision(delta));
-		if (info.collided){
-			x = Units::tileToGame(info.col) - collisionX.right();
-			velX = 0.0;
-		}
-		else
-			x += delta;
-		//other dir
-		info = getWallCollisionInfo(map, leftCollision(0));
-		if (info.collided){
-			x = Units::tileToGame(info.col) + collisionX.right();
-		}
-	}
-	else {
-		CollisionInfo info = getWallCollisionInfo(map, leftCollision(delta));
-		if (info.collided){
-			x = Units::tileToGame(info.col) + collisionX.right();
-			velX = 0.0;
-		}
-		else
-			x += delta;
-		//other dir
-		info = getWallCollisionInfo(map, rightCollision(0));
-		if (info.collided){
-			x = Units::tileToGame(info.col) - collisionX.right();
-		}
-	}
+	MapCollidable::updateX(collisionRectangle, kinematicsX, kinematicsY, dt, map);
 }
 
-void Player::updateY(Units::MS dt, const Map &map, ParticleTools &particleTools){
-	const Units::Acceleration grav = jumping && velY < 0.0f ? jumpGravity : gravity;
-	velY += grav * dt;
-	velY = std::min(velY, maxVelY);
+void Player::updateY(Units::MS dt, const Map &map){
+	const Units::Acceleration grav = jumping && kinematicsY.velocity < 0.0f ? jumpGravity : gravity;
+	kinematicsY.velocity += grav * dt;
+	kinematicsY.velocity = std::min(kinematicsY.velocity, maxVelY);
 
-	const Units::Game delta = velY * dt;
-
-	if (delta > 0){
-		CollisionInfo info = getWallCollisionInfo(map, bottomCollision(delta));
-		if (info.collided){
-			y = Units::tileToGame(info.row) - collisionYBottom;
-			velY = 0.0;
-			onGround = true;
-		} else {
-			y += delta;
-			onGround = false;
-		}
-		//other dir
-		info = getWallCollisionInfo(map, topCollision(0));
-		if (info.collided){
-			y = Units::tileToGame(info.row) + collisionYHeight;
-			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
-				new HeadBumpParticle(particleTools.graphics, centerX(), y + collisionYTop)));
-		}
-	} else {
-		CollisionInfo info = getWallCollisionInfo(map, topCollision(delta));
-		if (info.collided){
-			y = Units::tileToGame(info.row) + collisionYHeight;
-			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
-				new HeadBumpParticle(particleTools.graphics, centerX(), y + collisionYTop)));
-			velY = 0.0;
-		}
-		else {
-			y += delta;
-			onGround = false;
-		}
-		//other dir
-		info = getWallCollisionInfo(map, bottomCollision(0));
-		if (info.collided){
-			y = Units::tileToGame(info.row) - collisionYBottom;
-			onGround = true;
-		}
-	}
+	MapCollidable::updateY(collisionRectangle, kinematicsX, kinematicsY, dt, map);
 }
 
 void Player::draw(Graphics &graphics){
 	if (spriteIsVisible()){
-		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp(), x, y);
-		sprites[getSpriteState()]->draw(graphics, x, y);
+		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp(), kinematicsX.position, kinematicsY.position);
+		sprites[getSpriteState()]->draw(graphics, kinematicsX.position, kinematicsY.position);
 	}
 }
 
@@ -230,8 +154,8 @@ void Player::startJump(){
 	interacting = false;
 	jumping = true;
 	if (onGround){
-		velY = -jumpSpeed;
-	} else if (velY < 0.0) {	//mid jump
+		kinematicsY.velocity = -jumpSpeed;
+	} else if (kinematicsY.velocity < 0.0) {	//mid jump
 	}
 }
 
@@ -239,8 +163,8 @@ void Player::stopJump(){
 	jumping = false;
 }
 
-void Player::startFire(ParticleTools &particleTools){
-	polarStar.startFire(x, y, horizontalFacing, verticalFacing(), gunUp(), particleTools);
+void Player::startFire(){
+	polarStar.startFire(kinematicsX.position, kinematicsY.position, horizontalFacing, verticalFacing(), gunUp(), particleTools);
 }
 
 void Player::stopFire(){
@@ -254,13 +178,54 @@ void Player::takeDamage(Units::HP damage){
 	damageText->setDamage(damage);
 
 	interacting = false;
-	velY = std::min(-shortJumpSpeed, velY);
+	kinematicsY.velocity = std::min(-shortJumpSpeed, kinematicsY.velocity);
 	invincibleTimer.reset();
 }
 
 Rectangle Player::damageRectangle() const{
-	return Rectangle(x + collisionX.left(), y + collisionYTop,
-		collisionX.width(), collisionYHeight);
+	return Rectangle(kinematicsX.position + collisionRectangle.boundingBox().left(),
+		kinematicsY.position + collisionRectangle.boundingBox().top(),
+		collisionRectangle.boundingBox().width(),
+		collisionRectangle.boundingBox().height());
+}
+
+void Player::onCollision(MapCollidable::SideType side, bool isDeltaDirection){
+	switch (side){
+	case MapCollidable::TOP_SIDE:
+		particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
+			new HeadBumpParticle(particleTools.graphics, centerX(), kinematicsY.position + collisionRectangle.boundingBox().top())));
+		if (isDeltaDirection)
+			kinematicsY.velocity = 0.0;
+		break;
+	case MapCollidable::BOTTOM_SIDE:
+		onGround = true;
+		if (isDeltaDirection)
+			kinematicsY.velocity = 0.0;
+		break;
+	case MapCollidable::LEFT_SIDE:
+		if (isDeltaDirection)
+			kinematicsX.velocity = 0.0;
+		break;
+	case MapCollidable::RIGHT_SIDE:
+		if (isDeltaDirection)
+			kinematicsX.velocity = 0.0;
+		break;
+	}
+}
+
+void Player::onDelta(MapCollidable::SideType side){
+	switch (side){
+	case MapCollidable::TOP_SIDE:
+		onGround = false;
+		break;
+	case MapCollidable::BOTTOM_SIDE:
+		onGround = false;
+		break;
+	case MapCollidable::LEFT_SIDE:
+		break;
+	case MapCollidable::RIGHT_SIDE:
+		break;
+	}
 }
 
 void Player::initSprites(Graphics &graphics){
@@ -312,54 +277,16 @@ Player::MotionType Player::motionType() const{
 
 	if (interacting) motion = INTERACTING;
 	else if (onGround) motion = accX == 0 ? STANDING : WALKING;
-	else motion = velY < 0.0 ? JUMPING : FALLING;
+	else motion = kinematicsY.velocity < 0.0 ? JUMPING : FALLING;
 	return motion;
 }
 
 Player::SpriteState Player::getSpriteState(){
-
-
 	return SpriteState(
 		motionType(),
 		horizontalFacing,
 		verticalFacing(),
 		walkingAnimation.stride());
-}
-
-Rectangle Player::leftCollision(Units::Game delta) const{
-	_ASSERT(delta <= 0);
-	return Rectangle(
-		x + collisionX.left() + delta,
-		y + collisionX.top(),
-		collisionX.width() / 2 - delta,
-		collisionX.height());
-}
-
-Rectangle Player::rightCollision(Units::Game delta) const{
-	_ASSERT(delta >= 0);
-	return Rectangle(
-		x + collisionX.left() + collisionX.width() / 2,
-		y + collisionX.top(),
-		collisionX.width() / 2 + delta,
-		collisionX.height());
-}
-
-Rectangle Player::topCollision(Units::Game delta) const{
-	_ASSERT(delta <= 0);
-	return Rectangle(
-		x + collisionYTopLeft,
-		y + collisionYTop + delta,
-		collisionYTopWidth,
-		collisionYHeight / 2 - delta);
-}
-
-Rectangle Player::bottomCollision(Units::Game delta) const{
-	_ASSERT(delta >= 0);
-	return Rectangle(
-		x + collisionYBottomLeft,
-		y + collisionYTop + collisionYHeight / 2,
-		collisionYBottomWidth,
-		collisionYHeight / 2 + delta);
 }
 
 bool Player::spriteIsVisible() const{

@@ -34,7 +34,9 @@ void Game::eventLoop(){
 	Input input;
 	SDL_Event event;
 
-	player.reset(new Player(graphics, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2)));
+	ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
+
+	player.reset(new Player(graphics, particleTools, Units::tileToGame(screenWidth / 2), Units::tileToGame(screenHeight / 2)));
 	damageTexts.addDamageable(player);
 	map.reset(Map::createTestMap(graphics));
 	bat.reset(new FirstCaveBat(graphics, Units::tileToGame(8), Units::tileToGame(screenHeight / 2+1)));
@@ -75,8 +77,7 @@ void Game::eventLoop(){
 		if (input.wasKeyPressed(SDLK_z)) player->startJump();
 		else if (input.wasKeyReleased(SDLK_z)) player->stopJump();
 
-		ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
-		if (input.wasKeyPressed(SDLK_x)) player->startFire(particleTools);
+		if (input.wasKeyPressed(SDLK_x)) player->startFire();
 		else if (input.wasKeyReleased(SDLK_x)) player->stopFire();
 
 		const Units::MS currentTime = SDL_GetTicks();
@@ -101,10 +102,10 @@ void Game::update(Units::MS dt, Graphics &graphics){
 	entityParticleSystem.update(dt);
 	damageTexts.update(dt);
 
-	ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
-	player->update(dt, *map, particleTools);
+	player->update(dt, *map);
 	if (bat){
 		if (bat->update(dt, player->centerX()) == false){
+			ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
 			DeathCloudParticle::createRandomDeathClouds(particleTools, bat->centerX(), bat->centerY(), 3);
 			bat.reset();
 		}
