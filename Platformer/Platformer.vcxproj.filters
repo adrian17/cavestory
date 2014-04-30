@@ -99,6 +99,9 @@
     <ClCompile Include="pickup\pickups.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pickup\experiencePickup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -207,6 +210,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pickup\pickups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pickup\experiencePickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

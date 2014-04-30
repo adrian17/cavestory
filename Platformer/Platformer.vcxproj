@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="pickup\experiencePickup.cpp" />
     <ClCompile Include="pickup\pickups.cpp" />
     <ClCompile Include="util\accelerators.cpp" />
     <ClCompile Include="backdrop.cpp" />
@@ -109,6 +110,7 @@
     <ClCompile Include="util\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pickup\experiencePickup.h" />
     <ClInclude Include="pickup\pickups.h" />
     <ClInclude Include="pickup\pickup.h" />
     <ClInclude Include="util\accelerators.h" />

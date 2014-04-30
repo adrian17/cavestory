@@ -2,6 +2,7 @@
 
 #include "damageTexts.h"
 #include "particle\particleSystem.h"
+#include "pickup\pickups.h"
 #include "util\units.h"
 #include <memory>
 
@@ -27,4 +28,5 @@ private:
 	DamageTexts damageTexts;
 	ParticleSystem frontParticleSystem;
 	ParticleSystem entityParticleSystem;
+	Pickups pickups;
 };

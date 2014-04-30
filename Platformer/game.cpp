@@ -13,6 +13,8 @@
 #include <ctime>
 //#include <cstdio>
 
+#include "pickup\experiencePickup.h"
+
 namespace {
 	const Units::FPS fps = 60;
 	const Units::MS maxFrameTime = 5 * 1000 / 60;
@@ -101,6 +103,7 @@ void Game::update(Units::MS dt, Graphics &graphics){
 	frontParticleSystem.update(dt);
 	entityParticleSystem.update(dt);
 	damageTexts.update(dt);
+	pickups.update(dt, *map);
 
 	player->update(dt, *map);
 	if (bat){
@@ -113,11 +116,12 @@ void Game::update(Units::MS dt, Graphics &graphics){
 	
 	for (auto&& projectile : player->getProjectiles()){
 		if (bat && bat->collisionRectangle().collidesWith(projectile->collisionRectangle())){
+			bat->takeDamage(projectile->contactDamage());
 			projectile->collideWithEnemy();
-			if (bat)
-				bat->takeDamage(projectile->contactDamage());
 		}
 	}
+
+	pickups.handleCollision(*player);
 
 	if (bat && bat->damageRectangle().collidesWith(player->damageRectangle()))
 		player->takeDamage(bat->getContactDamage());
@@ -131,6 +135,7 @@ void Game::draw(Graphics &graphics){
 	if (bat)
 		bat->draw(graphics);
 	entityParticleSystem.draw(graphics);
+	pickups.draw(graphics);
 	player->draw(graphics);
 
 	map->draw(graphics);
