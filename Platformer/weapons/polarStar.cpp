@@ -7,6 +7,7 @@
 #include "particle\projectileStarParticle.h"
 #include "player\gunExperienceHUD.h"
 #include "sprite\sprite.h"
+#include <algorithm>
 
 namespace {
 	const std::string spritePath = "Arms.bmp";
@@ -46,6 +47,7 @@ namespace {
 	const Units::Game projectileWidths[Units::maxGunLevel] = { 4.0, 8.0, 16.0 };
 
 	const Units::HP damages[Units::maxGunLevel] = { 1, 2, 4 };
+	const Units::GunExperience experiences[] = { 0, 10, 30, 40 };
 }
 
 PolarStar::PolarStar(Graphics &graphics)
@@ -75,16 +77,20 @@ void PolarStar::startFire(Units::Game playerX, Units::Game playerY,
 
 	if(!projectileA)
 		projectileA.reset(new Projectile(
-			verticalFacing == HORIZONTAL ? horizontalProjectiles[currentLevel - 1] : verticalProjectiles[currentLevel - 1],
-			horizontalFacing, verticalFacing, bulletX, bulletY, currentLevel, particleTools));
+			verticalFacing == HORIZONTAL ? horizontalProjectiles[currentLevel() - 1] : verticalProjectiles[currentLevel() - 1],
+			horizontalFacing, verticalFacing, bulletX, bulletY, currentLevel(), particleTools));
 	else if (!projectileB)
 		projectileB.reset(new Projectile(
-			verticalFacing == HORIZONTAL ? horizontalProjectiles[currentLevel - 1] : verticalProjectiles[currentLevel - 1],
-			horizontalFacing, verticalFacing, bulletX, bulletY, currentLevel, particleTools));
+			verticalFacing == HORIZONTAL ? horizontalProjectiles[currentLevel() - 1] : verticalProjectiles[currentLevel() - 1],
+			horizontalFacing, verticalFacing, bulletX, bulletY, currentLevel(), particleTools));
 }
 
 void PolarStar::stopFire(){
 
+}
+
+void PolarStar::collectExperience(Units::GunExperience experience){
+	currentExperience = std::min(currentExperience + experience, experiences[Units::maxGunLevel]);
 }
 
 std::vector<std::shared_ptr< ::Projectile>> PolarStar::getProjectiles(){
@@ -106,7 +112,10 @@ void PolarStar::updateProjectiles(Units::MS dt, const Map &map, ParticleTools &p
 }
 
 void PolarStar::drawHUD(Graphics &graphics, GunExperienceHUD &hud){
-	hud.draw(graphics, currentLevel, 7, 10);
+	const Units::GunLevel level = currentLevel();
+	hud.draw(graphics, level,
+		currentExperience - experiences[level - 1],
+		experiences[level] - experiences[level - 1]);
 }
 
 void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
@@ -166,6 +175,12 @@ void PolarStar::initSprite(Graphics &graphics, const SpriteState spriteState){
 	spriteMap[spriteState].reset(new Sprite(graphics, spritePath,
 		polarStarIndex*gunWidth, srcY,
 		gunWidth, gunHeight));
+}
+
+Units::GunLevel PolarStar::currentLevel() const{
+	Units::GunLevel level = Units::maxGunLevel;
+	while (currentExperience < experiences[level - 1]) --level;
+	return level;
 }
 
 PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,

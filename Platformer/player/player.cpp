@@ -3,6 +3,7 @@
 #include "map.h"
 #include "particle\headBumpParticle.h"
 #include "particle\particleSystem.h"
+#include "pickup\experiencePickup.h"
 #include "sprite/animatedSprite.h"
 #include "sprite/numberSprite.h"
 #include "util\accelerators.h"
@@ -184,7 +185,10 @@ void Player::takeDamage(Units::HP damage){
 }
 
 void Player::collectPickup(const Pickup &pickup){
-	
+	if (pickup.type() == Pickup::EXPERIENCE){
+		polarStar.collectExperience((Units::GunExperience)pickup.value());
+		gunExperienceHUD.activateFlash();
+	}
 }
 
 Rectangle Player::damageRectangle() const{

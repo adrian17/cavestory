@@ -24,6 +24,7 @@ public:
 		HorizontalFacing horizontalFacing, VerticalFacing verticalFacing,
 		bool gunUp, ParticleTools &particleTools);
 	void stopFire();
+	void collectExperience(Units::GunExperience experience);
 
 	std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
 	void updateProjectiles(Units::MS dt, const Map &map, ParticleTools &particleTools);
@@ -60,7 +61,8 @@ private:
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
-	Units::GunLevel currentLevel = 1;
+	Units::GunExperience currentExperience = 29;
+	Units::GunLevel currentLevel() const;
 
 	std::map<SpriteState, std::shared_ptr<Sprite>> spriteMap;
 	
