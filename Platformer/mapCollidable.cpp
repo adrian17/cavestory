@@ -67,7 +67,7 @@ void MapCollidable::updateX(const CollisionRectangle &collisionRectangle,
 
 }
 
-void MapCollidable::updateY(const CollisionRectangle collisionRectangle,
+void MapCollidable::updateY(const CollisionRectangle &collisionRectangle,
 	const Accelerator &accelerator,
 	const Kinematics &kinematicsX, Kinematics &kinematicsY,
 	Units::MS dt, const Map &map)

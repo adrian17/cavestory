@@ -96,6 +96,9 @@
     <ClCompile Include="util\accelerators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pickup\pickups.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -198,6 +201,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util\accelerators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pickup\pickup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pickup\pickups.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

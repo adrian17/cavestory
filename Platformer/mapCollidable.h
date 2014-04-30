@@ -16,7 +16,7 @@ public:
 		const Accelerator &accelerator,
 		Kinematics &kinematicsX, const Kinematics &kinematicsY,
 		Units::MS dt, const Map &map);
-	void updateY(const CollisionRectangle collisionRectangle,
+	void updateY(const CollisionRectangle &collisionRectangle,
 		const Accelerator &accelerator,
 		const Kinematics &kinematicsX, Kinematics &kinematicsY,
 		Units::MS dt, const Map &map);

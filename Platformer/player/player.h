@@ -18,6 +18,7 @@
 class Map;
 class Graphics;
 class ParticleTools;
+class Pickup;
 class Projectile;
 class Rectangle;
 
@@ -48,6 +49,7 @@ public:
 	void stopFire();
 
 	void takeDamage(Units::HP damage);
+	void collectPickup(const Pickup &pickup);
 
 	Rectangle damageRectangle() const;
 

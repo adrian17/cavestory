@@ -47,7 +47,7 @@ namespace {
 	const Units::Game collisionYTopLeft = (Units::tileToGame(1) - collisionYTopWidth) / 2;
 	const Units::Game collisionYBottomLeft = (Units::tileToGame(1) - collisionYBottomWidth) / 2;
 
-	const CollisionRectangle collisionRectangle(
+	const CompositeCollisionRectangle collisionRectangle(
 		Rectangle(collisionYTopLeft, collisionYTop, collisionYTopWidth, collisionYHeight / 2),
 		Rectangle(collisionYBottomLeft, collisionYTop + collisionYHeight / 2,
 					collisionYBottomWidth, collisionYHeight / 2),
@@ -181,6 +181,10 @@ void Player::takeDamage(Units::HP damage){
 	interacting = false;
 	kinematicsY.velocity = std::min(-shortJumpSpeed, kinematicsY.velocity);
 	invincibleTimer.reset();
+}
+
+void Player::collectPickup(const Pickup &pickup){
+	
 }
 
 Rectangle Player::damageRectangle() const{
