@@ -93,6 +93,10 @@ void PolarStar::collectExperience(Units::GunExperience experience){
 	currentExperience = std::min(currentExperience + experience, experiences[Units::maxGunLevel]);
 }
 
+void PolarStar::loseExperience(Units::GunExperience experience){
+	currentExperience = std::max(0, currentExperience - experience);
+}
+
 std::vector<std::shared_ptr< ::Projectile>> PolarStar::getProjectiles(){
 	std::vector<std::shared_ptr< ::Projectile>> projectiles;
 	if(projectileA) projectiles.push_back(projectileA);

@@ -25,6 +25,7 @@ public:
 		bool gunUp, ParticleTools &particleTools);
 	void stopFire();
 	void collectExperience(Units::GunExperience experience);
+	void loseExperience(Units::GunExperience experience);
 
 	std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
 	void updateProjectiles(Units::MS dt, const Map &map, ParticleTools &particleTools);

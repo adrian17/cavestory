@@ -184,6 +184,8 @@ void Player::takeDamage(Units::HP damage){
 	health.takeDamage(damage);
 	damageText->addValue(damage);
 
+	polarStar.loseExperience(damage * 2);
+
 	interacting = false;
 	kinematicsY.velocity = std::min(-shortJumpSpeed, kinematicsY.velocity);
 	invincibleTimer.reset();
