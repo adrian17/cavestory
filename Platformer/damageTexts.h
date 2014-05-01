@@ -5,7 +5,7 @@
 #include <memory>
 
 class Damageable;
-class DamageText;
+class FloatingNumber;
 class Graphics;
 
 class DamageTexts
@@ -17,7 +17,7 @@ public:
 	void addDamageable(std::shared_ptr<Damageable> damageable);
 private:
 
-	typedef std::map<std::shared_ptr<DamageText>, std::weak_ptr<Damageable>> DamageTextMap;
+	typedef std::map<std::shared_ptr<FloatingNumber>, std::weak_ptr<Damageable>> DamageTextMap;
 	DamageTextMap damageTextMap;
 };
 

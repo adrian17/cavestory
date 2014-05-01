@@ -5,20 +5,22 @@
 
 class Graphics;
 
-class DamageText
+class FloatingNumber
 {
 public:
-	DamageText();
+	enum NumberType { DAMAGE, EXPERIENCE };
+	FloatingNumber(NumberType type);
 
-	void setDamage(Units::HP damage);
+	void addValue(int val);
 	bool update(Units::MS dt);
 	void setPosition(Units::Game centerX, Units::Game centerY);
 	void draw(Graphics &graphics);
 private:
-	Units::HP damage = 0;
+	int value = 0;
 	Units::Game centerX = 0, centerY = 0;
 	Units::Game offsetY = 0.0;
 	Timer timer;
 	bool rises = true;
+	const NumberType type;
 };
 

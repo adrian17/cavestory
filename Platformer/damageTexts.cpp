@@ -1,7 +1,7 @@
 #include "damageTexts.h"
 
 #include "interfaces\damageable.h"
-#include "damageText.h"
+#include "floatingNumber.h"
 
 void DamageTexts::update(Units::MS dt){
 	for (auto iter = damageTextMap.begin(); iter != damageTextMap.end();){

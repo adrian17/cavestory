@@ -85,7 +85,7 @@
     <ClCompile Include="util\accelerators.cpp" />
     <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="config.cpp" />
-    <ClCompile Include="damageText.cpp" />
+    <ClCompile Include="floatingNumber.cpp" />
     <ClCompile Include="damageTexts.cpp" />
     <ClCompile Include="mapCollidable.cpp" />
     <ClCompile Include="player\gunExperienceHUD.cpp" />
@@ -128,7 +128,7 @@
     <ClInclude Include="particle\particleSystem.h" />
     <ClInclude Include="particle\headBumpParticle.h" />
     <ClInclude Include="interfaces\damageable.h" />
-    <ClInclude Include="damageText.h" />
+    <ClInclude Include="floatingNumber.h" />
     <ClInclude Include="damageTexts.h" />
     <ClInclude Include="enemy\firstCaveBat.h" />
     <ClInclude Include="interfaces\projectile.h" />

@@ -18,7 +18,7 @@ namespace {
 FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
 	x(x), y(y),
 	flightCenterY(y),
-	damageText(new DamageText())
+	damageText(new FloatingNumber(FloatingNumber::DAMAGE))
 {
 	initSprites(graphics);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "damageText.h"
+#include "floatingNumber.h"
 #include "mapCollidable.h"
 #include "spriteState.h"
 #include "interfaces\damageable.h"
@@ -55,7 +55,7 @@ public:
 
 	Units::Game centerX() const{ return kinematicsX.position + Units::halfTile; }
 	Units::Game centerY() const{ return kinematicsY.position + Units::halfTile; }
-	std::shared_ptr<DamageText> getDamageText() { return damageText; }
+	std::shared_ptr<FloatingNumber> getDamageText() { return damageText; }
 
 	std::vector<std::shared_ptr< ::Projectile>> getProjectiles(){
 		return polarStar.getProjectiles();
@@ -126,7 +126,8 @@ private:
 
 	Health health;
 	Timer invincibleTimer;
-	std::shared_ptr<DamageText> damageText;
+	std::shared_ptr<FloatingNumber> damageText;
+	FloatingNumber experienceText;
 
 	GunExperienceHUD gunExperienceHUD;
 	PolarStar polarStar;

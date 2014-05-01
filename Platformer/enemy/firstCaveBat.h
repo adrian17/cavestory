@@ -1,6 +1,6 @@
 #pragma once
 
-#include "damageText.h"
+#include "floatingNumber.h"
 #include "spriteState.h"
 #include "interfaces\damageable.h"
 #include "util/rectangle.h"
@@ -29,13 +29,13 @@ public:
 
 	Units::HP getContactDamage() const;
 	void takeDamage(Units::HP damage){
-		damageText->setDamage(damage);
+		damageText->addValue(damage);
 		alive = false;
 	}
 
 	Units::Game centerX() const{ return x + Units::halfTile; }
 	Units::Game centerY() const{ return y + Units::halfTile; }
-	std::shared_ptr<DamageText> getDamageText() { return damageText; }
+	std::shared_ptr<FloatingNumber> getDamageText() { return damageText; }
 private:
 	typedef std::tuple<HorizontalFacing> SpriteState;
 	SpriteState getSpriteState() const;
@@ -51,6 +51,6 @@ private:
 	HorizontalFacing horizontalFacing = LEFT;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
-	std::shared_ptr<DamageText> damageText;
+	std::shared_ptr<FloatingNumber> damageText;
 };
 

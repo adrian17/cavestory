@@ -65,7 +65,8 @@ Player::Player(Graphics &graphics, ParticleTools &particleTools, Units::Game x, 
 	kinematicsY(y, 0.0),
 	health(graphics),
 	invincibleTimer(invincibleTimeLimit),
-	damageText(new DamageText()),
+	damageText(new FloatingNumber(FloatingNumber::DAMAGE)),
+	experienceText(FloatingNumber::EXPERIENCE),
 	gunExperienceHUD(graphics),
 	polarStar(graphics)
 {
@@ -81,6 +82,9 @@ void Player::update(Units::MS dt, const Map &map){
 	health.update(dt);
 	walkingAnimation.update();
 	polarStar.updateProjectiles(dt, map, particleTools);
+
+	experienceText.update(dt);
+	experienceText.setPosition(centerX(), centerY());
 
 	updateX(dt, map);
 	updateY(dt, map);
@@ -113,6 +117,7 @@ void Player::draw(Graphics &graphics){
 }
 
 void Player::drawHUD(Graphics &graphics){
+	experienceText.draw(graphics);
 	if (spriteIsVisible()){
 		health.draw(graphics);
 		polarStar.drawHUD(graphics, gunExperienceHUD);
@@ -177,7 +182,7 @@ void Player::takeDamage(Units::HP damage){
 	if (invincibleTimer.active()) return;
 
 	health.takeDamage(damage);
-	damageText->setDamage(damage);
+	damageText->addValue(damage);
 
 	interacting = false;
 	kinematicsY.velocity = std::min(-shortJumpSpeed, kinematicsY.velocity);
@@ -187,6 +192,7 @@ void Player::takeDamage(Units::HP damage){
 void Player::collectPickup(const Pickup &pickup){
 	if (pickup.type() == Pickup::EXPERIENCE){
 		polarStar.collectExperience(pickup.value());
+		experienceText.addValue(pickup.value());
 		gunExperienceHUD.activateFlash();
 	} else if (pickup.type() == Pickup::HEALTH){
 		health.addHealth(pickup.value());
