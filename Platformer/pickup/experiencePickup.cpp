@@ -26,9 +26,9 @@ namespace {
 
 	const FrictionAccelerator frictionAccelerator(0.00002);
 	const SimpleCollisionRectangle collisionRectangles[] = {
+		SimpleCollisionRectangle(Rectangle(12, 12, 8, 8)),
 		SimpleCollisionRectangle(Rectangle(8, 8, 16, 16)),
-		SimpleCollisionRectangle(Rectangle(4, 4, 24, 24)),
-		SimpleCollisionRectangle(Rectangle(0, 0, 32, 32))
+		SimpleCollisionRectangle(Rectangle(4, 4, 24, 24))
 	};
 }
 
