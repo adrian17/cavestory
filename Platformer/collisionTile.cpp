@@ -1,7 +1,7 @@
 #include "collisionTile.h"
 
 boost::optional<Units::Game> CollisionTile::testCollision(sides::SideType side, Units::Game position){
-	if (tileType == tiles::WALL_TILE){
+	if (tileType[tiles::WALL]){
 		if (side == sides::TOP_SIDE)
 			return Units::tileToGame(row);
 		if (side == sides::BOTTOM_SIDE)

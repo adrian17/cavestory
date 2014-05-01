@@ -21,7 +21,7 @@ public:
 	void draw(Graphics &graphics);
 private:
 	struct Tile{
-		Tile(tiles::TileType tileType = tiles::AIR_TILE, std::shared_ptr<Sprite> sprite = std::shared_ptr<Sprite>()) :
+		Tile(tiles::TileType tileType = tiles::TileType().set(tiles::EMPTY), std::shared_ptr<Sprite> sprite = std::shared_ptr<Sprite>()) :
 			tileType(tileType), sprite(sprite) {}
 		tiles::TileType tileType;
 		std::shared_ptr<Sprite> sprite;

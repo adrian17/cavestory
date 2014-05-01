@@ -23,7 +23,7 @@ Map* Map::createTestMap(Graphics &graphics){
 	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "stage/PrtCave.bmp",
 		Units::tileToPixel(1), 0,
 		Units::tileToPixel(1), Units::tileToPixel(1)));
-	Tile tile(tiles::WALL_TILE, sprite);
+	Tile tile(tiles::TileType().set(tiles::WALL), sprite);
 
 	for (auto&& vec : map->tiles){
 		vec.front() = tile;
