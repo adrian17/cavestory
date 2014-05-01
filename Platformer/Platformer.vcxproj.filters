@@ -105,6 +105,9 @@
     <ClCompile Include="floatingNumber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="collisionTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -219,6 +222,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="floatingNumber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sideType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tileType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionTile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

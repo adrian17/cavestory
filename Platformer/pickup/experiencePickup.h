@@ -23,8 +23,8 @@ public:
 	PickupType type() const { return EXPERIENCE; }
 private:
 
-	void onCollision(SideType side, bool isDeltaDirection);
-	void onDelta(SideType side){}
+	void onCollision(sides::SideType side, bool isDeltaDirection);
+	void onDelta(sides::SideType side){}
 
 	Kinematics kinematicsX, kinematicsY;
 	AnimatedSprite sprite;

@@ -8,6 +8,9 @@ public:
 	Rectangle(Units::Game x, Units::Game y, Units::Game w, Units::Game h) :
 		x(x), y(y), w(w), h(h) {}
 
+	Units::Game centerX() const { return x + w / 2; }
+	Units::Game centerY() const { return y + h / 2; }
+
 	Units::Game left() const{ return x; }
 	Units::Game right() const{ return x + w; }
 	Units::Game top() const{ return y; }

@@ -66,10 +66,10 @@ int ExperiencePickup::value() const{
 	return values[size];
 }
 
-void ExperiencePickup::onCollision(SideType side, bool isDeltaDirection){
-	if (side == TOP_SIDE)
+void ExperiencePickup::onCollision(sides::SideType side, bool isDeltaDirection){
+	if (side == sides::TOP_SIDE)
 		kinematicsY.velocity = 0.0;
-	else if (side == BOTTOM_SIDE)
+	else if (side == sides::BOTTOM_SIDE)
 		kinematicsY.velocity = -bounceVelocity;
 	else 
 	 kinematicsX.velocity *= -1;
