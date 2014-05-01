@@ -153,15 +153,27 @@ Map* Map::createSlopeTestMap(Graphics &graphics){
 	return map;
 }
 
-std::vector<CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle) const{
-	const Units::Tile firstRow = Units::gameToTile(rectangle.top());
-	const Units::Tile lastRow = Units::gameToTile(rectangle.bottom());
-	const Units::Tile firstCol = Units::gameToTile(rectangle.left());
-	const Units::Tile lastCol = Units::gameToTile(rectangle.right());
+std::vector<CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle, sides::SideType direction) const{
+	const Units::Tile firstPrimary = Units::gameToTile(rectangle.side(sides::oppositeSide(direction)));
+	const Units::Tile lastPrimary = Units::gameToTile(rectangle.side(direction));
+	const Units::Tile primaryIncr = (direction == sides::BOTTOM_SIDE || direction == sides::RIGHT_SIDE) ? 1 : -1;
+
+	const bool horizontal = sides::isHorizontal(direction);
+	const Units::Tile minS = Units::gameToTile(horizontal ? rectangle.top() : rectangle.left());
+	const Units::Tile midS = Units::gameToTile(horizontal ? rectangle.centerY() : rectangle.centerX());
+	const Units::Tile maxS = Units::gameToTile(horizontal ? rectangle.bottom() : rectangle.right());
+
+	const bool positiveS = (midS - minS) < (maxS - midS);
+
+	const Units::Tile firstSecondary = positiveS ? minS : maxS;
+	const Units::Tile lastSecondary = !positiveS ? minS : maxS;
+	const Units::Tile secondaryIncr = positiveS ? 1 : -1;
 
 	std::vector<CollisionTile> collisionTiles;
-	for (Units::Tile row = firstRow; row <= lastRow; ++row){
-		for (Units::Tile col = firstCol; col <= lastCol; ++col){
+	for (Units::Tile primary = firstPrimary; primary != lastPrimary + primaryIncr; primary += primaryIncr){
+		for (Units::Tile secondary = firstSecondary; secondary != lastSecondary + secondaryIncr; secondary += secondaryIncr){
+			const Units::Tile row = !horizontal ? primary : secondary;
+			const Units::Tile col = horizontal ? primary : secondary;
 			collisionTiles.push_back(CollisionTile(row, col, tiles[row][col].tileType));
 		}
 	}

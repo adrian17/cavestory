@@ -7,7 +7,7 @@
 
 namespace {
 	boost::optional<Units::Game> testMapCollision(const Map &map, const Rectangle &rectangle, sides::SideType direction){
-		std::vector<CollisionTile> tiles = map.getCollidingTiles(rectangle);
+		std::vector<CollisionTile> tiles = map.getCollidingTiles(rectangle, direction);
 		for (auto && tile : tiles){
 			const sides::SideType side = sides::oppositeSide(direction);
 			const Units::Game position = sides::isVertical(side) ? rectangle.centerX() : rectangle.centerY();

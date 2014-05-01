@@ -200,9 +200,9 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	offset += projectileVelocity * dt;
 
-	std::vector<CollisionTile> collidingTiles = map.getCollidingTiles(collisionRectangle());
+	const sides::SideType direction = sides::fromFacing(horizontalDirection, verticalDirection);
+	std::vector<CollisionTile> collidingTiles = map.getCollidingTiles(collisionRectangle(), direction);
 	for (auto&& tile : collidingTiles){
-		const sides::SideType direction = sides::fromFacing(horizontalDirection, verticalDirection);
 		const sides::SideType side = sides::oppositeSide(direction);
 		const Units::Game position = sides::isVertical(side) ? getX() : getY();
 
