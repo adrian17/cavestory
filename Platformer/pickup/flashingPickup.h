@@ -16,6 +16,7 @@ public:
 	PickupType type() const { return type_; }
 
 	static std::shared_ptr<Pickup> HeartPickup(Graphics &graphics, Units::Game centerX, Units::Game centerY);
+	static std::shared_ptr<Pickup> MultiHeartPickup(Graphics &graphics, Units::Game centerX, Units::Game centerY);
 
 private:
 	FlashingPickup(Graphics &graphics,

@@ -13,6 +13,11 @@ namespace {
 	const Rectangle heartRectangle = { 5, 8, 25, 19 };
 	const Units::HP heartValue = 2;
 
+	const Units::Tile multiHeartSourceX = 4;
+	const Units::Tile multiHeartSourceY = 5;
+	const Rectangle multiHeartRectangle = { 6, 7, 26, 25 };
+	const Units::HP multiHeartValue = 6;
+
 	const Units::Tile heartsSourceX = 1;
 	const Units::Tile heartsSourceY = 0;
 
@@ -58,6 +63,11 @@ void FlashingPickup::draw(Graphics &graphics){
 std::shared_ptr<Pickup> FlashingPickup::HeartPickup(Graphics &graphics, Units::Game centerX, Units::Game centerY){
 	return std::shared_ptr<Pickup>(
 		new FlashingPickup(graphics, centerX, centerY, heartSourceX, heartSourceY, heartRectangle, heartValue, Pickup::HEALTH));
+}
+
+std::shared_ptr<Pickup> FlashingPickup::MultiHeartPickup(Graphics &graphics, Units::Game centerX, Units::Game centerY){
+	return std::shared_ptr<Pickup>(
+		new FlashingPickup(graphics, centerX, centerY, multiHeartSourceX, multiHeartSourceY, multiHeartRectangle, multiHeartValue, Pickup::HEALTH));
 }
 
 FlashingPickup::FlashingPickup(Graphics &graphics,
