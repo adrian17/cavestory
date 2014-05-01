@@ -211,10 +211,11 @@ Rectangle Player::damageRectangle() const{
 void Player::onCollision(sides::SideType side, bool isDeltaDirection){
 	switch (side){
 	case sides::TOP_SIDE:
-		particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
-			new HeadBumpParticle(particleTools.graphics, centerX(), kinematicsY.position + collisionRectangle.boundingBox().top())));
-		if (isDeltaDirection)
+		if (isDeltaDirection){
 			kinematicsY.velocity = 0.0;
+			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
+				new HeadBumpParticle(particleTools.graphics, centerX(), kinematicsY.position + collisionRectangle.boundingBox().top())));
+		}
 		break;
 	case sides::BOTTOM_SIDE:
 		onGround = true;
