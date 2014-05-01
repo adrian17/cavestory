@@ -156,7 +156,7 @@ Map* Map::createSlopeTestMap(Graphics &graphics){
 std::vector<CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle, sides::SideType direction) const{
 	const Units::Tile firstPrimary = Units::gameToTile(rectangle.side(sides::oppositeSide(direction)));
 	const Units::Tile lastPrimary = Units::gameToTile(rectangle.side(direction));
-	const Units::Tile primaryIncr = (direction == sides::BOTTOM_SIDE || direction == sides::RIGHT_SIDE) ? 1 : -1;
+	const Units::Tile primaryIncr = sides::isMax(direction) ? 1 : -1;
 
 	const bool horizontal = sides::isHorizontal(direction);
 	const Units::Tile minS = Units::gameToTile(horizontal ? rectangle.top() : rectangle.left());

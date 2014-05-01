@@ -10,7 +10,8 @@ struct CollisionTile{
 	CollisionTile(Units::Tile row, Units::Tile col, tiles::TileType tileType) :
 		row(row), col(col), tileType(tileType) {}
 
-	boost::optional<Units::Game> testCollision(sides::SideType side, Units::Game position);
+	boost::optional<Units::Game> testCollision(sides::SideType side, 
+		Units::Game perpendicularPosition, Units::Game leadingPosition, bool testSlope);
 
 private:
 	Units::Tile row, col;

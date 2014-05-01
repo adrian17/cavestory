@@ -32,4 +32,12 @@ namespace sides{
 			return LEFT_SIDE;
 		return RIGHT_SIDE;
 	}
+
+	inline bool isMax(SideType side){
+		return (side == RIGHT_SIDE || side == BOTTOM_SIDE);
+	}
+
+	inline bool isMin(SideType side){
+		return !isMax(side);
+	}
 };

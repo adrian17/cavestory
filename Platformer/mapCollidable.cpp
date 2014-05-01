@@ -10,8 +10,10 @@ namespace {
 		std::vector<CollisionTile> tiles = map.getCollidingTiles(rectangle, direction);
 		for (auto && tile : tiles){
 			const sides::SideType side = sides::oppositeSide(direction);
-			const Units::Game position = sides::isVertical(side) ? rectangle.centerX() : rectangle.centerY();
-			const boost::optional<Units::Game> maybePosition = tile.testCollision(side, position);
+			const Units::Game perpendicularPosition = sides::isVertical(side) ? rectangle.centerX() : rectangle.centerY();
+			const Units::Game leadingPosition = rectangle.side(direction);
+			const bool testSlope = sides::isVertical(side);
+			const boost::optional<Units::Game> maybePosition = tile.testCollision(side, perpendicularPosition, leadingPosition, testSlope);
 
 			if (maybePosition)
 				return maybePosition;
