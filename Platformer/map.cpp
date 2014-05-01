@@ -4,6 +4,8 @@
 #include "util/rectangle.h"
 #include "sprite/sprite.h"
 
+using namespace tiles;
+
 Map* Map::createTestMap(Graphics &graphics){
 	Map *map = new Map;
 
@@ -23,7 +25,7 @@ Map* Map::createTestMap(Graphics &graphics){
 	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "stage/PrtCave.bmp",
 		Units::tileToPixel(1), 0,
 		Units::tileToPixel(1), Units::tileToPixel(1)));
-	Tile tile(tiles::TileType().set(tiles::WALL), sprite);
+	Tile tile(TileType().set(WALL), sprite);
 
 	for (auto&& vec : map->tiles){
 		vec.front() = tile;
@@ -67,6 +69,86 @@ Map* Map::createTestMap(Graphics &graphics){
 	map->backgroundTiles[7][13] = chain_middle;
 	map->backgroundTiles[6][13] = chain_top;
 	map->tiles[5][13] = tile;
+
+	return map;
+}
+
+Map* Map::createSlopeTestMap(Graphics &graphics){
+	Map *map = new Map;
+
+	map->backdrop.reset(new FixedBackdrop("bkBlue.bmp", graphics));
+
+	const Units::Tile nRows = 15;
+	const Units::Tile nCols = 20;
+
+	map->tiles = std::vector<std::vector<Tile>>(
+		nRows, std::vector<Tile>(
+		nCols, Tile()));
+	map->backgroundTiles = std::vector<std::vector<std::shared_ptr<Sprite>>>(
+		nRows, std::vector<std::shared_ptr<Sprite>>(
+		nCols, std::shared_ptr<Sprite>()));
+
+	Tile wallTile(TileType().set(WALL),
+		std::shared_ptr<Sprite>(new Sprite(graphics, "stage/PrtCave.bmp",
+		Units::tileToPixel(1), 0,
+		Units::tileToPixel(1), Units::tileToPixel(1))));
+	enum {LTT, LTS, RTS, RTT,
+		  LBT, LBS, RBS, RBT, NUM_SLOPES};
+	Tile slopeTiles[NUM_SLOPES];
+	for (int i = 0; i < NUM_SLOPES; ++i){
+		slopeTiles[i] = Tile(
+			TileType().set(SLOPE).
+				set(i / 2 % 2 == 0 ? LEFT_SLOPE : RIGHT_SLOPE).
+				set(i / 4 == 0 ? TOP_SLOPE : BOTTOM_SLOPE).
+				set((i + 1) / 2 % 2== 0 ? TALL_SLOPE : SHORT_SLOPE),
+			std::shared_ptr<Sprite>(new Sprite(graphics, "stage/PrtCave.bmp",
+				Units::tileToPixel(2 + i % 4), Units::tileToPixel(i / 4),
+				Units::tileToPixel(1), Units::tileToPixel(1))));
+	}
+	Units::Tile row = 11;
+	for (Units::Tile col = 0; col < nCols; ++col){
+		map->tiles[row][col] = wallTile;
+	}
+
+	row -= 1;
+	Units::Tile col = 0;
+
+	map->tiles[row][col++] = wallTile;
+	map->tiles[row][col++] = slopeTiles[LBT];
+	map->tiles[row][col++] = slopeTiles[RBT];
+	map->tiles[row][col++] = wallTile;
+	map->tiles[row][col++] = slopeTiles[LBS];
+	col++;
+	map->tiles[row][col++] = slopeTiles[RBS];
+	map->tiles[row][col++] = slopeTiles[RBT];
+	map->tiles[row][col++] = wallTile;
+	map->tiles[row][col++] = slopeTiles[LBT];
+	map->tiles[row][col++] = slopeTiles[LBS];
+	map->tiles[row][col++] = slopeTiles[RBS];
+	map->tiles[row][col++] = slopeTiles[RBT];
+	map->tiles[row][col] = wallTile;
+	map->tiles[row - 1][col++] = slopeTiles[RBS];
+	map->tiles[row][col] = wallTile;
+	map->tiles[row - 1][col++] = slopeTiles[RBT];
+	map->tiles[row - 1][col++] = wallTile;
+	++col;
+	map->tiles[row][col++] = slopeTiles[RBS];
+	map->tiles[row][col++] = wallTile;
+
+	row -= 3; col = 0;
+
+	map->tiles[row-1][col] = wallTile;
+	map->tiles[row][col++] = wallTile;
+	map->tiles[row - 1][col] = wallTile;
+	map->tiles[row][col++] = slopeTiles[LTT];
+	map->tiles[row - 1][col] = wallTile;
+	map->tiles[row][col++] = slopeTiles[LTS];
+	map->tiles[row - 1][col] = wallTile;
+	map->tiles[row][col++] = slopeTiles[RTS];
+	map->tiles[row - 1][col] = wallTile;
+	map->tiles[row][col++] = slopeTiles[RTT];
+	map->tiles[row - 1][col] = wallTile;
+	map->tiles[row][col++] = wallTile;
 
 	return map;
 }

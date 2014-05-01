@@ -14,6 +14,7 @@ class Map
 {
 public:
 	static Map* createTestMap(Graphics &graphics);
+	static Map* createSlopeTestMap(Graphics &graphics);
 
 	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle) const;
 
