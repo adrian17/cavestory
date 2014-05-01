@@ -186,8 +186,10 @@ void Player::takeDamage(Units::HP damage){
 
 void Player::collectPickup(const Pickup &pickup){
 	if (pickup.type() == Pickup::EXPERIENCE){
-		polarStar.collectExperience((Units::GunExperience)pickup.value());
+		polarStar.collectExperience(pickup.value());
 		gunExperienceHUD.activateFlash();
+	} else if (pickup.type() == Pickup::HEALTH){
+		health.addHealth(pickup.value());
 	}
 }
 

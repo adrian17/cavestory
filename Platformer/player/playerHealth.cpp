@@ -3,6 +3,8 @@
 #include "graphics.h"
 #include "sprite/numberSprite.h"
 
+#include <algorithm>
+
 namespace {
 	const std::string spritePath = "TextBox.bmp";
 
@@ -76,7 +78,24 @@ void Player::Health::draw(Graphics &graphics){
 bool Player::Health::takeDamage(Units::HP damage){
 	damageTaken = damage;
 	damageTimer.reset();
-	healthFillSprite.setPercentageWidth((currentHealth - damage) * 1.0 / maxHealth);
-	damageFillSprite.setPercentageWidth(currentHealth * 1.0 / maxHealth);
+	resetFillSprites();
 	return false;
+}
+
+void Player::Health::addHealth(Units::HP health){
+	if (damageTaken > health) {
+		damageTaken -= health;
+		health = 0;
+	} else if (damageTaken > 0){
+		health -= damageTaken;
+		damageTaken = 0;
+	}
+
+	currentHealth = std::min(currentHealth + health, maxHealth);
+	resetFillSprites();
+}
+
+void Player::Health::resetFillSprites(){
+	healthFillSprite.setPercentageWidth((currentHealth - damageTaken) * 1.0 / maxHealth);
+	damageFillSprite.setPercentageWidth(currentHealth * 1.0 / maxHealth);
 }

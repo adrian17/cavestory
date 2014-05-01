@@ -84,7 +84,9 @@ private:
 		void update(Units::MS dt);
 		void draw(Graphics &graphics);
 		bool takeDamage(Units::HP damage);	//true if dies
+		void addHealth(Units::HP health);
 	private:
+		void resetFillSprites();
 		Units::HP currentHealth = 6;
 		Units::HP maxHealth = 6;
 		Sprite healthBarSprite;
