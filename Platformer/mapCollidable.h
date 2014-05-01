@@ -24,5 +24,12 @@ public:
 	virtual void onDelta(sides::SideType side) = 0;
 
 	virtual ~MapCollidable() {}
+private:
+	enum AxisType { X_AXIS, Y_AXIS };
+	void update(const CollisionRectangle &collisionRectangle,
+		const Accelerator &accelerator,
+		const Kinematics &kinematicsX, const Kinematics &kinematicsY,
+		Units::MS dt, const Map &map,
+		Kinematics &kinematics, AxisType axis);
 };
 

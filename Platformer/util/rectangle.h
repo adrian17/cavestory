@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sideType.h"
 #include "units.h"
 
 class Rectangle
@@ -10,6 +11,16 @@ public:
 
 	Units::Game centerX() const { return x + w / 2; }
 	Units::Game centerY() const { return y + h / 2; }
+
+	Units::Game side(sides::SideType side) const{
+		if (side == sides::LEFT_SIDE)
+			return left();
+		if (side == sides::RIGHT_SIDE)
+			return right();
+		if (side == sides::TOP_SIDE)
+			return top();
+		return bottom();
+	}
 
 	Units::Game left() const{ return x; }
 	Units::Game right() const{ return x + w; }

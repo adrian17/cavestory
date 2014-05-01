@@ -25,52 +25,7 @@ void MapCollidable::updateX(const CollisionRectangle &collisionRectangle,
 	Kinematics &kinematicsX, const Kinematics &kinematicsY,
 	Units::MS dt, const Map &map)
 {
-	accelerator.updateVelocity(kinematicsX, dt);
-
-	const Units::Game delta = kinematicsX.velocity * dt;
-
-	if (delta > 0.0){
-		const sides::SideType direction = sides::RIGHT_SIDE;
-
-		boost::optional<Units::Game> maybePosition = testMapCollision(
-			map, collisionRectangle.rightCollision(kinematicsX.position, kinematicsY.position, delta), direction);
-		if (maybePosition){
-			kinematicsX.position = *maybePosition - collisionRectangle.boundingBox().right();
-			onCollision(direction, true);
-		} else {
-			kinematicsX.position += delta;
-			onDelta(direction);
-		}
-
-		const sides::SideType oppositeDirection = sides::oppositeSide(direction);
-		maybePosition = testMapCollision(
-			map, collisionRectangle.leftCollision(kinematicsX.position, kinematicsY.position, 0), oppositeDirection);
-		if (maybePosition){
-			kinematicsX.position = *maybePosition - collisionRectangle.boundingBox().left();
-			onCollision(oppositeDirection, true);
-		}
-	} else {
-		const sides::SideType direction = sides::LEFT_SIDE;
-
-		boost::optional<Units::Game> maybePosition = testMapCollision(
-			map, collisionRectangle.leftCollision(kinematicsX.position, kinematicsY.position, delta), direction);
-		if (maybePosition){
-			kinematicsX.position = *maybePosition - collisionRectangle.boundingBox().left();
-			onCollision(direction, true);
-		} else {
-			kinematicsX.position += delta;
-			onDelta(direction);
-		}
-		
-		const sides::SideType oppositeDirection = sides::oppositeSide(direction);
-		maybePosition = testMapCollision(
-			map, collisionRectangle.rightCollision(kinematicsX.position, kinematicsY.position, 0), oppositeDirection);
-		if (maybePosition){
-			kinematicsX.position = *maybePosition - collisionRectangle.boundingBox().right();
-			onCollision(oppositeDirection, false);
-		}
-	}
-
+	update(collisionRectangle, accelerator, kinematicsX, kinematicsY, dt, map, kinematicsX, X_AXIS);
 }
 
 void MapCollidable::updateY(const CollisionRectangle &collisionRectangle,
@@ -78,48 +33,43 @@ void MapCollidable::updateY(const CollisionRectangle &collisionRectangle,
 	const Kinematics &kinematicsX, Kinematics &kinematicsY,
 	Units::MS dt, const Map &map)
 {
-	accelerator.updateVelocity(kinematicsY, dt);
+	update(collisionRectangle, accelerator, kinematicsX, kinematicsY, dt, map, kinematicsY, Y_AXIS);
+}
 
-	const Units::Game delta = kinematicsY.velocity * dt;
+void MapCollidable::update(const CollisionRectangle &collisionRectangle,
+	const Accelerator &accelerator,
+	const Kinematics &kinematicsX, const Kinematics &kinematicsY,
+	Units::MS dt, const Map &map,
+	Kinematics &kinematics, AxisType axis)
+{
+	accelerator.updateVelocity(kinematics, dt);
 
-	if (delta > 0){
-		const sides::SideType direction = sides::BOTTOM_SIDE;
+	const Units::Game delta = kinematics.velocity * dt;
 
+	const sides::SideType direction = axis == X_AXIS ?
+		(delta > 0 ? sides::RIGHT_SIDE : sides::LEFT_SIDE) :
+		(delta > 0 ? sides::BOTTOM_SIDE : sides::TOP_SIDE);
+
+	{
 		boost::optional<Units::Game> maybePosition = testMapCollision(
-			map, collisionRectangle.bottomCollision(kinematicsX.position, kinematicsY.position, delta), direction);
+			map, collisionRectangle.collision(direction, kinematicsX.position, kinematicsY.position, delta), direction);
 		if (maybePosition){
-			kinematicsY.position = *maybePosition - collisionRectangle.boundingBox().bottom();
+			kinematics.position = *maybePosition - collisionRectangle.boundingBox().side(direction);
 			onCollision(direction, true);
-		} else {
-			kinematicsY.position += delta;
+		}
+		else {
+			kinematics.position += delta;
 			onDelta(direction);
 		}
-		
+	}
+	{
 		const sides::SideType oppositeDirection = sides::oppositeSide(direction);
-		maybePosition = testMapCollision(
-			map, collisionRectangle.topCollision(kinematicsX.position, kinematicsY.position, 0), oppositeDirection);
+		boost::optional<Units::Game>maybePosition = testMapCollision(
+			map, collisionRectangle.collision(oppositeDirection, kinematicsX.position, kinematicsY.position, 0), oppositeDirection);
 		if (maybePosition){
-			kinematicsY.position = *maybePosition + collisionRectangle.boundingBox().top();
-			onCollision(oppositeDirection, false);
-		}
-	} else {
-		const sides::SideType direction = sides::TOP_SIDE;
-		boost::optional<Units::Game> maybePosition = testMapCollision(
-			map, collisionRectangle.topCollision(kinematicsX.position, kinematicsY.position, delta), direction);
-		if (maybePosition){
-			kinematicsY.position = *maybePosition + collisionRectangle.boundingBox().top();
-			onCollision(direction, true);
-		} else {
-			kinematicsY.position += delta;
-			onDelta(direction);
-		}
-
-		const sides::SideType oppositeDirection = sides::oppositeSide(direction);
-		maybePosition = testMapCollision(
-			map, collisionRectangle.bottomCollision(kinematicsX.position, kinematicsY.position, 0), oppositeDirection);
-		if (maybePosition){
-			kinematicsY.position = *maybePosition - collisionRectangle.boundingBox().bottom();
+			kinematics.position = *maybePosition - collisionRectangle.boundingBox().side(oppositeDirection);
 			onCollision(oppositeDirection, false);
 		}
 	}
+
 }
