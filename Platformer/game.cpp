@@ -5,6 +5,8 @@
 #include "map.h"
 #include "enemy\firstCaveBat.h"
 #include "particle\deathCloudParticle.h"
+#include "pickup\experiencePickup.h"
+#include "pickup\flashingPickup.h"
 #include "player/player.h"
 #include "util\timer.h"
 #include "SDL.h"
@@ -12,8 +14,6 @@
 #include <cstdlib>
 #include <ctime>
 //#include <cstdio>
-
-#include "pickup\experiencePickup.h"
 
 namespace {
 	const Units::FPS fps = 60;
@@ -110,7 +110,8 @@ void Game::update(Units::MS dt, Graphics &graphics){
 		if (bat->update(dt, player->centerX()) == false){
 			ParticleTools particleTools = { frontParticleSystem, entityParticleSystem, graphics };
 			DeathCloudParticle::createRandomDeathClouds(particleTools, bat->centerX(), bat->centerY(), 3);
-			pickups.add(std::shared_ptr<Pickup>(new ExperiencePickup(graphics, bat->centerX(), bat->centerY(), ExperiencePickup::SMALL)));
+			//pickups.add(std::shared_ptr<Pickup>(new ExperiencePickup(graphics, bat->centerX(), bat->centerY(), ExperiencePickup::SMALL)));
+			pickups.add(FlashingPickup::HeartPickup(graphics, bat->centerX(), bat->centerY()));
 			bat.reset();
 		}
 	}
