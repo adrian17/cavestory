@@ -196,7 +196,7 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 {
 	particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, x, y)));
 }
-#include <iostream>
+
 bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
 	offset += projectileVelocity * dt;
 
@@ -205,18 +205,17 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &
 	std::vector<CollisionTile> collidingTiles = map.getCollidingTiles(rectangle, direction);
 	for (auto&& tile : collidingTiles){
 		const sides::SideType side = sides::oppositeSide(direction);
-		const Units::Game perpendicularPosition = sides::isVertical(side) ? getX() : getY();
+		const Units::Game perpendicularPosition = sides::isVertical(side) ? rectangle.centerX() : rectangle.centerY();
 		const Units::Game leadingPosition = rectangle.side(direction);
 		const bool testSlope = true;
 
 		const boost::optional<Units::Game> maybePosition = tile.testCollision(side, perpendicularPosition, leadingPosition, testSlope);
 		if (maybePosition){
-			const Units::Game particleX = sides::isVertical(side) ? perpendicularPosition : *maybePosition - Units::halfTile;
-			const Units::Game particleY = sides::isVertical(side) ? *maybePosition - Units::halfTile : perpendicularPosition;
-			std::cout << side << std::endl;
+			const Units::Game collisionX = sides::isVertical(side) ? perpendicularPosition : *maybePosition;
+			const Units::Game collisionY = sides::isVertical(side) ? *maybePosition : perpendicularPosition;
 
 			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
-				new ProjectileNoEffectParticle(particleTools.graphics, particleX, particleY)));
+				new ProjectileNoEffectParticle(particleTools.graphics, collisionX - Units::halfTile, collisionY - Units::halfTile)));
 			return false;
 		}
 	}
