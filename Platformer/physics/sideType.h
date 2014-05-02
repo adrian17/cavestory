@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spriteState.h"
+#include "physics\spriteState.h"
 
 namespace sides{
 	enum SideType { TOP_SIDE, BOTTOM_SIDE, LEFT_SIDE, RIGHT_SIDE };

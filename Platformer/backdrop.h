@@ -1,7 +1,6 @@
 #pragma once
 
 #include "graphics.h"
-#include <string>
 
 class Backdrop
 {

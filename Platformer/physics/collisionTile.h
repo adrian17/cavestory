@@ -1,7 +1,7 @@
 #pragma once
 
-#include "tileType.h"
-#include "sideType.h"
+#include "physics\sideType.h"
+#include "physics\tileType.h"
 #include "util\units.h"
 
 struct CollisionTile{

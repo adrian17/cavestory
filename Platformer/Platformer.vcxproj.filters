@@ -27,9 +27,6 @@
     <ClCompile Include="input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sprite\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,12 +84,6 @@
     <ClCompile Include="player\gunExperienceHUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mapCollidable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\accelerators.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pickup\pickups.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,7 +96,16 @@
     <ClCompile Include="floatingNumber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="collisionTile.cpp">
+    <ClCompile Include="physics\accelerators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\collisionTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\mapCollidable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -117,9 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sprite\sprite.h">
@@ -152,9 +149,6 @@
     <ClInclude Include="weapons\polarStar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spriteState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="player\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -162,9 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="damageTexts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="interfaces\projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="interfaces\damageable.h">
@@ -197,18 +188,6 @@
     <ClInclude Include="player\gunExperienceHUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapCollidable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\collisionRectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\kinematics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\accelerators.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pickup\pickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -224,13 +203,34 @@
     <ClInclude Include="floatingNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sideType.h">
+    <ClInclude Include="physics\accelerators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tileType.h">
+    <ClInclude Include="physics\collisionRectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="collisionTile.h">
+    <ClInclude Include="physics\collisionTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\kinematics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\mapCollidable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\sideType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tileType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\spriteState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

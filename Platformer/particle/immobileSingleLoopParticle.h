@@ -2,7 +2,6 @@
 
 #include "particle\particle.h"
 #include "sprite\animatedSprite.h"
-#include "util\units.h"
 
 class Graphics;
 

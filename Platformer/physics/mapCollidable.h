@@ -1,7 +1,7 @@
 #pragma once
 
-#include "sideType.h"
-#include "tileType.h"
+#include "physics\sideType.h"
+#include "physics\tileType.h"
 #include "util\units.h"
 #include <boost\optional.hpp>
 

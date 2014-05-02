@@ -1,9 +1,8 @@
 #include "experiencePickup.h"
 
-#include "util\accelerators.h"
-#include "util\collisionRectangle.h"
+#include "physics\accelerators.h"
+#include "physics\collisionRectangle.h"
 #include <cstdlib>
-#include <string>
 
 namespace {
 	const std::string spritePath = "npc/npcSym.bmp";

@@ -3,14 +3,13 @@
 #include "map.h"
 #include "particle\headBumpParticle.h"
 #include "particle\particleSystem.h"
+#include "physics\accelerators.h"
+#include "physics\collisionRectangle.h"
 #include "pickup\experiencePickup.h"
 #include "sprite/animatedSprite.h"
 #include "sprite/numberSprite.h"
-#include "util\accelerators.h"
-#include "util\collisionRectangle.h"
 #include "util/rectangle.h"
 #include <algorithm>
-#include <cmath>
 
 namespace {
 	const Units::Acceleration walkingAcceleration = 0.00083007812;

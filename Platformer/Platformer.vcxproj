@@ -79,16 +79,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="collisionTile.cpp" />
+    <ClCompile Include="physics\collisionTile.cpp" />
     <ClCompile Include="pickup\flashingPickup.cpp" />
     <ClCompile Include="pickup\experiencePickup.cpp" />
     <ClCompile Include="pickup\pickups.cpp" />
-    <ClCompile Include="util\accelerators.cpp" />
+    <ClCompile Include="physics\accelerators.cpp" />
     <ClCompile Include="backdrop.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="floatingNumber.cpp" />
     <ClCompile Include="damageTexts.cpp" />
-    <ClCompile Include="mapCollidable.cpp" />
+    <ClCompile Include="physics\mapCollidable.cpp" />
     <ClCompile Include="player\gunExperienceHUD.cpp" />
     <ClCompile Include="particle\deathCloudParticle.cpp" />
     <ClCompile Include="enemy\firstCaveBat.cpp" />
@@ -112,19 +112,19 @@
     <ClCompile Include="util\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="collisionTile.h" />
+    <ClInclude Include="physics\collisionTile.h" />
     <ClInclude Include="pickup\flashingPickup.h" />
     <ClInclude Include="pickup\experiencePickup.h" />
     <ClInclude Include="pickup\pickups.h" />
     <ClInclude Include="pickup\pickup.h" />
-    <ClInclude Include="sideType.h" />
-    <ClInclude Include="tileType.h" />
-    <ClInclude Include="util\accelerators.h" />
+    <ClInclude Include="physics\sideType.h" />
+    <ClInclude Include="physics\tileType.h" />
+    <ClInclude Include="physics\accelerators.h" />
     <ClInclude Include="backdrop.h" />
-    <ClInclude Include="util\collisionRectangle.h" />
+    <ClInclude Include="physics\collisionRectangle.h" />
     <ClInclude Include="config.h" />
-    <ClInclude Include="util\kinematics.h" />
-    <ClInclude Include="mapCollidable.h" />
+    <ClInclude Include="physics\kinematics.h" />
+    <ClInclude Include="physics\mapCollidable.h" />
     <ClInclude Include="player\gunExperienceHUD.h" />
     <ClInclude Include="particle\deathCloudParticle.h" />
     <ClInclude Include="particle\immobileSingleLoopParticle.h" />
@@ -138,7 +138,7 @@
     <ClInclude Include="interfaces\projectile.h" />
     <ClInclude Include="particle\projectileStarParticle.h" />
     <ClInclude Include="particle\projectileNoEffectParticle.h" />
-    <ClInclude Include="spriteState.h" />
+    <ClInclude Include="physics\spriteState.h" />
     <ClInclude Include="util\polarVector.h" />
     <ClInclude Include="weapons\polarStar.h" />
     <ClInclude Include="sprite\numberSprite.h" />

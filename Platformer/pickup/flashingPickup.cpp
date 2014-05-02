@@ -1,7 +1,5 @@
 #include "flashingPickup.h"
 
-#include <string>
-
 namespace {
 	const std::string spritePath = "npc/NpcSym.bmp";
 

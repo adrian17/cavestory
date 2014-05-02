@@ -1,14 +1,14 @@
 #pragma once
 
 #include "floatingNumber.h"
-#include "mapCollidable.h"
-#include "spriteState.h"
-#include "tileType.h"
 #include "interfaces\damageable.h"
+#include "physics\kinematics.h"
+#include "physics\mapCollidable.h"
+#include "physics\spriteState.h"
+#include "physics\tileType.h"
 #include "player\gunExperienceHUD.h"
 #include "sprite\sprite.h"
 #include "sprite/varyingWidthSprite.h"
-#include "util\kinematics.h"
 #include "util\timer.h"
 #include "util/units.h"
 #include "weapons\polarStar.h"

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "floatingNumber.h"
-#include "spriteState.h"
 #include "interfaces\damageable.h"
+#include "physics\spriteState.h"
 #include "util/rectangle.h"
 #include "util/units.h"
 #include <map>
