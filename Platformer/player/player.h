@@ -3,6 +3,7 @@
 #include "floatingNumber.h"
 #include "mapCollidable.h"
 #include "spriteState.h"
+#include "tileType.h"
 #include "interfaces\damageable.h"
 #include "player\gunExperienceHUD.h"
 #include "sprite\sprite.h"
@@ -11,6 +12,7 @@
 #include "util\timer.h"
 #include "util/units.h"
 #include "weapons\polarStar.h"
+#include <boost\optional.hpp>
 #include <map>
 #include <memory>
 #include <tuple>
@@ -102,7 +104,7 @@ private:
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);
 
-	void onCollision(sides::SideType side, bool isDeltaDirection);
+	void onCollision(sides::SideType side, bool isDeltaDirection, const tiles::TileType tileType);
 	void onDelta(sides::SideType side);
 
 	ParticleTools &particleTools;
@@ -114,15 +116,18 @@ private:
 	HorizontalFacing horizontalFacing = LEFT;
 	VerticalFacing intendedVerticalFacing = HORIZONTAL;
 	VerticalFacing verticalFacing() const
-		{ return (onGround && intendedVerticalFacing == DOWN) ? HORIZONTAL : intendedVerticalFacing; }
+		{ return (onGround() && intendedVerticalFacing == DOWN) ? HORIZONTAL : intendedVerticalFacing; }
 	WalkingAnimation walkingAnimation;
 
 	bool gunUp() const 
 		{ return (motionType() == WALKING && walkingAnimation.stride() != STRIDE_MIDDLE); }
 
-	bool onGround = true;
+	boost::optional<tiles::TileType> maybeGroundTile = boost::none;
 	bool jumping = false;
 	bool interacting = false;
+
+	bool onGround() const
+		{ return maybeGroundTile; }
 
 	Health health;
 	Timer invincibleTimer;

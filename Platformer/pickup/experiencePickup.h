@@ -23,7 +23,7 @@ public:
 	PickupType type() const { return EXPERIENCE; }
 private:
 
-	void onCollision(sides::SideType side, bool isDeltaDirection);
+	void onCollision(sides::SideType side, bool isDeltaDirection, const tiles::TileType tileType);
 	void onDelta(sides::SideType side){}
 
 	Kinematics kinematicsX, kinematicsY;

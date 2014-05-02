@@ -7,6 +7,7 @@
 #include "particle\projectileStarParticle.h"
 #include "player\gunExperienceHUD.h"
 #include "sprite\sprite.h"
+#include <boost\optional.hpp>
 #include <algorithm>
 
 namespace {
@@ -209,10 +210,10 @@ bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &
 		const Units::Game leadingPosition = rectangle.side(direction);
 		const bool testSlope = true;
 
-		const boost::optional<Units::Game> maybePosition = tile.testCollision(side, perpendicularPosition, leadingPosition, testSlope);
-		if (maybePosition){
-			const Units::Game collisionX = sides::isVertical(side) ? perpendicularPosition : *maybePosition;
-			const Units::Game collisionY = sides::isVertical(side) ? *maybePosition : perpendicularPosition;
+		const CollisionTile::TestCollisionInfo testInfo = tile.testCollision(side, perpendicularPosition, leadingPosition, testSlope);
+		if (testInfo.isColliding){
+			const Units::Game collisionX = sides::isVertical(side) ? perpendicularPosition : testInfo.position;
+			const Units::Game collisionY = sides::isVertical(side) ? testInfo.position : perpendicularPosition;
 
 			particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(
 				new ProjectileNoEffectParticle(particleTools.graphics, collisionX - Units::halfTile, collisionY - Units::halfTile)));

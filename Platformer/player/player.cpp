@@ -92,7 +92,7 @@ void Player::update(Units::MS dt, const Map &map){
 
 void Player::updateX(Units::MS dt, const Map &map){
 	const Accelerator* accelerator;
-	if (onGround){
+	if (onGround()){
 		if (accX == 0) accelerator = &frictionAccelerator;
 		else accelerator = (accX < 0) ? &walkingAccelerators.negative : &walkingAccelerators.positive;
 	} else {
@@ -106,7 +106,7 @@ void Player::updateX(Units::MS dt, const Map &map){
 void Player::updateY(Units::MS dt, const Map &map){
 	const Accelerator &accelerator = (jumping && kinematicsY.velocity < 0.0) ? jumpGravityAccelerator : ConstantAccelerator::gravity;
 
-	MapCollidable::updateY(collisionRectangle, accelerator, kinematicsX, kinematicsY, dt, map);
+	MapCollidable::updateY(collisionRectangle, accelerator, kinematicsX, kinematicsY, dt, map, maybeGroundTile);
 }
 
 void Player::draw(Graphics &graphics){
@@ -125,14 +125,14 @@ void Player::drawHUD(Graphics &graphics){
 }
 
 void Player::startMovingLeft(){
-	if (onGround && accX == 0) walkingAnimation.reset();
+	if (onGround() && accX == 0) walkingAnimation.reset();
 	accX = -1;
 	horizontalFacing = LEFT;
 	interacting = false;
 }
 
 void Player::startMovingRight(){
-	if (onGround && accX == 0) walkingAnimation.reset();
+	if (onGround() && accX == 0) walkingAnimation.reset();
 	accX = 1;
 	horizontalFacing = RIGHT;
 	interacting = false;
@@ -150,7 +150,7 @@ void Player::loopUp(){
 void Player::lookDown(){
 	if (intendedVerticalFacing == DOWN) return;
 	intendedVerticalFacing = DOWN;
-	interacting = (onGround && accX == 0) ? true : false;
+	interacting = (onGround() && accX == 0) ? true : false;
 }
 
 void Player::lookHorizontal(){
@@ -160,7 +160,7 @@ void Player::lookHorizontal(){
 void Player::startJump(){
 	interacting = false;
 	jumping = true;
-	if (onGround){
+	if (onGround()){
 		kinematicsY.velocity = -jumpSpeed;
 	} else if (kinematicsY.velocity < 0.0) {	//mid jump
 	}
@@ -208,7 +208,7 @@ Rectangle Player::damageRectangle() const{
 		collisionRectangle.boundingBox().height());
 }
 
-void Player::onCollision(sides::SideType side, bool isDeltaDirection){
+void Player::onCollision(sides::SideType side, bool isDeltaDirection, const tiles::TileType tileType){
 	switch (side){
 	case sides::TOP_SIDE:
 		if (isDeltaDirection){
@@ -218,7 +218,7 @@ void Player::onCollision(sides::SideType side, bool isDeltaDirection){
 		}
 		break;
 	case sides::BOTTOM_SIDE:
-		onGround = true;
+		maybeGroundTile = boost::make_optional(tileType);
 		if (isDeltaDirection)
 			kinematicsY.velocity = 0.0;
 		break;
@@ -236,10 +236,10 @@ void Player::onCollision(sides::SideType side, bool isDeltaDirection){
 void Player::onDelta(sides::SideType side){
 	switch (side){
 	case sides::TOP_SIDE:
-		onGround = false;
+		maybeGroundTile = boost::none;
 		break;
 	case sides::BOTTOM_SIDE:
-		onGround = false;
+		maybeGroundTile = boost::none;
 		break;
 	case sides::LEFT_SIDE:
 		break;
@@ -296,7 +296,7 @@ Player::MotionType Player::motionType() const{
 	MotionType motion;
 
 	if (interacting) motion = INTERACTING;
-	else if (onGround) motion = accX == 0 ? STANDING : WALKING;
+	else if (onGround()) motion = accX == 0 ? STANDING : WALKING;
 	else motion = kinematicsY.velocity < 0.0 ? JUMPING : FALLING;
 	return motion;
 }

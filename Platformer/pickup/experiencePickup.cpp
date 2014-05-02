@@ -50,8 +50,8 @@ Rectangle ExperiencePickup::collisionRectangle() const{
 }
 
 bool ExperiencePickup::update(Units::MS dt, const Map &map){
-	updateY(collisionRectangles[size], ConstantAccelerator::gravity, kinematicsX, kinematicsY, dt, map);
 	updateX(collisionRectangles[size], frictionAccelerator, kinematicsX, kinematicsY, dt, map);
+	updateY(collisionRectangles[size], ConstantAccelerator::gravity, kinematicsX, kinematicsY, dt, map, boost::none);
 
 	sprite.update();
 	return timer.active();
@@ -66,7 +66,7 @@ int ExperiencePickup::value() const{
 	return values[size];
 }
 
-void ExperiencePickup::onCollision(sides::SideType side, bool isDeltaDirection){
+void ExperiencePickup::onCollision(sides::SideType side, bool isDeltaDirection, const tiles::TileType tileType){
 	if (side == sides::TOP_SIDE)
 		kinematicsY.velocity = 0.0;
 	else if (side == sides::BOTTOM_SIDE)

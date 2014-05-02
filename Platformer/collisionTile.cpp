@@ -28,16 +28,19 @@ namespace {
 	}
 }
 
-boost::optional<Units::Game> CollisionTile::testCollision(SideType side,
+CollisionTile::TestCollisionInfo CollisionTile::testCollision(SideType side,
 	Units::Game perpendicularPosition, Units::Game leadingPosition, bool testSlope){
+	TestCollisionInfo info = { false, leadingPosition };
 	if (tileType[WALL]){
+		info.isColliding = true;
 		if (side == TOP_SIDE)
-			return Units::tileToGame(row);
-		if (side == BOTTOM_SIDE)
-			return Units::tileToGame(row + 1);
-		if (side == LEFT_SIDE)
-			return Units::tileToGame(col);
-		return Units::tileToGame(col + 1);
+			info.position = Units::tileToGame(row);
+		else if (side == BOTTOM_SIDE)
+			info.position = Units::tileToGame(row + 1);
+		else if (side == LEFT_SIDE)
+			info.position = Units::tileToGame(col);
+		else
+			info.position = Units::tileToGame(col + 1);
 	}
 	else if (testSlope && tileType[SLOPE] && !tileType[slopeFlagFromSide(side)]){
 		Units::Game gameRow = Units::tileToGame(row);
@@ -52,8 +55,8 @@ boost::optional<Units::Game> CollisionTile::testCollision(SideType side,
 		const bool isColliding = isMax(side) ?
 			leadingPosition <= calculatedPosition :
 			leadingPosition >= calculatedPosition;
-		if (isColliding)
-			return calculatedPosition;
+		info.isColliding = isColliding;
+		info.position = calculatedPosition;
 	}
-	return boost::none;
+	return info;
 }
