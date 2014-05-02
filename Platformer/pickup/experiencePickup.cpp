@@ -16,8 +16,8 @@ namespace {
 	const Units::Frame nFrames = 6;
 
 	const Units::MS lifetime = 8000;
-	const Units::MS flashTime = 7000;
-	const Units::MS flashPeroid = 50;
+	const Units::MS flickerTime = 7000;
+	const Units::MS flickerPeriod = 50;
 
 	const Units::GunExperience values[] = { 1, 5, 20 };
 
@@ -57,7 +57,7 @@ bool ExperiencePickup::update(Units::MS dt, const Map &map){
 }
 
 void ExperiencePickup::draw(Graphics &graphics){
-	if(timer.getCurrentTime() < flashTime || timer.getCurrentTime() / flashPeroid % 2 == 0)
+	if (timer.getCurrentTime() < flickerTime || timer.getCurrentTime() / flickerPeriod % 2 == 0)
 		sprite.draw(graphics, kinematicsX.position, kinematicsY.position);
 }
 

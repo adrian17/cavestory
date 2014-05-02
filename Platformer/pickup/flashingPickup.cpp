@@ -20,8 +20,8 @@ namespace {
 	const Units::Tile heartsSourceY = 0;
 
 	const Units::MS lifetime = 8000;
-	const Units::MS flashTime = 7000;
 	const Units::MS flashPeriod = 60;
+	const Units::MS flickerTime = 7000;
 	const Units::MS flickerPeriod = 50;
 	const Units::MS dissipateTime = lifetime - 25;
 }
@@ -42,7 +42,7 @@ void FlashingPickup::draw(Graphics &graphics){
 	if (time > dissipateTime){
 		dissipatingSprite.draw(graphics, x, y);
 	}
-	else if (time < flashTime || time / flickerPeriod % 2 == 0) {
+	else if (time < flickerTime || time / flickerPeriod % 2 == 0) {
 		if (time / flashPeriod % 2 == 0)
 			sprite.draw(graphics, x, y);
 		else if (time / flashPeriod % 2 == 1)
