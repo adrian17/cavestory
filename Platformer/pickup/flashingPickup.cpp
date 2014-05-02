@@ -20,12 +20,10 @@ namespace {
 	const Units::Tile heartsSourceY = 0;
 
 	const Units::MS lifetime = 8000;
-	const Units::MS startPeriod = 400;
-	const Units::MS endPeriod = 75*3;
-	const Units::MS flickerPeriod = 75;
-	const Units::MS flickerTime = lifetime - 1000;
+	const Units::MS flashTime = 7000;
+	const Units::MS flashPeriod = 60;
+	const Units::MS flickerPeriod = 50;
 	const Units::MS dissipateTime = lifetime - 25;
-	const double flashInterpolation = (endPeriod * 1.0 - startPeriod * 1.0) / flickerTime;
 }
 
 Rectangle FlashingPickup::collisionRectangle() const{
@@ -35,25 +33,19 @@ Rectangle FlashingPickup::collisionRectangle() const{
 }
 
 bool FlashingPickup::update(Units::MS dt, const Map &map){
-	flashPeriod = timer.getCurrentTime() < flickerTime ?
-		Units::MS(flashInterpolation * timer.getCurrentTime() + startPeriod) :
-		flickerPeriod;
-
 	return timer.active();
 }
 
 void FlashingPickup::draw(Graphics &graphics){
-	if (timer.getCurrentTime()  > dissipateTime){
+	Units::MS time = timer.getCurrentTime();
+
+	if (time > dissipateTime){
 		dissipatingSprite.draw(graphics, x, y);
-	} else if (timer.getCurrentTime() > flickerTime) {
-		if (timer.getCurrentTime() / flashPeriod % 3 == 0)
+	}
+	else if (time < flashTime || time / flickerPeriod % 2 == 0) {
+		if (time / flashPeriod % 2 == 0)
 			sprite.draw(graphics, x, y);
-		else if (timer.getCurrentTime() / flashPeriod % 3 == 1)
-			flashSprite.draw(graphics, x, y);
-	} else {
-		if (timer.getCurrentTime() / flashPeriod % 2 == 0)
-			sprite.draw(graphics, x, y);
-		else
+		else if (time / flashPeriod % 2 == 1)
 			flashSprite.draw(graphics, x, y);
 	}
 }
@@ -77,5 +69,5 @@ FlashingPickup::FlashingPickup(Graphics &graphics,
 	flashSprite(graphics, spritePath, Units::tileToPixel(sourceX + 1), Units::tileToPixel(sourceY), Units::tileToPixel(1), Units::tileToPixel(1)),
 	dissipatingSprite(graphics, spritePath, Units::tileToPixel(dissipatingSpriteX), Units::tileToPixel(dissipatingSpriteY), Units::tileToPixel(1), Units::tileToPixel(1)),
 	x(centerX - Units::halfTile), y(centerY - Units::halfTile),
-	timer(lifetime, true), flashPeriod(startPeriod), rectangle(rectangle), value_(value), type_(type)
+	timer(lifetime, true), rectangle(rectangle), value_(value), type_(type)
 {}

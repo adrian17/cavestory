@@ -30,7 +30,6 @@ private:
 	Units::Game x, y;
 
 	Timer timer;
-	Units::MS flashPeriod;
 
 	const Rectangle &rectangle;
 	const int value_;

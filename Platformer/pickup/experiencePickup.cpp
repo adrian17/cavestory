@@ -17,7 +17,7 @@ namespace {
 
 	const Units::MS lifetime = 8000;
 	const Units::MS flashTime = 7000;
-	const Units::MS flashPeroid = 15;
+	const Units::MS flashPeroid = 50;
 
 	const Units::GunExperience values[] = { 1, 5, 20 };
 
