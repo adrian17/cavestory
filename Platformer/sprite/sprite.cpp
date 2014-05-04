@@ -2,7 +2,7 @@
 
 #include "graphics.h"
 
-Sprite::Sprite(Graphics &graphics, const std::string relativePath,
+Sprite::Sprite(Graphics &graphics, const std::string &relativePath,
 	Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height)
 {
 	const bool transparency = true;

@@ -6,7 +6,7 @@
 
 class AnimatedSprite : public Sprite {
 public:
-	AnimatedSprite(Graphics &graphics, const std::string relativePath,
+	AnimatedSprite(Graphics &graphics, const std::string &relativePath,
 		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height,
 		Units::FPS fps, Units::Frame nFrames);
 	~AnimatedSprite();
