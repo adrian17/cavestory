@@ -66,6 +66,8 @@ void Game::eventLoop(){
 		}
 		if (input.wasKeyPressed(SDLK_ESCAPE)) done = true;
 
+		if ((SDL_GetModState() & KMOD_ALT) && input.wasKeyPressed(SDLK_RETURN)) graphics.toggleFullscreen();
+
 		if (input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) player->stopMoving();
 		else if (input.isKeyHeld(SDLK_LEFT)) player->startMovingLeft();
 		else if (input.isKeyHeld(SDLK_RIGHT)) player->startMovingRight();

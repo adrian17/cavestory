@@ -19,6 +19,8 @@ public:
 	Graphics();
 	~Graphics();
 
+	void toggleFullscreen();
+
 	void drawTexture(TextureID texture, SDL_Rect *source, SDL_Rect *dest);
 	void clear();
 	void flip();
@@ -29,4 +31,6 @@ private:
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
+
+	bool fullscreen = false;
 };
