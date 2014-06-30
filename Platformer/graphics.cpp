@@ -22,7 +22,7 @@ void Graphics::toggleFullscreen(){
 	SDL_SetWindowFullscreen(window, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_RESIZABLE);
 }
 
-Graphics::TextureID Graphics::createTexture(const std::string &relativePath, bool transparency){
+Graphics::TextureID Graphics::createTexture(const std::string &relativePath, const bool transparency){
 	const std::string path = Config::getGraphicsQuality() == Config::HIGH_QUALITY ?
 		"content/" + relativePath :
 		"content/ogph/" + relativePath;
@@ -47,13 +47,13 @@ Graphics::TextureID Graphics::createTexture(const std::string &relativePath, boo
 	return spriteSheets[path];
 }
 
-void Graphics::drawTexture(TextureID texture, SDL_Rect *source, SDL_Rect *dest){
-	SDL_Rect newDest = (*dest);
-	SDL_RenderCopy(renderer, texture, source, &newDest);
+void Graphics::drawTexture(const TextureID texture, const SDL_Rect *source, const SDL_Rect *dest){
+	SDL_RenderCopy(renderer, texture, source, dest);
 }
 
 void Graphics::clear(){
-	SDL_RenderFillRect(renderer, nullptr);
+	SDL_RenderClear(renderer);
+	//SDL_RenderFillRect(renderer, nullptr);
 }
 
 void Graphics::flip(){

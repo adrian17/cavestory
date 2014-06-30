@@ -21,11 +21,11 @@ public:
 
 	void toggleFullscreen();
 
-	void drawTexture(TextureID texture, SDL_Rect *source, SDL_Rect *dest);
+	void drawTexture(const TextureID texture, const SDL_Rect *source, const SDL_Rect *dest);
 	void clear();
 	void flip();
 
-	TextureID createTexture(const std::string &relativePath, bool transparency = false);
+	TextureID createTexture(const std::string &relativePath, const bool transparency = false);
 private:
 	std::map<std::string, TextureID> spriteSheets;
 
