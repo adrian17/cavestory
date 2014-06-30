@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.h"
+#include "vector2D.h"
 #include <cmath>
 
 namespace Units {
@@ -62,3 +63,9 @@ namespace Units {
 	const Game halfTile = tileToGame(1) / 2.0;
 
 }
+
+typedef Vector2D<Units::Tile> Tile2D;
+
+typedef Vector2D<Units::Game> Position2D;
+typedef Vector2D<Units::Game> Dimension2D;
+typedef Vector2D<Units::Game> Velocity2D;

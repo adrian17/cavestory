@@ -140,6 +140,7 @@
     <ClInclude Include="particle\projectileNoEffectParticle.h" />
     <ClInclude Include="physics\spriteState.h" />
     <ClInclude Include="util\polarVector.h" />
+    <ClInclude Include="util\vector2D.h" />
     <ClInclude Include="weapons\polarStar.h" />
     <ClInclude Include="sprite\numberSprite.h" />
     <ClInclude Include="sprite\varyingWidthSprite.h" />
