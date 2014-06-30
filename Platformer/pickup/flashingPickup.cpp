@@ -45,7 +45,7 @@ void FlashingPickup::draw(Graphics &graphics){
 	else if (time < flickerTime || time / flickerPeriod % 2 == 0) {
 		if (time / flashPeriod % 2 == 0)
 			sprite.draw(graphics, x, y);
-		else if (time / flashPeriod % 2 == 1)
+		else
 			flashSprite.draw(graphics, x, y);
 	}
 }
