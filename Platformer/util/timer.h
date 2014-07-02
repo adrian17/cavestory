@@ -25,7 +25,7 @@ public:
 
 	static void updateAll(Units::MS dt);
 private:
-	void update(Units::MS dt){
+	void update(const Units::MS dt){
 		if (active())
 			currentTime += dt;
 	}

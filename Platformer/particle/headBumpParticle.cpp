@@ -27,7 +27,7 @@ HeadBumpParticle::HeadBumpParticle(Graphics &graphics, Units::Game centerX, Unit
 {
 }
 
-bool HeadBumpParticle::update(Units::MS dt){
+bool HeadBumpParticle::update(const Units::MS dt){
 	particleA.magnitude = std::min(particleA.magnitude + velocity * dt, maxOffsetA);
 	particleB.magnitude = std::min(particleB.magnitude + velocity * dt, maxOffsetB);
 	return timer.active();

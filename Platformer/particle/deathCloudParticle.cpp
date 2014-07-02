@@ -44,7 +44,7 @@ DeathCloudParticle::~DeathCloudParticle()
 {
 }
 
-bool DeathCloudParticle::update(Units::MS dt){
+bool DeathCloudParticle::update(const Units::MS dt){
 	sprite.update();
 	offset.magnitude += velocity * dt;
 	return sprite.completedLoops() == 0;

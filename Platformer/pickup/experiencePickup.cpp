@@ -48,7 +48,7 @@ Rectangle ExperiencePickup::collisionRectangle() const{
 		);
 }
 
-bool ExperiencePickup::update(Units::MS dt, const Map &map){
+bool ExperiencePickup::update(const Units::MS dt, const Map &map){
 	updateX(collisionRectangles[size], frictionAccelerator, kinematicsX, kinematicsY, dt, map);
 	updateY(collisionRectangles[size], ConstantAccelerator::gravity, kinematicsX, kinematicsY, dt, map, boost::none);
 

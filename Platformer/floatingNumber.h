@@ -12,7 +12,7 @@ public:
 	FloatingNumber(NumberType type);
 
 	void addValue(int val);
-	bool update(Units::MS dt);
+	bool update(const Units::MS dt);
 	void setPosition(Units::Game centerX, Units::Game centerY);
 	void draw(Graphics &graphics);
 private:

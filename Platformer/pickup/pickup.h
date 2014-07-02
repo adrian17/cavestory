@@ -11,7 +11,7 @@ public:
 
 	virtual Rectangle collisionRectangle() const = 0;
 
-	virtual bool update(Units::MS dt, const Map &map) = 0;
+	virtual bool update(const Units::MS dt, const Map &map) = 0;
 	virtual void draw(Graphics &graphics) = 0;
 	virtual int value() const = 0;
 	virtual PickupType type() const = 0;

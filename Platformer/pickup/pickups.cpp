@@ -14,7 +14,7 @@ void Pickups::handleCollision(Player &player){
 	}
 }
 
-void Pickups::update(Units::MS dt, const Map &map){
+void Pickups::update(const Units::MS dt, const Map &map){
 	for (PickupSet::iterator iter = pickups.begin(); iter != pickups.end();){
 		if ((*iter)->update(dt, map))
 			++iter;

@@ -16,7 +16,7 @@ public:
 
 	Rectangle collisionRectangle() const;
 
-	bool update(Units::MS dt, const Map &map);
+	bool update(const Units::MS dt, const Map &map);
 	void draw(Graphics &graphics);
 
 	int value() const;

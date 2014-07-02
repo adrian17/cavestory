@@ -18,7 +18,7 @@ public:
 	FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y);
 	~FirstCaveBat();
 
-	bool update(Units::MS dt, Units::Game playerX);
+	bool update(const Units::MS dt, Units::Game playerX);
 	void draw(Graphics &graphics);
 
 	Rectangle damageRectangle() const

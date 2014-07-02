@@ -38,7 +38,7 @@ private:
 	public:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
 			Units::Game x, Units::Game y, Units::GunLevel gunLevel, ParticleTools &particleTools);
-		bool update(Units::MS dt, const Map &map, ParticleTools &particleTools);
+		bool update(const Units::MS dt, const Map &map, ParticleTools &particleTools);
 		void draw(Graphics &graphics);
 
 		Rectangle collisionRectangle() const;

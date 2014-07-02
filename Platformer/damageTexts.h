@@ -11,7 +11,7 @@ class Graphics;
 class DamageTexts
 {
 public:
-	void update(Units::MS dt);
+	void update(const Units::MS dt);
 	void draw(Graphics &graphics);
 
 	void addDamageable(std::shared_ptr<Damageable> damageable);

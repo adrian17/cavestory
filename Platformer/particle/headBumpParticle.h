@@ -10,7 +10,7 @@ class HeadBumpParticle : public Particle
 public:
 	HeadBumpParticle(Graphics &graphics, Units::Game centerX, Units::Game centerY);
 
-	bool update(Units::MS dt);
+	bool update(const Units::MS dt);
 	void draw(Graphics &graphics);
 private:
 	const Units::Game centerX, centerY;

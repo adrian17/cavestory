@@ -32,7 +32,7 @@ Rectangle FlashingPickup::collisionRectangle() const{
 		rectangle.width(), rectangle.height());
 }
 
-bool FlashingPickup::update(Units::MS dt, const Map &map){
+bool FlashingPickup::update(const Units::MS dt, const Map &map){
 	return timer.active();
 }
 

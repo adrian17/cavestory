@@ -198,7 +198,7 @@ PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite, HorizontalFaci
 	particleTools.frontSystem.addNewParticle(std::shared_ptr<Particle>(new ProjectileStarParticle(particleTools.graphics, x, y)));
 }
 
-bool PolarStar::Projectile::update(Units::MS dt, const Map &map, ParticleTools &particleTools){
+bool PolarStar::Projectile::update(const Units::MS dt, const Map &map, ParticleTools &particleTools){
 	offset += projectileVelocity * dt;
 
 	const sides::SideType direction = sides::fromFacing(horizontalDirection, verticalDirection);

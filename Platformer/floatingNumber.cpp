@@ -23,7 +23,7 @@ void FloatingNumber::addValue(int val){
 	timer.reset();
 }
 
-bool FloatingNumber::update(Units::MS dt){
+bool FloatingNumber::update(const Units::MS dt){
 	if (timer.expired()) {
 		value = 0;
 	}

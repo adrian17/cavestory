@@ -56,7 +56,7 @@ Player::Health::Health(Graphics &graphics) :
 }
 
 
-void Player::Health::update(Units::MS dt){
+void Player::Health::update(const Units::MS dt){
 	if (damageTaken > 0 && damageTimer.expired()){
 		currentHealth -= damageTaken;
 		damageTaken = 0;

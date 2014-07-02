@@ -3,7 +3,7 @@
 #include "interfaces\damageable.h"
 #include "floatingNumber.h"
 
-void DamageTexts::update(Units::MS dt){
+void DamageTexts::update(const Units::MS dt){
 	for (auto iter = damageTextMap.begin(); iter != damageTextMap.end();){
 		if (!iter->second.expired()){
 			std::shared_ptr<Damageable> damageable(iter->second);

@@ -75,7 +75,7 @@ Player::Player(Graphics &graphics, ParticleTools &particleTools, Units::Game x, 
 Player::~Player(){
 }
 
-void Player::update(Units::MS dt, const Map &map){
+void Player::update(const Units::MS dt, const Map &map){
 	sprites[getSpriteState()]->update();
 
 	health.update(dt);

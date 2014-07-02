@@ -30,7 +30,7 @@ public:
 	Player(Graphics &graphics, ParticleTools &particleTools, Units::Game x, Units::Game y);
 	~Player();
 
-	void update(Units::MS dt, const Map &map);
+	void update(const Units::MS dt, const Map &map);
 	void updateX(Units::MS dt, const Map &map);
 	void updateY(Units::MS dt, const Map &map);
 	void draw(Graphics &graphics);
@@ -83,7 +83,7 @@ private:
 
 	struct Health {
 		Health(Graphics &graphics);
-		void update(Units::MS dt);
+		void update(const Units::MS dt);
 		void draw(Graphics &graphics);
 		bool takeDamage(Units::HP damage);	//true if dies
 		void addHealth(Units::HP health);

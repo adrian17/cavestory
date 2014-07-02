@@ -17,7 +17,7 @@ ImmobileSingleLoopParticle::~ImmobileSingleLoopParticle()
 }
 
 
-bool ImmobileSingleLoopParticle::update(Units::MS dt){
+bool ImmobileSingleLoopParticle::update(const Units::MS dt){
 	sprite.update();
 	return sprite.completedLoops() == 0;
 }

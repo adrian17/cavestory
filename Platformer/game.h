@@ -19,7 +19,7 @@ public:
 private:
 	void eventLoop();
 
-	void update(Units::MS dt, Graphics &graphics);
+	void update(const Units::MS dt, Graphics &graphics);
 	void draw(Graphics &graphics);
 
 	std::shared_ptr<Player> player;

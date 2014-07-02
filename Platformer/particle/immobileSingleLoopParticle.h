@@ -15,7 +15,7 @@ public:
 		Units::FPS fps, Units::Frame nFrames);
 	virtual ~ImmobileSingleLoopParticle();
 
-	bool update(Units::MS dt);
+	bool update(const Units::MS dt);
 	void draw(Graphics &graphics);
 private:
 	const Units::Game x, y;

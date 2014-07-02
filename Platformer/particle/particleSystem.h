@@ -13,7 +13,7 @@ public:
 	void addNewParticle(std::shared_ptr<Particle> particle)
 		{ particles.insert(particle); }
 
-	void update(Units::MS dt);
+	void update(const Units::MS dt);
 	void draw(Graphics &graphics);
 private:
 	typedef std::set<std::shared_ptr<Particle>> ParticleSet;

@@ -15,7 +15,7 @@ public:
 	void add(std::shared_ptr<Pickup> pickup) { pickups.insert(pickup); }
 	void handleCollision(Player &player);
 
-	void update(Units::MS dt, const Map &map);
+	void update(const Units::MS dt, const Map &map);
 	void draw(Graphics &graphics);
 private:
 	typedef std::set<std::shared_ptr<Pickup>> PickupSet;

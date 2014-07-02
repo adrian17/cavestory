@@ -26,7 +26,7 @@ FirstCaveBat::FirstCaveBat(Graphics &graphics, Units::Game x, Units::Game y) :
 FirstCaveBat::~FirstCaveBat(){
 }
 
-bool FirstCaveBat::update(Units::MS dt, Units::Game playerX){
+bool FirstCaveBat::update(const Units::MS dt, Units::Game playerX){
 	flightAngle += angularVelocity * dt;
 
 	horizontalFacing = x + Units::halfTile > playerX ? LEFT : RIGHT;

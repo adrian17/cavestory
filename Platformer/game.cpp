@@ -100,7 +100,7 @@ void Game::eventLoop(){
 	}
 }
 
-void Game::update(Units::MS dt, Graphics &graphics){
+void Game::update(const Units::MS dt, Graphics &graphics){
 	Timer::updateAll(dt);
 	frontParticleSystem.update(dt);
 	entityParticleSystem.update(dt);

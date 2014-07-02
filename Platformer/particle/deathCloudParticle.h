@@ -16,7 +16,7 @@ public:
 
 	~DeathCloudParticle();
 
-	bool update(Units::MS dt);
+	bool update(const Units::MS dt);
 	void draw(Graphics &graphics);
 
 	static void createRandomDeathClouds(ParticleTools particleTools, Units::Game centerX, Units::Game centerY, int nParticles);

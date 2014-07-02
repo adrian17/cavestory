@@ -2,7 +2,7 @@
 
 #include "particle.h"
 
-void ParticleSystem::update(Units::MS dt){
+void ParticleSystem::update(const Units::MS dt){
 	for (auto iter = particles.begin(); iter != particles.end();){
 		if ((*iter)->update(dt)){
 			++iter;
