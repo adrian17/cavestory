@@ -18,8 +18,8 @@ public:
 
 	std::vector<CollisionTile> getCollidingTiles(const Rectangle &rectangle, sides::SideType direction) const;
 
-	void drawBackground(Graphics &graphics);
-	void draw(Graphics &graphics);
+	void drawBackground(Graphics &graphics) const;
+	void draw(Graphics &graphics) const;
 private:
 	struct Tile{
 		Tile(tiles::TileType tileType = tiles::TileType().set(tiles::EMPTY), std::shared_ptr<Sprite> sprite = std::shared_ptr<Sprite>()) :

@@ -14,7 +14,7 @@ public:
 	virtual ~Sprite();
 
 	virtual void update(){};
-	void draw(Graphics &graphics, Units::Game x, Units::Game y);
+	void draw(Graphics &graphics, Units::Game x, Units::Game y) const;
 
 protected:
 	SDL_Rect sourceRect;

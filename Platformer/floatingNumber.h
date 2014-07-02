@@ -14,7 +14,7 @@ public:
 	void addValue(int val);
 	bool update(const Units::MS dt);
 	void setPosition(Units::Game centerX, Units::Game centerY);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 private:
 	int value = 0;
 	Units::Game centerX = 0, centerY = 0;

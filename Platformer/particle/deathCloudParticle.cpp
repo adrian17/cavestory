@@ -50,6 +50,6 @@ bool DeathCloudParticle::update(const Units::MS dt){
 	return sprite.completedLoops() == 0;
 }
 
-void DeathCloudParticle::draw(Graphics &graphics){
+void DeathCloudParticle::draw(Graphics &graphics) const{
 	sprite.draw(graphics, centerX + offset.getX(), centerY + offset.getY());
 }

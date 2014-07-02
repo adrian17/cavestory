@@ -37,8 +37,8 @@ bool FirstCaveBat::update(const Units::MS dt, Units::Game playerX){
 	return alive;
 }
 
-void FirstCaveBat::draw(Graphics &graphics){
-	sprites[getSpriteState()]->draw(graphics, x, y);
+void FirstCaveBat::draw(Graphics &graphics) const{
+	sprites.at(getSpriteState())->draw(graphics, x, y);
 }
 
 Units::HP FirstCaveBat::getContactDamage() const{

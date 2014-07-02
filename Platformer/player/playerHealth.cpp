@@ -63,7 +63,7 @@ void Player::Health::update(const Units::MS dt){
 	}
 }
 
-void Player::Health::draw(Graphics &graphics){
+void Player::Health::draw(Graphics &graphics) const{
 	healthBarSprite.draw(graphics, healthBarX, healthBarY);
 
 	if (damageTaken > 0){

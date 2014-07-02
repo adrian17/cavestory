@@ -22,7 +22,7 @@ void Pickups::update(const Units::MS dt, const Map &map){
 			pickups.erase(iter++);
 	}
 }
-void Pickups::draw(Graphics &graphics){
+void Pickups::draw(Graphics &graphics) const{
 	for (auto&& pickup : pickups)
 		pickup->draw(graphics);
 }

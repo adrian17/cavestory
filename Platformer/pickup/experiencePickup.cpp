@@ -56,7 +56,7 @@ bool ExperiencePickup::update(const Units::MS dt, const Map &map){
 	return timer.active();
 }
 
-void ExperiencePickup::draw(Graphics &graphics){
+void ExperiencePickup::draw(Graphics &graphics) const{
 	if (timer.getCurrentTime() < flickerTime || timer.getCurrentTime() / flickerPeriod % 2 == 0)
 		sprite.draw(graphics, kinematicsX.position, kinematicsY.position);
 }

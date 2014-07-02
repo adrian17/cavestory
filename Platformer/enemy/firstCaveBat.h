@@ -19,7 +19,7 @@ public:
 	~FirstCaveBat();
 
 	bool update(const Units::MS dt, Units::Game playerX);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 
 	Rectangle damageRectangle() const
 		{ return Rectangle(x + Units::halfTile, y + Units::halfTile, 0, 0); }
@@ -33,9 +33,9 @@ public:
 		alive = false;
 	}
 
-	Units::Game centerX() const{ return x + Units::halfTile; }
-	Units::Game centerY() const{ return y + Units::halfTile; }
-	std::shared_ptr<FloatingNumber> getDamageText() { return damageText; }
+	Units::Game centerX() const { return x + Units::halfTile; }
+	Units::Game centerY() const { return y + Units::halfTile; }
+	std::shared_ptr<FloatingNumber> getDamageText() const { return damageText; }
 private:
 	typedef std::tuple<HorizontalFacing> SpriteState;
 	SpriteState getSpriteState() const;

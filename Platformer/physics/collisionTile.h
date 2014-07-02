@@ -16,7 +16,7 @@ struct CollisionTile{
 	TestCollisionInfo testCollision(sides::SideType side,
 		Units::Game perpendicularPosition, Units::Game leadingPosition, bool testSlope);
 
-	tiles::TileType getTileType(){ return tileType; }
+	tiles::TileType getTileType() const{ return tileType; }
 
 private:
 	Units::Tile row, col;

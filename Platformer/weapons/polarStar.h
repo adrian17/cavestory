@@ -27,10 +27,10 @@ public:
 	void collectExperience(Units::GunExperience experience);
 	void loseExperience(Units::GunExperience experience);
 
-	std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
+	std::vector<std::shared_ptr< ::Projectile>> getProjectiles() const;
 	void updateProjectiles(Units::MS dt, const Map &map, ParticleTools &particleTools);
 	void drawHUD(Graphics &graphics, GunExperienceHUD &hud);
-	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y);
+	void draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp, Units::Game x, Units::Game y) const;
 private:
 	typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteState;
 
@@ -39,7 +39,7 @@ private:
 		Projectile(std::shared_ptr<Sprite> sprite, HorizontalFacing horizontalDirection, VerticalFacing verticalDirection,
 			Units::Game x, Units::Game y, Units::GunLevel gunLevel, ParticleTools &particleTools);
 		bool update(const Units::MS dt, const Map &map, ParticleTools &particleTools);
-		void draw(Graphics &graphics);
+		void draw(Graphics &graphics) const;
 
 		Rectangle collisionRectangle() const;
 		Units::HP contactDamage() const;
@@ -56,8 +56,8 @@ private:
 		bool alive = true;
 	};
 
-	Units::Game gunX(HorizontalFacing horizontalFacing, Units::Game playerX);
-	Units::Game gunY(VerticalFacing verticalFacing, bool gunUp, Units::Game playerY);
+	Units::Game gunX(HorizontalFacing horizontalFacing, Units::Game playerX) const;
+	Units::Game gunY(VerticalFacing verticalFacing, bool gunUp, Units::Game playerY) const;
 
 	void initSprites(Graphics &graphics);
 	void initSprite(Graphics &graphics, const SpriteState spriteState);

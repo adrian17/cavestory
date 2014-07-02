@@ -22,6 +22,6 @@ bool ImmobileSingleLoopParticle::update(const Units::MS dt){
 	return sprite.completedLoops() == 0;
 }
 
-void ImmobileSingleLoopParticle::draw(Graphics &graphics){
+void ImmobileSingleLoopParticle::draw(Graphics &graphics) const{
 	sprite.draw(graphics, x, y);
 }

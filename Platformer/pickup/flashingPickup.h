@@ -10,7 +10,7 @@ class FlashingPickup : public Pickup
 public:
 	Rectangle collisionRectangle() const;
 	bool update(const Units::MS dt, const Map &map);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 
 	int value() const { return value_; }
 	PickupType type() const { return type_; }

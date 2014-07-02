@@ -180,7 +180,7 @@ std::vector<CollisionTile> Map::getCollidingTiles(const Rectangle &rectangle, si
 	return collisionTiles;
 }
 
-void Map::drawBackground(Graphics &graphics){
+void Map::drawBackground(Graphics &graphics) const{
 	backdrop->draw(graphics);
 	for (size_t row = 0; row < backgroundTiles.size(); ++row){
 		for (size_t col = 0; col < backgroundTiles[row].size(); ++col){
@@ -191,7 +191,7 @@ void Map::drawBackground(Graphics &graphics){
 	}
 }
 
-void Map::draw(Graphics &graphics){
+void Map::draw(Graphics &graphics) const{
 	for (size_t row = 0; row < tiles.size(); ++row){
 		for (size_t col = 0; col < tiles[row].size(); ++col){
 			if (tiles[row][col].sprite){

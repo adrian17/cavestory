@@ -98,7 +98,7 @@ void PolarStar::loseExperience(Units::GunExperience experience){
 	currentExperience = std::max(0, currentExperience - experience);
 }
 
-std::vector<std::shared_ptr< ::Projectile>> PolarStar::getProjectiles(){
+std::vector<std::shared_ptr< ::Projectile>> PolarStar::getProjectiles() const{
 	std::vector<std::shared_ptr< ::Projectile>> projectiles;
 	if(projectileA) projectiles.push_back(projectileA);
 	if(projectileB) projectiles.push_back(projectileB);
@@ -124,22 +124,24 @@ void PolarStar::drawHUD(Graphics &graphics, GunExperienceHUD &hud){
 }
 
 void PolarStar::draw(Graphics &graphics, HorizontalFacing horizontalFacing, VerticalFacing verticalFacing, bool gunUp,
-		Units::Game playerX, Units::Game playerY){
+		Units::Game playerX, Units::Game playerY) const
+{
 	Units::Game x = gunX(horizontalFacing, playerX);
 	Units::Game y = gunY(verticalFacing, gunUp, playerY);
-	spriteMap[SpriteState(horizontalFacing, verticalFacing)]->draw(graphics, x, y);
+	spriteMap.at(SpriteState(horizontalFacing, verticalFacing))->draw(graphics, x, y);
 	if(projectileA)
 		projectileA->draw(graphics);
 	if (projectileB)
 		projectileB->draw(graphics);
 }
 
-Units::Game PolarStar::gunX(HorizontalFacing horizontalFacing, Units::Game playerX)
-{ 
+Units::Game PolarStar::gunX(HorizontalFacing horizontalFacing, Units::Game playerX) const
+{
 	return (horizontalFacing == LEFT) ? playerX - Units::halfTile : playerX;
 }
 
-Units::Game PolarStar::gunY(VerticalFacing verticalFacing, bool gunUp, Units::Game playerY){
+Units::Game PolarStar::gunY(VerticalFacing verticalFacing, bool gunUp, Units::Game playerY) const
+{
 	Units::Game gunY = playerY;
 	if (verticalFacing == UP)
 		gunY -= Units::halfTile / 2;
@@ -231,7 +233,7 @@ bool PolarStar::Projectile::update(const Units::MS dt, const Map &map, ParticleT
 		return true;
 }
 
-void PolarStar::Projectile::draw(Graphics &graphics){
+void PolarStar::Projectile::draw(Graphics &graphics) const{
 	sprite->draw(graphics, getX(), getY());
 }
 

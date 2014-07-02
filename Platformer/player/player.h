@@ -31,9 +31,9 @@ public:
 	~Player();
 
 	void update(const Units::MS dt, const Map &map);
-	void updateX(Units::MS dt, const Map &map);
-	void updateY(Units::MS dt, const Map &map);
-	void draw(Graphics &graphics);
+	void updateX(const Units::MS dt, const Map &map);
+	void updateY(const Units::MS dt, const Map &map);
+	void draw(Graphics &graphics) const;
 	void drawHUD(Graphics &graphics);
 
 	void startMovingLeft();
@@ -55,11 +55,11 @@ public:
 
 	Rectangle damageRectangle() const;
 
-	Units::Game centerX() const{ return kinematicsX.position + Units::halfTile; }
-	Units::Game centerY() const{ return kinematicsY.position + Units::halfTile; }
-	std::shared_ptr<FloatingNumber> getDamageText() { return damageText; }
+	Units::Game centerX() const { return kinematicsX.position + Units::halfTile; }
+	Units::Game centerY() const { return kinematicsY.position + Units::halfTile; }
+	std::shared_ptr<FloatingNumber> getDamageText() const { return damageText; }
 
-	std::vector<std::shared_ptr< ::Projectile>> getProjectiles(){
+	std::vector<std::shared_ptr< ::Projectile>> getProjectiles() const{
 		return polarStar.getProjectiles();
 	}
 
@@ -68,7 +68,7 @@ private:
 	enum StrideType { STRIDE_MIDDLE, STRIDE_LEFT, STRIDE_RIGHT, LAST_STRIDE_TYPE };
 
 	typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing, StrideType> SpriteState;
-	SpriteState getSpriteState();
+	SpriteState getSpriteState() const;
 
 	struct WalkingAnimation{
 		WalkingAnimation();
@@ -84,7 +84,7 @@ private:
 	struct Health {
 		Health(Graphics &graphics);
 		void update(const Units::MS dt);
-		void draw(Graphics &graphics);
+		void draw(Graphics &graphics) const;
 		bool takeDamage(Units::HP damage);	//true if dies
 		void addHealth(Units::HP health);
 	private:

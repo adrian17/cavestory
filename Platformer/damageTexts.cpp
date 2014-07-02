@@ -17,7 +17,7 @@ void DamageTexts::update(const Units::MS dt){
 	}
 }
 
-void DamageTexts::draw(Graphics &graphics){
+void DamageTexts::draw(Graphics &graphics) const{
 	for (auto&& damageText : damageTextMap){
 		damageText.first->draw(graphics);
 	}

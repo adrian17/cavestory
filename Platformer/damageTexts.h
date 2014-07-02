@@ -12,7 +12,7 @@ class DamageTexts
 {
 public:
 	void update(const Units::MS dt);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 
 	void addDamageable(std::shared_ptr<Damageable> damageable);
 private:

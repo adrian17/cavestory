@@ -37,7 +37,7 @@ void FloatingNumber::setPosition(Units::Game centerX, Units::Game centerY){
 	this->centerY = centerY;
 }
 
-void FloatingNumber::draw(Graphics &graphics){
+void FloatingNumber::draw(Graphics &graphics) const{
 	if (timer.expired()) return;
 	if(type == DAMAGE)
 		NumberSprite::DamageNumber(graphics, value).drawCentered(graphics, centerX, centerY + offsetY);

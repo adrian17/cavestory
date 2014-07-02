@@ -17,7 +17,7 @@ public:
 	Rectangle collisionRectangle() const;
 
 	bool update(const Units::MS dt, const Map &map);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 
 	int value() const;
 	PickupType type() const { return EXPERIENCE; }

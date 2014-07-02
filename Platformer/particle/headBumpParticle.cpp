@@ -33,7 +33,7 @@ bool HeadBumpParticle::update(const Units::MS dt){
 	return timer.active();
 }
 
-void HeadBumpParticle::draw(Graphics &graphics){
+void HeadBumpParticle::draw(Graphics &graphics) const{
 	if (timer.getCurrentTime() / flashPeroid % 3 == 0){
 		sprite.draw(graphics, centerX + particleA.getX(), centerY + particleA.getY());
 		sprite.draw(graphics, centerX + particleB.getX(), centerY + particleB.getY());

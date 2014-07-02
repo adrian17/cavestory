@@ -14,7 +14,7 @@ Sprite::Sprite(Graphics &graphics, const std::string &relativePath,
 Sprite::~Sprite(){
 }
 
-void Sprite::draw(Graphics &graphics, Units::Game x, Units::Game y){
+void Sprite::draw(Graphics &graphics, Units::Game x, Units::Game y) const{
 	SDL_Rect destRect = { Units::gameToPixel(x), Units::gameToPixel(y), sourceRect.w, sourceRect.h };
 	graphics.drawTexture(spriteSheet, &sourceRect, &destRect);
 }

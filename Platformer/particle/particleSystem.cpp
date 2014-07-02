@@ -12,7 +12,7 @@ void ParticleSystem::update(const Units::MS dt){
 	}
 }
 
-void ParticleSystem::draw(Graphics &graphics){
+void ParticleSystem::draw(Graphics &graphics) const{
 	for (auto&& particle : particles){
 		particle->draw(graphics);
 	}

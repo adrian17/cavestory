@@ -14,7 +14,7 @@ public:
 		{ particles.insert(particle); }
 
 	void update(const Units::MS dt);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 private:
 	typedef std::set<std::shared_ptr<Particle>> ParticleSet;
 	ParticleSet particles;

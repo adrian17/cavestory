@@ -35,7 +35,7 @@ NumberSprite::NumberSprite(Graphics &graphics, int number, size_t nDigits, Color
 	padding = (nDigits == 0) ? 0.0 : (nDigits - digits.size()) * Units::halfTile;
 }
 
-void NumberSprite::draw(Graphics &graphics, Units::Game x, Units::Game y){
+void NumberSprite::draw(Graphics &graphics, Units::Game x, Units::Game y) const{
 	Units::Game offset = Units::halfTile * (digits.size() - 1);	//move from right to left
 	for (auto &&sprite : digits){
 		sprite->draw(graphics, x + offset + padding, y);
@@ -43,6 +43,6 @@ void NumberSprite::draw(Graphics &graphics, Units::Game x, Units::Game y){
 	}
 }
 
-void NumberSprite::drawCentered(Graphics &graphics, Units::Game x, Units::Game y){
+void NumberSprite::drawCentered(Graphics &graphics, Units::Game x, Units::Game y) const{
 	draw(graphics, x - width() / 2, y - height() / 2);
 }

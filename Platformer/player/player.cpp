@@ -89,7 +89,7 @@ void Player::update(const Units::MS dt, const Map &map){
 	updateY(dt, map);
 }
 
-void Player::updateX(Units::MS dt, const Map &map){
+void Player::updateX(const Units::MS dt, const Map &map){
 	const Accelerator* accelerator;
 	if (onGround()){
 		if (accX == 0) accelerator = &frictionAccelerator;
@@ -102,16 +102,16 @@ void Player::updateX(Units::MS dt, const Map &map){
 	MapCollidable::updateX(collisionRectangle, *accelerator, kinematicsX, kinematicsY, dt, map);
 }
 
-void Player::updateY(Units::MS dt, const Map &map){
+void Player::updateY(const Units::MS dt, const Map &map){
 	const Accelerator &accelerator = (jumping && kinematicsY.velocity < 0.0) ? jumpGravityAccelerator : ConstantAccelerator::gravity;
 
 	MapCollidable::updateY(collisionRectangle, accelerator, kinematicsX, kinematicsY, dt, map, maybeGroundTile);
 }
 
-void Player::draw(Graphics &graphics){
+void Player::draw(Graphics &graphics) const{
 	if (spriteIsVisible()){
 		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp(), kinematicsX.position, kinematicsY.position);
-		sprites[getSpriteState()]->draw(graphics, kinematicsX.position, kinematicsY.position);
+		sprites.at(getSpriteState())->draw(graphics, kinematicsX.position, kinematicsY.position);
 	}
 }
 
@@ -300,7 +300,7 @@ Player::MotionType Player::motionType() const{
 	return motion;
 }
 
-Player::SpriteState Player::getSpriteState(){
+Player::SpriteState Player::getSpriteState() const{
 	return SpriteState(
 		motionType(),
 		horizontalFacing,

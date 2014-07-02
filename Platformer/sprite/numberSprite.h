@@ -18,8 +18,8 @@ public:
 	static NumberSprite ExperienceNumber(Graphics &graphics, int number)
 		{return NumberSprite(graphics, number, 0, WHITE, PLUS);}
 
-	void draw(Graphics &graphics, Units::Game x, Units::Game y);
-	void drawCentered(Graphics &graphics, Units::Game x, Units::Game y);
+	void draw(Graphics &graphics, Units::Game x, Units::Game y) const;
+	void drawCentered(Graphics &graphics, Units::Game x, Units::Game y) const;
 
 private:
 	enum ColorType{ WHITE, RED };

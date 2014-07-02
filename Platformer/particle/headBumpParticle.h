@@ -11,7 +11,7 @@ public:
 	HeadBumpParticle(Graphics &graphics, Units::Game centerX, Units::Game centerY);
 
 	bool update(const Units::MS dt);
-	void draw(Graphics &graphics);
+	void draw(Graphics &graphics) const;
 private:
 	const Units::Game centerX, centerY;
 	Sprite sprite;

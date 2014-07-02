@@ -36,7 +36,7 @@ bool FlashingPickup::update(const Units::MS dt, const Map &map){
 	return timer.active();
 }
 
-void FlashingPickup::draw(Graphics &graphics){
+void FlashingPickup::draw(Graphics &graphics) const{
 	Units::MS time = timer.getCurrentTime();
 
 	if (time > dissipateTime){
