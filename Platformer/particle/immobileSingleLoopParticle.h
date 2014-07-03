@@ -8,7 +8,7 @@ class Graphics;
 class ImmobileSingleLoopParticle : public Particle
 {
 public:
-	ImmobileSingleLoopParticle(Graphics &graphics, const std::string &spritePath,
+	ImmobileSingleLoopParticle(Graphics &graphics, const char* spritePath,
 		Units::Game x, Units::Game y,
 		Units::Pixel sourceX, Units::Pixel sourceY,
 		Units::Pixel sourceW, Units::Pixel sourceH,

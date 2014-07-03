@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 namespace {
-	const std::string spritePath = "npc/npcSym.bmp";
+	const char* spritePath = "npc/npcSym.bmp";
 
 	const Units::Pixel sourceX = 0;
 	const Units::Pixel sourceYs[] = { Units::tileToPixel(1), Units::tileToPixel(2), Units::tileToPixel(3) };

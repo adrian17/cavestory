@@ -1,12 +1,13 @@
 #include "backdrop.h"
 
-#include "SDL.h"
+#include "graphics.h"
+#include "SDL_rect.h"
 
 namespace {
 	const Units::Tile backgroundSize = 4;
 }
 
-FixedBackdrop::FixedBackdrop(const std::string &path, Graphics &graphics){
+FixedBackdrop::FixedBackdrop(const char* path, Graphics &graphics){
 	textureID = graphics.createTexture(path);
 }
 

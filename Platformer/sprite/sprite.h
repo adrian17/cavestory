@@ -1,15 +1,15 @@
 #pragma once
 
 #include "util/units.h"
-#include <string>
-#include "SDL.h"
+#include "SDL_rect.h"
 
 class Graphics;
+struct SDL_Texture;
 
 class Sprite
 {
 public:
-	Sprite(Graphics &graphics, const std::string &relativePath,
+	Sprite(Graphics &graphics, const char* relativePath,
 		Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height);
 	virtual ~Sprite();
 
@@ -20,5 +20,5 @@ protected:
 	SDL_Rect sourceRect;
 
 private:
-	SDL_Texture *spriteSheet;
+	SDL_Texture *textureID;
 };

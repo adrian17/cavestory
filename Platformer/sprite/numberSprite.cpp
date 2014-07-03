@@ -1,9 +1,7 @@
 #include "numberSprite.h"
 
-#include "graphics.h"
-
 namespace {
-	const std::string spritePath = "TextBox.bmp";
+	const char* spritePath = "TextBox.bmp";
 	const Units::Pixel sourceWhiteY = Units::gameToPixel(7 * Units::halfTile);
 	const Units::Pixel sourceRedY = Units::gameToPixel(8 * Units::halfTile);
 	const Units::Pixel sourceW = Units::gameToPixel(Units::halfTile);

@@ -1,6 +1,6 @@
 #include "animatedSprite.h"
 
-AnimatedSprite::AnimatedSprite(Graphics &graphics, const std::string &relativePath,
+AnimatedSprite::AnimatedSprite(Graphics &graphics, const char* relativePath,
 	Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height,
 	Units::FPS fps, Units::Frame nFrames) :
 	Sprite(graphics, relativePath, srcX, srcY, width, height),

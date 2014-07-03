@@ -3,7 +3,7 @@
 #include "sprite\numberSprite.h"
 
 namespace {
-	const std::string spritePath = "TextBox.bmp";
+	const char* spritePath = "TextBox.bmp";
 	Units::Game drawY = 3 * Units::halfTile;
 
 	Units::Pixel levelSourceX = Units::tileToPixel(5);

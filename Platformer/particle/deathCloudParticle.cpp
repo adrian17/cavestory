@@ -3,7 +3,7 @@
 #include "particle\particleSystem.h"
 
 namespace {
-	const std::string spritePath = "npc/NpcSym.bmp";
+	const char* spritePath = "npc/NpcSym.bmp";
 	const Units::Pixel sourceX = Units::tileToPixel(1);
 	const Units::Pixel sourceY = Units::tileToPixel(0);
 	const Units::Pixel sourceW = Units::tileToPixel(1);

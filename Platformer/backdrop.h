@@ -1,6 +1,7 @@
 #pragma once
 
-#include "graphics.h"
+class Graphics;
+struct SDL_Texture;
 
 class Backdrop
 {
@@ -10,8 +11,8 @@ public:
 
 class FixedBackdrop : public Backdrop{
 public:
-	FixedBackdrop(const std::string &path, Graphics &graphics);
+	FixedBackdrop(const char* path, Graphics &graphics);
 	void draw(Graphics &graphics) const;
 private:
-	Graphics::TextureID textureID;
+	SDL_Texture *textureID;
 };

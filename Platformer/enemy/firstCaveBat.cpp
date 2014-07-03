@@ -1,6 +1,5 @@
 #include "firstCaveBat.h"
 
-#include "graphics.h"
 #include "sprite/animatedSprite.h"
 #include <cmath>
 

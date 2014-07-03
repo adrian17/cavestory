@@ -11,16 +11,17 @@
 #include "sprite/varyingWidthSprite.h"
 #include "util\timer.h"
 #include "util/units.h"
-#include "weapons\polarStar.h"
 #include <boost\optional.hpp>
 #include <map>
 #include <memory>
 #include <tuple>
+#include <vector>
 
 class Map;
 class Graphics;
 class ParticleTools;
 class Pickup;
+class PolarStar;
 class Projectile;
 class Rectangle;
 
@@ -59,9 +60,7 @@ public:
 	Units::Game centerY() const { return kinematicsY.position + Units::halfTile; }
 	std::shared_ptr<FloatingNumber> getDamageText() const { return damageText; }
 
-	std::vector<std::shared_ptr< ::Projectile>> getProjectiles() const{
-		return polarStar.getProjectiles();
-	}
+	std::vector<std::shared_ptr<Projectile>> getProjectiles() const;
 
 private:
 	enum MotionType { STANDING, INTERACTING, WALKING, JUMPING, FALLING, LAST_MOTION_TYPE };
@@ -135,7 +134,7 @@ private:
 	FloatingNumber experienceText;
 
 	GunExperienceHUD gunExperienceHUD;
-	PolarStar polarStar;
+	std::unique_ptr<PolarStar> polarStar;
 
 	std::map<SpriteState, std::unique_ptr<Sprite>> sprites;
 };

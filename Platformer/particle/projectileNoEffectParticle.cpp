@@ -1,7 +1,7 @@
 #include "projectileNoEffectParticle.h"
 
 namespace {
-	const std::string spritePath = "Caret.bmp";
+	const char* spritePath = "Caret.bmp";
 	const Units::Pixel sourceX = Units::tileToPixel(11);
 	const Units::Pixel sourceY = Units::tileToPixel(0);
 	const Units::Pixel sourceW = Units::tileToPixel(1);

@@ -1,7 +1,6 @@
 #include "polarStar.h"
 
 #include "map.h"
-#include "graphics.h"
 #include "particle\particleSystem.h"
 #include "particle\projectileNoEffectParticle.h"
 #include "particle\projectileStarParticle.h"
@@ -11,7 +10,7 @@
 #include <algorithm>
 
 namespace {
-	const std::string spritePath = "Arms.bmp";
+	const char* spritePath = "Arms.bmp";
 	const int polarStarIndex = 2;
 	const Units::Pixel gunWidth = Units::gameToPixel(3 * Units::halfTile);
 	const Units::Pixel gunHeight = Units::gameToPixel(2 * Units::halfTile);

@@ -4,6 +4,7 @@
 #include "input.h"
 #include "map.h"
 #include "enemy\firstCaveBat.h"
+#include "interfaces\projectile.h"
 #include "particle\deathCloudParticle.h"
 #include "pickup\experiencePickup.h"
 #include "pickup\flashingPickup.h"

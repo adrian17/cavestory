@@ -1,6 +1,5 @@
 #include "floatingNumber.h"
 
-#include "graphics.h"
 #include "sprite\numberSprite.h"
 #include <algorithm>
 

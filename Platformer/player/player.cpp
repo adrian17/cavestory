@@ -9,6 +9,7 @@
 #include "sprite/animatedSprite.h"
 #include "sprite/numberSprite.h"
 #include "util/rectangle.h"
+#include "weapons\polarStar.h"
 #include <algorithm>
 
 namespace {
@@ -26,7 +27,7 @@ namespace {
 	const BidirectionalAccelerators airAccelerators(airAcceleration, maxVelX);
 	const ConstantAccelerator jumpGravityAccelerator(jumpGravity, terminalSpeed);
 
-	const std::string spriteFilePath = "myChar.bmp";
+	const char* spriteFilePath = "myChar.bmp";
 
 	const Units::Frame characterFrame = 0;
 
@@ -67,7 +68,7 @@ Player::Player(Graphics &graphics, ParticleTools &particleTools, Units::Game x, 
 	damageText(new FloatingNumber(FloatingNumber::DAMAGE)),
 	experienceText(FloatingNumber::EXPERIENCE),
 	gunExperienceHUD(graphics),
-	polarStar(graphics)
+	polarStar(new PolarStar(graphics))
 {
 	initSprites(graphics);
 }
@@ -80,7 +81,7 @@ void Player::update(const Units::MS dt, const Map &map){
 
 	health.update(dt);
 	walkingAnimation.update();
-	polarStar.updateProjectiles(dt, map, particleTools);
+	polarStar->updateProjectiles(dt, map, particleTools);
 
 	experienceText.update(dt);
 	experienceText.setPosition(centerX(), centerY());
@@ -110,7 +111,7 @@ void Player::updateY(const Units::MS dt, const Map &map){
 
 void Player::draw(Graphics &graphics) const{
 	if (spriteIsVisible()){
-		polarStar.draw(graphics, horizontalFacing, verticalFacing(), gunUp(), kinematicsX.position, kinematicsY.position);
+		polarStar->draw(graphics, horizontalFacing, verticalFacing(), gunUp(), kinematicsX.position, kinematicsY.position);
 		sprites.at(getSpriteState())->draw(graphics, kinematicsX.position, kinematicsY.position);
 	}
 }
@@ -119,7 +120,7 @@ void Player::drawHUD(Graphics &graphics){
 	experienceText.draw(graphics);
 	if (spriteIsVisible()){
 		health.draw(graphics);
-		polarStar.drawHUD(graphics, gunExperienceHUD);
+		polarStar->drawHUD(graphics, gunExperienceHUD);
 	}
 }
 
@@ -170,11 +171,11 @@ void Player::stopJump(){
 }
 
 void Player::startFire(){
-	polarStar.startFire(kinematicsX.position, kinematicsY.position, horizontalFacing, verticalFacing(), gunUp(), particleTools);
+	polarStar->startFire(kinematicsX.position, kinematicsY.position, horizontalFacing, verticalFacing(), gunUp(), particleTools);
 }
 
 void Player::stopFire(){
-	polarStar.stopFire();
+	polarStar->stopFire();
 }
 
 void Player::takeDamage(Units::HP damage){
@@ -183,7 +184,7 @@ void Player::takeDamage(Units::HP damage){
 	health.takeDamage(damage);
 	damageText->addValue(damage);
 
-	polarStar.loseExperience(damage * 2);
+	polarStar->loseExperience(damage * 2);
 
 	interacting = false;
 	kinematicsY.velocity = std::min(-shortJumpSpeed, kinematicsY.velocity);
@@ -192,7 +193,7 @@ void Player::takeDamage(Units::HP damage){
 
 void Player::collectPickup(const Pickup &pickup){
 	if (pickup.type() == Pickup::EXPERIENCE){
-		polarStar.collectExperience(pickup.value());
+		polarStar->collectExperience(pickup.value());
 		experienceText.addValue(pickup.value());
 		gunExperienceHUD.activateFlash();
 	} else if (pickup.type() == Pickup::HEALTH){
@@ -205,6 +206,10 @@ Rectangle Player::damageRectangle() const{
 		kinematicsY.position + collisionRectangle.boundingBox().top(),
 		collisionRectangle.boundingBox().width(),
 		collisionRectangle.boundingBox().height());
+}
+
+std::vector<std::shared_ptr<Projectile>> Player::getProjectiles() const{
+	return polarStar->getProjectiles();
 }
 
 void Player::onCollision(sides::SideType side, bool isDeltaDirection, const tiles::TileType tileType){
