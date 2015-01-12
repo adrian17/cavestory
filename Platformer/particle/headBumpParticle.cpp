@@ -21,8 +21,8 @@ HeadBumpParticle::HeadBumpParticle(Graphics &graphics, Units::Game centerX, Unit
 	sprite(graphics, "Caret.bmp", sourceX, sourceY, width, height),
 	timer(lifetime, true),
 	particleA(0, (Units::Degrees)(rand() % 360)),
-	maxOffsetA(4 + rand() % 16),
 	particleB(0, (Units::Degrees)(rand() % 360)),
+	maxOffsetA(4 + rand() % 16),
 	maxOffsetB(4 + rand() % 16)
 {
 }

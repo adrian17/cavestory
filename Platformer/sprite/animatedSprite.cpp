@@ -4,8 +4,8 @@ AnimatedSprite::AnimatedSprite(Graphics &graphics, const char* relativePath,
 	Units::Pixel srcX, Units::Pixel srcY, Units::Pixel width, Units::Pixel height,
 	Units::FPS fps, Units::Frame nFrames) :
 	Sprite(graphics, relativePath, srcX, srcY, width, height),
-	frameTimer(1000/fps),
-	nFrames(nFrames)
+	nFrames(nFrames),
+	frameTimer(1000/fps)
 {
 }
 

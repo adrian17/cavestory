@@ -16,9 +16,6 @@ namespace {
 	const Rectangle multiHeartRectangle = { 6, 7, 26, 25 };
 	const Units::HP multiHeartValue = 6;
 
-	const Units::Tile heartsSourceX = 1;
-	const Units::Tile heartsSourceY = 0;
-
 	const Units::MS lifetime = 8000;
 	const Units::MS flashPeriod = 60;
 	const Units::MS flickerTime = 7000;
