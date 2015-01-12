@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sprite.h"
-#include <crtdbg.h>
+#include <cassert>
 
 class VaryingWidthSprite : public Sprite{
 public:
@@ -15,7 +15,7 @@ public:
 
 	}
 	void setPercentageWidth(double percentage){
-		_ASSERT(percentage <= 1.0 && percentage >= 0.0);
+		assert(percentage <= 1.0 && percentage >= 0.0);
 		sourceRect.w = int(percentage * maxWidth);
 	}
 private:

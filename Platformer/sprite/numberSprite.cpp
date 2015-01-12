@@ -1,5 +1,7 @@
 #include "numberSprite.h"
 
+#include <cassert>
+
 namespace {
 	const char* spritePath = "TextBox.bmp";
 	const Units::Pixel sourceWhiteY = Units::gameToPixel(7 * Units::halfTile);
@@ -15,7 +17,7 @@ namespace {
 NumberSprite::NumberSprite(Graphics &graphics, int number, size_t nDigits, ColorType color, OperatorType op)
 {
 	Units::Pixel sourceY = (color == WHITE) ? sourceWhiteY : sourceRedY;
-	_ASSERT(number >= 0);
+	assert(number >= 0);
 	do{
 		const int digit = number % 10;
 		digits.push_back(std::unique_ptr<Sprite>(new Sprite(graphics, spritePath,
@@ -29,7 +31,7 @@ NumberSprite::NumberSprite(Graphics &graphics, int number, size_t nDigits, Color
 	else if (op == MINUS) digits.push_back(std::unique_ptr<Sprite>(new Sprite(graphics, spritePath,
 		opMinusSourceX, opSourceY, sourceW, sourceH)));
 
-	_ASSERT(nDigits == 0 || nDigits >= digits.size());
+	assert(nDigits == 0 || nDigits >= digits.size());
 	padding = (nDigits == 0) ? 0.0 : (nDigits - digits.size()) * Units::halfTile;
 }
 

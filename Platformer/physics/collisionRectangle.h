@@ -41,7 +41,7 @@ public:
 	}
 
 	Rectangle leftCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta <= 0);
+		assert(delta <= 0);
 		return Rectangle(
 			x + rectangle.left() + delta,
 			y + rectangle.top(),
@@ -49,7 +49,7 @@ public:
 			rectangle.height());
 	}
 	Rectangle rightCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta >= 0);
+		assert(delta >= 0);
 		return Rectangle(
 			x + rectangle.left(),
 			y + rectangle.top(),
@@ -57,7 +57,7 @@ public:
 			rectangle.height());
 	}
 	Rectangle topCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta <= 0);
+		assert(delta <= 0);
 		return Rectangle(
 			x + rectangle.left(),
 			y + rectangle.top() + delta,
@@ -65,7 +65,7 @@ public:
 			rectangle.height() - delta);
 	}
 	Rectangle bottomCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta >= 0);
+		assert(delta >= 0);
 		return Rectangle(
 			x + rectangle.left(),
 			y + rectangle.top(),
@@ -92,7 +92,7 @@ public:
 	}
 
 	Rectangle leftCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta <= 0);
+		assert(delta <= 0);
 		return Rectangle(
 			x + left.left() + delta,
 			y + left.top(),
@@ -100,7 +100,7 @@ public:
 			left.height());
 	}
 	Rectangle rightCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta >= 0);
+		assert(delta >= 0);
 		return Rectangle(
 			x + right.left(),
 			y + right.top(),
@@ -108,7 +108,7 @@ public:
 			right.height());
 	}
 	Rectangle topCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta <= 0);
+		assert(delta <= 0);
 		return Rectangle(
 			x + top.left(),
 			y + top.top() + delta,
@@ -116,7 +116,7 @@ public:
 			top.height() - delta);
 	}
 	Rectangle bottomCollision(Units::Game x, Units::Game y, Units::Game delta) const{
-		_ASSERT(delta >= 0);
+		assert(delta >= 0);
 		return Rectangle(
 			x + bottom.left(),
 			y + bottom.top(),
