@@ -7,13 +7,14 @@ struct Kinematics;
 extern const Units::Velocity terminalSpeed;
 
 struct Accelerator{
-	Accelerator(){};
+	Accelerator(){}
 	virtual ~Accelerator() = 0;
 	virtual void updateVelocity(Kinematics &kinematics, Units::MS dt) const = 0;
 };
 inline Accelerator::~Accelerator(){}
 
 struct ZeroAccelerator : Accelerator{
+	ZeroAccelerator(){}
 	void updateVelocity(Kinematics&, Units::MS) const{}
 	static const ZeroAccelerator zero;
 };
