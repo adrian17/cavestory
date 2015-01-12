@@ -27,7 +27,7 @@ namespace {
 	const BidirectionalAccelerators airAccelerators(airAcceleration, maxVelX);
 	const ConstantAccelerator jumpGravityAccelerator(jumpGravity, terminalSpeed);
 
-	const char* spriteFilePath = "myChar.bmp";
+	const char* spriteFilePath = "MyChar.bmp";
 
 	const Units::Frame characterFrame = 0;
 

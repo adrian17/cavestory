@@ -24,8 +24,8 @@ void Graphics::toggleFullscreen(){
 
 Graphics::TextureID Graphics::createTexture(const std::string &relativePath, const bool transparency){
 	const std::string path = Config::getGraphicsQuality() == Config::HIGH_QUALITY ?
-		"content/" + relativePath :
-		"content/ogph/" + relativePath;
+		"./content/" + relativePath :
+		"./content/ogph/" + relativePath;
 	if (spriteSheets.count(path) == false){
 		SDL_Surface *tempSurface = SDL_LoadBMP(path.c_str());
 		if (!tempSurface){

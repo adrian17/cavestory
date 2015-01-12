@@ -54,7 +54,7 @@ void FirstCaveBat::initSprite(Graphics &graphics, const SpriteState spriteState)
 	HorizontalFacing spriteHorizontalFacing = std::get<0>(spriteState);
 
 	Units::Tile tileY = (spriteHorizontalFacing == LEFT) ? 2 : 3;
-	sprites[spriteState].reset(new AnimatedSprite(graphics, "npc/NpcCemet.bmp",
+	sprites[spriteState].reset(new AnimatedSprite(graphics, "Npc/NpcCemet.bmp",
 		Units::tileToPixel(2), Units::tileToPixel(tileY),
 		Units::tileToPixel(1), Units::tileToPixel(1),
 		flyFPS, nFlyFrames));

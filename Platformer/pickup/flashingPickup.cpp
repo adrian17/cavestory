@@ -1,7 +1,7 @@
 #include "flashingPickup.h"
 
 namespace {
-	const char* spritePath = "npc/NpcSym.bmp";
+	const char* spritePath = "Npc/NpcSym.bmp";
 
 	const Units::Tile dissipatingSpriteX = 1;
 	const Units::Tile dissipatingSpriteY = 0;

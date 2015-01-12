@@ -22,7 +22,7 @@ Map* Map::createTestMap(Graphics &graphics){
 		nRows, std::vector<std::shared_ptr<Sprite>>(
 			nCols, std::shared_ptr<Sprite>()));
 
-	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "stage/PrtCave.bmp",
+	std::shared_ptr<Sprite> sprite(new Sprite(graphics, "Stage/PrtCave.bmp",
 		Units::tileToPixel(1), 0,
 		Units::tileToPixel(1), Units::tileToPixel(1)));
 	Tile tile(TileType().set(WALL), sprite);
@@ -47,13 +47,13 @@ Map* Map::createTestMap(Graphics &graphics){
 	map->tiles[9][15] = tile;
 	map->tiles[7][15] = tile;
 
-	std::shared_ptr<Sprite> chain_top(new Sprite(graphics, "stage/PrtCave.bmp",
+	std::shared_ptr<Sprite> chain_top(new Sprite(graphics, "Stage/PrtCave.bmp",
 		Units::tileToPixel(11), Units::tileToPixel(2),
 		Units::tileToPixel(1), Units::tileToPixel(1)));
-	std::shared_ptr<Sprite> chain_middle(new Sprite(graphics, "stage/PrtCave.bmp",
+	std::shared_ptr<Sprite> chain_middle(new Sprite(graphics, "Stage/PrtCave.bmp",
 		Units::tileToPixel(12), Units::tileToPixel(2),
 		Units::tileToPixel(1), Units::tileToPixel(1)));
-	std::shared_ptr<Sprite> chain_bottom(new Sprite(graphics, "stage/PrtCave.bmp",
+	std::shared_ptr<Sprite> chain_bottom(new Sprite(graphics, "Stage/PrtCave.bmp",
 		Units::tileToPixel(13), Units::tileToPixel(2),
 		Units::tileToPixel(1), Units::tileToPixel(1)));
 
@@ -89,7 +89,7 @@ Map* Map::createSlopeTestMap(Graphics &graphics){
 		nCols, std::shared_ptr<Sprite>()));
 
 	Tile wallTile(TileType().set(WALL),
-		std::shared_ptr<Sprite>(new Sprite(graphics, "stage/PrtCave.bmp",
+		std::shared_ptr<Sprite>(new Sprite(graphics, "Stage/PrtCave.bmp",
 		Units::tileToPixel(1), 0,
 		Units::tileToPixel(1), Units::tileToPixel(1))));
 	enum {LTT, LTS, RTS, RTT,
@@ -101,7 +101,7 @@ Map* Map::createSlopeTestMap(Graphics &graphics){
 				set(i / 2 % 2 == 0 ? LEFT_SLOPE : RIGHT_SLOPE).
 				set(i / 4 == 0 ? TOP_SLOPE : BOTTOM_SLOPE).
 				set((i + 1) / 2 % 2== 0 ? TALL_SLOPE : SHORT_SLOPE),
-			std::shared_ptr<Sprite>(new Sprite(graphics, "stage/PrtCave.bmp",
+			std::shared_ptr<Sprite>(new Sprite(graphics, "Stage/PrtCave.bmp",
 				Units::tileToPixel(2 + i % 4), Units::tileToPixel(i / 4),
 				Units::tileToPixel(1), Units::tileToPixel(1))));
 	}
