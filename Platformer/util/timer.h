@@ -16,7 +16,7 @@ public:
 	Timer(const Timer&) = delete;
 	Timer& operator=(const Timer&) = delete;
 
-	Timer::~Timer(){ timers.erase(this); }
+	~Timer(){ timers.erase(this); }
 
 	Units::MS getCurrentTime() const { return currentTime; }
 	bool active() const { return currentTime < expirationTime; }

@@ -21,7 +21,7 @@ public:
 	}
 
 	Vector2D operator/(T n) const{
-		return return operator*(1.0 / n);
+		return operator*(1.0 / n);
 	}
 
 	template<typename U>
