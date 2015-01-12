@@ -1,7 +1,7 @@
 #include "experiencePickup.h"
 
-#include "physics\accelerators.h"
-#include "physics\collisionRectangle.h"
+#include "physics/accelerators.h"
+#include "physics/collisionRectangle.h"
 #include <cstdlib>
 
 namespace {

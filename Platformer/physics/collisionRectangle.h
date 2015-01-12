@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util\rectangle.h"
+#include "util/rectangle.h"
 
 class CollisionRectangle{
 public:

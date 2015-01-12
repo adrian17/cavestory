@@ -1,8 +1,8 @@
 #pragma once
 
-#include "particle\particle.h"
-#include "sprite\animatedSprite.h"
-#include "util\polarVector.h"
+#include "particle/particle.h"
+#include "sprite/animatedSprite.h"
+#include "util/polarVector.h"
 
 class Graphics;
 class ParticleTools;

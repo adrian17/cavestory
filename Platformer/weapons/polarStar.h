@@ -1,9 +1,9 @@
 #pragma once
 
-#include "interfaces\projectile.h"
-#include "physics\spriteState.h"
-#include "util\rectangle.h"
-#include "util\units.h"
+#include "interfaces/projectile.h"
+#include "physics/spriteState.h"
+#include "util/rectangle.h"
+#include "util/units.h"
 #include <map>
 #include <memory>
 #include <tuple>

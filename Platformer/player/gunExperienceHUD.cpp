@@ -1,6 +1,6 @@
 #include "gunExperienceHUD.h"
 
-#include "sprite\numberSprite.h"
+#include "sprite/numberSprite.h"
 
 namespace {
 	const char* spritePath = "TextBox.bmp";

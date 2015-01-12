@@ -1,6 +1,6 @@
 #pragma once
 
-#include "particle\immobileSingleLoopParticle.h"
+#include "particle/immobileSingleLoopParticle.h"
 
 class ProjectileNoEffectParticle : public ImmobileSingleLoopParticle
 {

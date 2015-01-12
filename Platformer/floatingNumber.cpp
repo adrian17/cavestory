@@ -1,6 +1,6 @@
 #include "floatingNumber.h"
 
-#include "sprite\numberSprite.h"
+#include "sprite/numberSprite.h"
 #include <algorithm>
 
 namespace {

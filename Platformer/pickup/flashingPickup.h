@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pickup\pickup.h"
-#include "sprite\sprite.h"
-#include "util\timer.h"
+#include "pickup/pickup.h"
+#include "sprite/sprite.h"
+#include "util/timer.h"
 #include <memory>
 
 class FlashingPickup : public Pickup

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "physics\kinematics.h"
-#include "physics\mapCollidable.h"
-#include "pickup\pickup.h"
-#include "sprite\animatedSprite.h"
+#include "physics/kinematics.h"
+#include "physics/mapCollidable.h"
+#include "pickup/pickup.h"
+#include "sprite/animatedSprite.h"
 
 class Graphics;
 

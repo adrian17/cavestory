@@ -1,12 +1,12 @@
 #include "polarStar.h"
 
 #include "map.h"
-#include "particle\particleSystem.h"
-#include "particle\projectileNoEffectParticle.h"
-#include "particle\projectileStarParticle.h"
-#include "player\gunExperienceHUD.h"
-#include "sprite\sprite.h"
-#include <boost\optional.hpp>
+#include "particle/particleSystem.h"
+#include "particle/projectileNoEffectParticle.h"
+#include "particle/projectileStarParticle.h"
+#include "player/gunExperienceHUD.h"
+#include "sprite/sprite.h"
+#include <boost/optional.hpp>
 #include <algorithm>
 
 namespace {

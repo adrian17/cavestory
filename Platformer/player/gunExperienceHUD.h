@@ -1,8 +1,8 @@
 #pragma once
 
-#include "sprite\sprite.h"
-#include "sprite\varyingWidthSprite.h"
-#include "util\timer.h"
+#include "sprite/sprite.h"
+#include "sprite/varyingWidthSprite.h"
+#include "util/timer.h"
 
 class Graphics;
 

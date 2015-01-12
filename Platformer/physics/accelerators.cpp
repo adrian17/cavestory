@@ -1,6 +1,6 @@
 #include "accelerators.h"
 
-#include "physics\kinematics.h"
+#include "physics/kinematics.h"
 #include <algorithm>
 
 const Units::Acceleration gravityAcceleration = 0.00078125;	//fall

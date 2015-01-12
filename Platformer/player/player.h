@@ -1,17 +1,17 @@
 #pragma once
 
 #include "floatingNumber.h"
-#include "interfaces\damageable.h"
-#include "physics\kinematics.h"
-#include "physics\mapCollidable.h"
-#include "physics\spriteState.h"
-#include "physics\tileType.h"
-#include "player\gunExperienceHUD.h"
-#include "sprite\sprite.h"
+#include "interfaces/damageable.h"
+#include "physics/kinematics.h"
+#include "physics/mapCollidable.h"
+#include "physics/spriteState.h"
+#include "physics/tileType.h"
+#include "player/gunExperienceHUD.h"
+#include "sprite/sprite.h"
 #include "sprite/varyingWidthSprite.h"
-#include "util\timer.h"
+#include "util/timer.h"
 #include "util/units.h"
-#include <boost\optional.hpp>
+#include <boost/optional.hpp>
 #include <map>
 #include <memory>
 #include <tuple>

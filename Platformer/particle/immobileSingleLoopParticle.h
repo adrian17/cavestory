@@ -1,7 +1,7 @@
 #pragma once
 
-#include "particle\particle.h"
-#include "sprite\animatedSprite.h"
+#include "particle/particle.h"
+#include "sprite/animatedSprite.h"
 
 class Graphics;
 

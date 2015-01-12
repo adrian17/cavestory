@@ -2,7 +2,7 @@
 
 #include "sprite.h"
 
-#include "util\timer.h"
+#include "util/timer.h"
 
 class AnimatedSprite : public Sprite {
 public:

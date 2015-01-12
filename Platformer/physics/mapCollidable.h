@@ -1,9 +1,9 @@
 #pragma once
 
-#include "physics\sideType.h"
-#include "physics\tileType.h"
-#include "util\units.h"
-#include <boost\optional.hpp>
+#include "physics/sideType.h"
+#include "physics/tileType.h"
+#include "util/units.h"
+#include <boost/optional.hpp>
 
 struct Accelerator;
 class CollisionRectangle;

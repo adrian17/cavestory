@@ -1,9 +1,9 @@
 #pragma once
 
-#include "particle\particle.h"
-#include "sprite\sprite.h"
-#include "util\polarVector.h"
-#include "util\timer.h"
+#include "particle/particle.h"
+#include "sprite/sprite.h"
+#include "util/polarVector.h"
+#include "util/timer.h"
 
 class HeadBumpParticle : public Particle
 {

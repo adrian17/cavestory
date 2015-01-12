@@ -1,8 +1,8 @@
 #include "mapCollidable.h"
 
-#include "physics\accelerators.h"
-#include "physics\collisionRectangle.h"
-#include "physics\kinematics.h"
+#include "physics/accelerators.h"
+#include "physics/collisionRectangle.h"
+#include "physics/kinematics.h"
 #include "map.h"
 
 namespace {

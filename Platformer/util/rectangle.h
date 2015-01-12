@@ -1,7 +1,7 @@
 #pragma once
 
-#include "physics\sideType.h"
-#include "util\units.h"
+#include "physics/sideType.h"
+#include "util/units.h"
 
 class Rectangle
 {

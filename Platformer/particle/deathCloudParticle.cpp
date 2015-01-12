@@ -1,6 +1,6 @@
 #include "deathCloudParticle.h"
 
-#include "particle\particleSystem.h"
+#include "particle/particleSystem.h"
 
 namespace {
 	const char* spritePath = "npc/NpcSym.bmp";

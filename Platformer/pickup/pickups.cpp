@@ -1,7 +1,7 @@
 #include "pickups.h"
 
-#include "player\player.h"
-#include "pickup\pickup.h"
+#include "player/player.h"
+#include "pickup/pickup.h"
 
 void Pickups::handleCollision(Player &player){
 	for (PickupSet::iterator iter = pickups.begin(); iter != pickups.end();){
