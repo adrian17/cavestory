@@ -126,7 +126,7 @@ private:
 	bool interacting = false;
 
 	bool onGround() const
-		{ return maybeGroundTile; }
+		{ return (bool)maybeGroundTile; }
 
 	Health health;
 	Timer invincibleTimer;
