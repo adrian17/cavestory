@@ -1,8 +1,8 @@
 #pragma once
 
-#include "physics\sideType.h"
-#include "physics\tileType.h"
-#include "util\units.h"
+#include "physics/sideType.h"
+#include "physics/tileType.h"
+#include "util/units.h"
 
 struct CollisionTile{
 	CollisionTile(Units::Tile row, Units::Tile col, tiles::TileType tileType) :

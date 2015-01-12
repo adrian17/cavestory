@@ -80,7 +80,7 @@ private:
 class CompositeCollisionRectangle : public CollisionRectangle{
 public:
 
-	CompositeCollisionRectangle(const Rectangle &top, Rectangle &bottom, Rectangle &left, Rectangle &right) :
+	CompositeCollisionRectangle(const Rectangle &top, const Rectangle &bottom, const Rectangle &left, const Rectangle &right) :
 		top(top), bottom(bottom), left(left), right(right)
 	{}
 
